@@ -5,6 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>eSafe PTW — Genser Energy Ghana Limited</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, doc, setDoc, getDoc, getDocs, onSnapshot, deleteDoc, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+  import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtyEk7WC-iniAnTrl_Jh1MAbUhKhG766s",
+    authDomain: "esafe-ptw.firebaseapp.com",
+    projectId: "esafe-ptw",
+    storageBucket: "esafe-ptw.firebasestorage.app",
+    messagingSenderId: "552690022718",
+    appId: "1:552690022718:web:fdfa7af0e92d64369b946f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Expose to global scope for use in main script
+  window._db = db;
+  window._collection = collection;
+  window._doc = doc;
+  window._setDoc = setDoc;
+  window._getDoc = getDoc;
+  window._getDocs = getDocs;
+  window._onSnapshot = onSnapshot;
+  window._deleteDoc = deleteDoc;
+  window._query = query;
+  window._orderBy = orderBy;
+  window._serverTimestamp = serverTimestamp;
+  window._firebaseReady = false;
+
+  // Sign in anonymously and signal ready
+  signInAnonymously(auth).then(() => {
+    window._firebaseReady = true;
+    window.dispatchEvent(new Event('firebase-ready'));
+    console.log('Firebase ready — anonymous session active');
+  }).catch(e => {
+    console.error('Firebase auth error:', e);
+    window._firebaseReady = false;
+    window.dispatchEvent(new Event('firebase-ready'));
+  });
+</script>
 <style>
 :root{
   --bg:#0b0f14;--bg2:#111720;--bg3:#181f2a;--bg4:#1f2836;--bg5:#263041;
@@ -282,6 +326,7 @@ table.t tbody tr:hover td{background:rgba(255,255,255,.025);}
 .empty{padding:36px;text-align:center;color:var(--text3);font-size:13px;}
 .qr-box{width:64px;height:64px;background:repeating-linear-gradient(45deg,var(--bg4),var(--bg4) 3px,var(--bg5) 3px,var(--bg5) 9px);border-radius:var(--r);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;color:var(--text3);flex-shrink:0;}
 #toast{position:fixed;bottom:18px;right:18px;z-index:999;display:none;}
+#offline-banner{display:none;position:fixed;top:0;left:0;right:0;background:var(--amber);color:#1a0e00;text-align:center;padding:6px;font-size:12px;font-family:var(--cond);font-weight:600;letter-spacing:.05em;z-index:500;}
 /* ── Date/time picker dark theme fix ── */
 input[type=datetime-local],input[type=date],input[type=time]{
   color-scheme:dark;
@@ -322,6 +367,7 @@ input[type=datetime-local]::-webkit-calendar-picker-indicator:hover{
 </style>
 </head>
 <body>
+<div id="offline-banner">⚠ You are offline — changes will sync when connection is restored</div>
 <div class="mob-ov" id="mob-ov" onclick="closeMob()"></div>
 <div class="app">
 
@@ -389,6 +435,9 @@ input[type=datetime-local]::-webkit-calendar-picker-indicator:hover{
       <span style="font-size:11px;color:var(--text3)" id="tb-s">· PGCP</span>
     </div>
     <div class="tb-right">
+      <span id="sync-indicator" style="font-size:11px;font-family:var(--mono);color:var(--amber)">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--amber);margin-right:4px;vertical-align:middle"></span>Connecting…
+      </span>
       <span class="tb-clk" id="clk">--:--:--</span>
       <button class="btn btn-p btn-sm" onclick="openNewPermit()">+ New Permit</button>
     </div>
@@ -626,11 +675,133 @@ let APP_SETTINGS = {
   permitPrefix: { PGCP:'PGCP', TNET:'TNET' },
 };
 
-// ── Permits store ──
+// ── Permits store (local cache — synced from Firestore) ──
 let PERMITS = [];
 
 // ── Current signed-in user ──
 let currentUser = null;
+
+// ── Firebase sync state ──
+let _unsubPermits = null;   // Firestore listener unsubscribe fn
+let _unsubUsers = null;
+let _firebaseOk = false;
+let _syncStatus = 'connecting'; // 'connecting' | 'online' | 'offline'
+
+// ── Wait for Firebase then initialise listeners ──
+function waitForFirebase(cb){
+  if(window._firebaseReady !== undefined && window._firebaseOk !== false){
+    cb(); return;
+  }
+  window.addEventListener('firebase-ready', () => {
+    _firebaseOk = window._firebaseReady;
+    cb();
+  }, { once: true });
+}
+
+// ── Firestore helpers ──
+async function fsSet(collName, docId, data){
+  if(!window._db) return false;
+  try {
+    await window._setDoc(window._doc(window._db, collName, docId), {
+      ...data, _updatedAt: window._serverTimestamp()
+    });
+    return true;
+  } catch(e){ console.error('fsSet error:', e); return false; }
+}
+
+async function fsDelete(collName, docId){
+  if(!window._db) return false;
+  try {
+    await window._deleteDoc(window._doc(window._db, collName, docId));
+    return true;
+  } catch(e){ console.error('fsDelete error:', e); return false; }
+}
+
+async function fsGetAll(collName){
+  if(!window._db) return [];
+  try {
+    const snap = await window._getDocs(window._collection(window._db, collName));
+    return snap.docs.map(d => ({id: d.id, ...d.data()}));
+  } catch(e){ console.error('fsGetAll error:', e); return []; }
+}
+
+// ── Save a permit to Firestore ──
+async function savePermit(p){
+  if(!window._db){ PERMITS = [p,...PERMITS.filter(x=>x.id!==p.id)]; return; }
+  const data = JSON.parse(JSON.stringify(p));
+  delete data._updatedAt;
+  await fsSet('permits', p.id, data);
+}
+
+// ── Save settings to Firestore ──
+async function saveSettings(){
+  if(!window._db) return;
+  await fsSet('settings', 'main', {
+    users: APP_SETTINGS.users,
+    gasThresholds: APP_SETTINGS.gasThresholds,
+    musterPoints: APP_SETTINGS.musterPoints,
+    permitPrefix: APP_SETTINGS.permitPrefix,
+    sharepoint: APP_SETTINGS.sharepoint||{},
+  });
+}
+
+// ── Load settings from Firestore ──
+async function loadSettings(){
+  if(!window._db) return;
+  try {
+    const snap = await window._getDoc(window._doc(window._db,'settings','main'));
+    if(snap.exists()){
+      const d = snap.data();
+      if(d.users) APP_SETTINGS.users = d.users;
+      if(d.gasThresholds) APP_SETTINGS.gasThresholds = d.gasThresholds;
+      if(d.musterPoints) APP_SETTINGS.musterPoints = d.musterPoints;
+      if(d.permitPrefix) APP_SETTINGS.permitPrefix = d.permitPrefix;
+      if(d.sharepoint) APP_SETTINGS.sharepoint = d.sharepoint;
+    }
+  } catch(e){ console.error('loadSettings error:', e); }
+}
+
+// ── Real-time listeners ──
+function startRealtimeListeners(){
+  if(!window._db) return;
+
+  // Permits listener — real-time sync
+  if(_unsubPermits) _unsubPermits();
+  const permitsRef = window._collection(window._db, 'permits');
+  _unsubPermits = window._onSnapshot(permitsRef, (snap) => {
+    const remote = snap.docs.map(d => ({...d.data(), id:d.id}));
+    // Merge: remote is source of truth
+    PERMITS = remote.sort((a,b)=>{
+      // Sort by creation time descending
+      const ta = a._updatedAt?.seconds||0;
+      const tb = b._updatedAt?.seconds||0;
+      return tb-ta;
+    });
+    _syncStatus = 'online';
+    updateSyncIndicator();
+    // Refresh current view
+    if(appView) go(appView);
+  }, (err) => {
+    console.error('Permits listener error:', err);
+    _syncStatus = 'offline';
+    updateSyncIndicator();
+  });
+}
+
+function updateSyncIndicator(){
+  const el = document.getElementById('sync-indicator');
+  const banner = document.getElementById('offline-banner');
+  if(!el) return;
+  const cfg = {
+    connecting: { col:'var(--amber)', txt:'Connecting…' },
+    online:     { col:'var(--green)', txt:'Live ●' },
+    offline:    { col:'var(--red)',   txt:'Offline ✗' },
+  };
+  const c = cfg[_syncStatus]||cfg.connecting;
+  el.style.color = c.col;
+  el.innerHTML = `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${c.col};margin-right:4px;vertical-align:middle"></span>${c.txt}`;
+  if(banner) banner.style.display = _syncStatus==='offline' ? 'block' : 'none';
+}
 
 // ══════════════════════════════════════════════════════
 // HELPERS
@@ -1478,20 +1649,21 @@ function saveSharePointConfig(){
   APP_SETTINGS.sharepoint.clientId=document.getElementById('sp-clientid')?.value||'';
   APP_SETTINGS.sharepoint.clientSecret=document.getElementById('sp-secret')?.value||'';
   APP_SETTINGS.sharepoint.autopush=document.getElementById('sp-autopush')?.value||'No';
+  saveSettings();  // sync to Firestore
   toast('SharePoint configuration saved.','s');
 }
 
 function saveThreshold(key){
   const el=document.getElementById('thresh-'+key);
-  if(el){APP_SETTINGS.gasThresholds[key]=parseFloat(el.value);toast('Threshold saved.','s');}
+  if(el){APP_SETTINGS.gasThresholds[key]=parseFloat(el.value);saveSettings();toast('Threshold saved.','s');}
 }
 function savePrefix(site){
   const el=document.getElementById('pref-'+site.toLowerCase());
-  if(el){APP_SETTINGS.permitPrefix[site]=el.value;toast('Prefix saved.','s');}
+  if(el){APP_SETTINGS.permitPrefix[site]=el.value;saveSettings();toast('Prefix saved.','s');}
 }
 function saveMuster(site,i){
   const el=document.getElementById('mp-'+site.toLowerCase()+'-'+i);
-  if(el){APP_SETTINGS.musterPoints[site][i]=el.value;toast('Muster point saved.','s');}
+  if(el){APP_SETTINGS.musterPoints[site][i]=el.value;saveSettings();toast('Muster point saved.','s');}
 }
 
 // ── Add / Edit / Delete User — PIN gated ──
@@ -1618,6 +1790,7 @@ function deleteUser(id){
   _showUserMgmtPinGate('Delete User: '+(u?.name||''), ()=>{
     confirm2('Confirm Delete','Remove <b>'+(u?.name||'this user')+'</b>? This cannot be undone.',()=>{
       APP_SETTINGS.users=APP_SETTINGS.users.filter(x=>x.id!==id);
+      saveSettings();  // sync to Firestore
       toast('User removed.','w'); go('set');
     });
   });
@@ -1648,6 +1821,7 @@ function saveUser(existingId){
     APP_SETTINGS.users.push({id:'u'+Date.now(),name,empNo:emp,role,site,pin,active:true});
     toast('User added: '+name,'s');
   }
+  saveSettings();  // sync to Firestore
   closeOv('conf-ov'); go('set');
 }
 
@@ -2104,6 +2278,7 @@ function doClose(id){
           if(!p.authChain) p.authChain={};
           p.authChain.close_recipient=sig1;
           p.authChain.close_issuer=sig2;
+          savePermit(p);  // sync to Firestore
           toast(`${id} closed by ${sig2.name}. Records retained for 3 months per GEGL-MID-GCP-HS-PRO-001.`,'s');
           go(appView); updateBadges();
         }
@@ -2860,12 +3035,14 @@ function wzSubmit(){
           originator: sigData,
         };
         window._resubmitId = null;
+        savePermit(targetPermit);  // sync to Firestore
         closeOv('new-ov');
         toast(`${targetPermit.id} resubmitted by ${sigData.name}. Authorization chain restarted from Stage 1.`,'s');
       } else {
         const id=genPermitId(appSite);
         const newPermit={ id, site:appSite, workers:[], ...permitData, authChain:{ originator:sigData } };
         PERMITS.unshift(newPermit);
+        savePermit(newPermit);  // sync to Firestore
         closeOv('new-ov');
         toast(`Permit <b>${id}</b> submitted by ${sigData.name}. Awaiting Safe Maker sign-off.`,'s');
       }
@@ -3067,9 +3244,43 @@ setInterval(()=>{
 },1000);
 
 // ══════════════════════════════════════════════════════
-// INIT
+// INIT — load from Firebase then start
 // ══════════════════════════════════════════════════════
-go('db'); updateBadges();
+async function initApp(){
+  // Show connecting state
+  go('db'); updateBadges();
+
+  // Wait for Firebase to be ready
+  waitForFirebase(async () => {
+    if(!window._db){
+      // Firebase not available — run in local mode
+      console.warn('Firebase unavailable — running in local-only mode');
+      _syncStatus = 'offline';
+      updateSyncIndicator();
+      return;
+    }
+
+    try {
+      // Load settings (users, thresholds, etc) from Firestore
+      await loadSettings();
+
+      // Start real-time permits listener
+      startRealtimeListeners();
+
+      // Refresh view after initial load
+      go(appView);
+      updateBadges();
+
+      console.log('eSafe PTW — Firebase connected. Real-time sync active.');
+    } catch(e){
+      console.error('Firebase init error:', e);
+      _syncStatus = 'offline';
+      updateSyncIndicator();
+    }
+  });
+}
+
+initApp();
 </script>
 </body>
 </html>
