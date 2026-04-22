@@ -1,0 +1,3075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>eSafe PTW — Genser Energy Ghana Limited</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f14;--bg2:#111720;--bg3:#181f2a;--bg4:#1f2836;--bg5:#263041;
+  --border:rgba(255,255,255,.07);--border2:rgba(255,255,255,.13);
+  --text:#dde4ef;--text2:#8a97aa;--text3:#4e5d72;
+  --acc:#00c2a8;--acc2:#00876f;
+  --amber:#f0a500;--red:#e84040;--red-bg:rgba(232,64,64,.12);
+  --green:#2ecc71;--green-bg:rgba(46,204,113,.1);
+  --blue:#4a9eff;--purple:#a78bfa;--orange:#dc8246;
+  --font:'Barlow',sans-serif;--mono:'DM Mono',monospace;--cond:'Barlow Condensed',sans-serif;
+  --r:6px;--r2:10px;--r3:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:none;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;min-height:100dvh;overflow-x:hidden;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:4px;}
+
+/* ── LAYOUT ── */
+.app{display:flex;height:100dvh;overflow:hidden;}
+.sidebar{width:228px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:110;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
+
+/* ── SIDEBAR ── */
+.sb-brand{padding:14px 14px 10px;border-bottom:1px solid var(--border);}
+.sb-logo-row{display:flex;align-items:center;gap:9px;margin-bottom:6px;}
+.sb-wm1{font-family:var(--cond);font-size:16px;font-weight:700;letter-spacing:.04em;line-height:1;}
+.sb-wm1 .w{color:var(--text);font-weight:300;}
+.sb-wm1 .e{color:var(--acc);}
+.sb-wm2{font-size:10px;color:var(--text3);letter-spacing:.07em;margin-top:2px;}
+.sb-ref{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:5px;border-top:1px solid var(--border);padding-top:5px;}
+.site-sw{display:flex;margin:10px;border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;}
+.ss-b{flex:1;padding:7px 4px;font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.07em;text-align:center;cursor:pointer;background:none;border:none;color:var(--text3);transition:all .2s;}
+.ss-b.on{background:var(--acc);color:#001a15;}
+.ss-b:not(.on):hover{background:var(--bg3);color:var(--text);}
+.nav-grp{padding:7px 12px 2px;font-family:var(--cond);font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 12px;margin:1px 6px;border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:14px;transition:all .15s;position:relative;}
+.ni:hover{background:var(--bg3);color:var(--text);}
+.ni.on{background:rgba(0,194,168,.1);color:var(--acc);}
+.ni.on::before{content:'';position:absolute;left:0;top:20%;height:60%;width:2.5px;background:var(--acc);border-radius:2px;}
+.ni-ic{width:16px;text-align:center;flex-shrink:0;font-size:13px;}
+.nb{margin-left:auto;background:var(--amber);color:#1a0e00;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;font-family:var(--cond);}
+.nb.r{background:var(--red);color:#fff;}
+.nb.g{background:rgba(0,194,168,.2);color:var(--acc);}
+.sb-foot{margin-top:auto;padding:10px 12px;border-top:1px solid var(--border);}
+.sb-usr{display:flex;align-items:center;gap:8px;cursor:pointer;}
+.av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:11px;font-weight:700;color:#001a15;flex-shrink:0;}
+.av.empty{background:var(--bg4);color:var(--text3);}
+.u-n{font-size:12px;font-weight:500;}
+.u-r{font-size:10px;color:var(--text3);}
+
+/* ── TOPBAR ── */
+.topbar{height:50px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 18px;gap:10px;flex-shrink:0;}
+.tb-menu{display:none;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer;padding:4px 6px;}
+.tb-title{font-family:var(--cond);font-size:17px;font-weight:600;letter-spacing:.03em;}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.tb-clk{font-family:var(--mono);font-size:11px;color:var(--text3);}
+
+/* ── RIBBON ── */
+.ribbon{padding:5px 18px;font-family:var(--cond);font-size:12px;font-weight:600;letter-spacing:.05em;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.ribbon.pgcp{background:rgba(0,194,168,.05);border-bottom:1px solid rgba(0,194,168,.15);color:var(--acc);}
+.ribbon.tnet{background:rgba(240,165,0,.05);border-bottom:1px solid rgba(240,165,0,.2);color:var(--amber);}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;animation:blink 2s infinite;}
+.dot.teal{background:var(--acc);} .dot.amber{background:var(--amber);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.content{flex:1;overflow-y:auto;padding:16px;}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:var(--font);transition:all .15s;white-space:nowrap;}
+.btn-p{background:var(--acc);color:#001a15;font-weight:600;}
+.btn-p:hover{background:#00d4b8;}
+.btn-g{background:var(--bg3);color:var(--text);border:1px solid var(--border2);}
+.btn-g:hover{background:var(--bg4);}
+.btn-d{background:var(--red-bg);color:var(--red);border:1px solid rgba(232,64,64,.3);}
+.btn-s{background:var(--green-bg);color:var(--green);border:1px solid rgba(46,204,113,.3);}
+.btn-a{background:rgba(240,165,0,.1);color:var(--amber);border:1px solid rgba(240,165,0,.3);}
+.btn-sm{padding:5px 9px;font-size:11px;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ── STATS ── */
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px;margin-bottom:16px;}
+.sc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:13px 15px;}
+.sc-l{font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
+.sc-n{font-family:var(--mono);font-size:26px;font-weight:400;line-height:1;}
+.sc-s{font-size:10px;color:var(--text3);margin-top:3px;}
+.c-teal .sc-n{color:var(--acc);}.c-amber .sc-n{color:var(--amber);}.c-green .sc-n{color:var(--green);}.c-red .sc-n{color:var(--red);}.c-blue .sc-n{color:var(--blue);}
+
+/* ── CARD / TABLE ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap;}
+.ct{font-family:var(--cond);font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text2);}
+.tw{overflow-x:auto;}
+table.t{width:100%;border-collapse:collapse;}
+table.t th{text-align:left;padding:8px 14px;font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border);white-space:nowrap;}
+table.t td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle;}
+table.t tr:last-child td{border-bottom:none;}
+table.t tbody tr{cursor:pointer;transition:background .12s;}
+table.t tbody tr:hover td{background:rgba(255,255,255,.025);}
+.pid{font-family:var(--mono);font-size:11px;color:var(--acc);}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:4px;font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:1px solid transparent;}
+.b-cold{background:rgba(74,158,255,.1);color:var(--blue);border-color:rgba(74,158,255,.25);}
+.b-cse{background:rgba(167,139,250,.12);color:var(--purple);border-color:rgba(167,139,250,.3);}
+.b-elec{background:rgba(240,165,0,.1);color:var(--amber);border-color:rgba(240,165,0,.3);}
+.b-wah{background:rgba(46,204,113,.1);color:var(--green);border-color:rgba(46,204,113,.3);}
+.b-excv{background:rgba(220,130,70,.12);color:var(--orange);border-color:rgba(220,130,70,.3);}
+.b-rad{background:rgba(232,64,64,.1);color:var(--red);border-color:rgba(232,64,64,.3);}
+
+/* ── STATUS PILLS ── */
+.st{display:inline-flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap;}
+.st::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.s-draft{color:var(--text3);}.s-draft::before{background:var(--text3);}
+.s-safe{color:#7ac4ff;}.s-safe::before{background:#7ac4ff;}
+.s-authmgr{color:var(--orange);}.s-authmgr::before{background:var(--orange);box-shadow:0 0 5px var(--orange);}
+.s-recip{color:var(--purple);}.s-recip::before{background:var(--purple);}
+.s-hsereview{color:#c77dff;}.s-hsereview::before{background:#c77dff;box-shadow:0 0 5px #c77dff;}
+.s-active{color:var(--green);}.s-active::before{background:var(--green);box-shadow:0 0 5px var(--green);}
+.s-suspended{color:var(--amber);}.s-suspended::before{background:var(--amber);}
+.s-closed{color:var(--text3);}.s-closed::before{background:var(--text3);}
+.s-rejected{color:var(--red);}.s-rejected::before{background:var(--red);}
+
+/* ── RISK ── */
+.rk{display:inline-flex;padding:2px 7px;border-radius:3px;font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.05em;}
+.rl{background:rgba(46,204,113,.12);color:var(--green);}
+.rm{background:rgba(74,158,255,.12);color:var(--blue);}
+.rh{background:rgba(240,165,0,.12);color:var(--amber);}
+.rv{background:rgba(232,64,64,.12);color:var(--red);}
+
+/* ── PROGRESS ── */
+.pg{height:3px;background:var(--bg5);border-radius:2px;width:72px;}
+.pg-f{height:100%;border-radius:2px;}
+
+/* ── ALERTS ── */
+.al{padding:10px 14px;border-radius:var(--r);margin-bottom:12px;font-size:12px;display:flex;gap:10px;align-items:flex-start;line-height:1.6;}
+.al b{font-weight:600;}
+.al-w{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.25);color:var(--amber);}
+.al-d{background:rgba(232,64,64,.08);border:1px solid rgba(232,64,64,.25);color:var(--red);}
+.al-i{background:rgba(74,158,255,.08);border:1px solid rgba(74,158,255,.2);color:var(--blue);}
+.al-s{background:rgba(46,204,113,.08);border:1px solid rgba(46,204,113,.25);color:var(--green);}
+
+/* ── FORMS ── */
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.fl{font-family:var(--cond);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);}
+.fl .req{color:var(--red);margin-left:2px;}
+.fi,.fs,.fta{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 10px;border-radius:var(--r);font-size:14px;font-family:var(--font);transition:border-color .15s;}
+.fi:focus,.fs:focus,.fta:focus{outline:none;border-color:var(--acc);}
+.fta{resize:vertical;min-height:64px;line-height:1.5;}
+.fs option{background:var(--bg3);}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.f3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.ff{grid-column:1/-1;}
+.fsec{margin-bottom:18px;}
+.fsec-t{font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--border);}
+
+/* ── CHECKBOX ITEMS ── */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.ci{display:flex;align-items:flex-start;gap:7px;padding:6px 8px;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:all .12s;}
+.ci:hover{border-color:var(--border2);background:var(--bg3);}
+.ci.on{border-color:rgba(0,194,168,.4);background:rgba(0,194,168,.06);}
+.ci input[type=checkbox]{accent-color:var(--acc);width:13px;height:13px;margin-top:2px;flex-shrink:0;cursor:pointer;}
+.ci label{font-size:12px;line-height:1.4;cursor:pointer;}
+
+/* ── HAZARD CHECKLIST (simplified) ── */
+.hz-item{border:1px solid var(--border);border-radius:var(--r);margin-bottom:4px;overflow:hidden;transition:border-color .15s;}
+.hz-item.active{border-color:rgba(240,165,0,.35);}
+.hz-header{display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;transition:background .12s;}
+.hz-header:hover{background:var(--bg3);}
+.hz-check{width:16px;height:16px;accent-color:var(--amber);cursor:pointer;flex-shrink:0;}
+.hz-label{font-size:14px;flex:1;}
+.hz-expand{font-size:10px;color:var(--text3);margin-left:auto;}
+.hz-detail{padding:10px 12px 12px 36px;background:rgba(240,165,0,.04);border-top:1px solid rgba(240,165,0,.15);display:none;}
+.hz-item.active .hz-detail{display:block;}
+.hz-chips{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0;}
+.hz-chip{padding:3px 10px;border-radius:12px;border:1px solid var(--border2);font-size:11px;cursor:pointer;transition:all .15s;color:var(--text2);}
+.hz-chip.on{border-color:var(--amber);background:rgba(240,165,0,.12);color:var(--amber);}
+.hz-spec{width:100%;background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:6px 8px;border-radius:var(--r);font-size:12px;font-family:var(--font);margin-top:5px;}
+.hz-spec:focus{outline:none;border-color:var(--acc);}
+.hz-elim{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:12px;}
+.hz-elim-btn{padding:4px 12px;border-radius:var(--r);border:1px solid var(--border2);font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:all .15s;}
+.hz-elim-btn.yes{border-color:var(--green);background:rgba(46,204,113,.1);color:var(--green);}
+.hz-elim-btn.no{border-color:var(--red);background:var(--red-bg);color:var(--red);}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{height:0;}
+.tab{padding:8px 12px;cursor:pointer;font-size:13px;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;white-space:nowrap;flex-shrink:0;}
+.tab:hover{color:var(--text);}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc);font-weight:500;}
+
+/* ── WIZARD ── */
+.wz-bar{display:flex;gap:0;margin-bottom:18px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);}
+.wz-step{flex:1;padding:8px 4px;text-align:center;font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-right:1px solid var(--border);cursor:pointer;transition:all .15s;min-width:0;user-select:none;}
+.wz-step:last-child{border-right:none;}
+.wz-step.curr{background:rgba(0,194,168,.12);color:var(--acc);}
+.wz-step.done{background:rgba(46,204,113,.06);color:var(--green);}
+.wz-step .wz-lbl{font-size:10px;}
+.wz-step .wz-n{display:none;}
+@media(max-width:560px){.wz-step .wz-lbl{display:none;}.wz-step .wz-n{display:block;}}
+
+/* ── MODAL ── */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:200;overflow-y:auto;padding:16px;backdrop-filter:blur(3px);}
+.ov.open{display:flex;align-items:flex-start;justify-content:center;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r3);width:100%;max-width:920px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.6);}
+.modal.sm{max-width:400px;}
+.modal.med{max-width:600px;}
+.mh{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.mh-t{font-family:var(--cond);font-size:15px;font-weight:600;letter-spacing:.03em;}
+.mhx{background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px;line-height:1;padding:2px;transition:color .15s;}
+.mhx:hover{color:var(--text);}
+.mb{padding:18px;}
+.mf{padding:12px 18px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;}
+
+/* ── AUTH SIGN-OFF BLOCK ── */
+.auth-block{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:16px;margin-top:10px;}
+.auth-block.signed{border-color:var(--green);background:rgba(46,204,113,.04);}
+.auth-block.skipped{border-color:var(--border);background:var(--bg3);opacity:.6;}
+.auth-stage-label{font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.auth-name-row{display:flex;gap:8px;align-items:flex-end;margin-bottom:10px;}
+.auth-pin-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.pin-dots{display:flex;gap:5px;}
+.pin-dot{width:9px;height:9px;border-radius:50%;background:var(--border2);transition:all .2s;}
+.pin-dot.filled{background:var(--acc);}
+.pin-numpad{display:grid;grid-template-columns:repeat(3,48px);gap:4px;margin-top:10px;}
+.pnb{width:48px;height:40px;background:var(--bg4);border:1px solid var(--border);color:var(--text);border-radius:var(--r);font-size:15px;font-family:var(--mono);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.pnb:hover{background:var(--bg5);border-color:var(--border2);}
+.pnb:active{transform:scale(.94);}
+.auth-decl{display:flex;align-items:flex-start;gap:7px;margin-top:10px;font-size:12px;color:var(--text2);line-height:1.5;}
+.auth-decl input{accent-color:var(--acc);width:14px;height:14px;margin-top:2px;flex-shrink:0;}
+.auth-signed-info{display:flex;align-items:center;gap:10px;}
+.auth-signed-tick{width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:14px;color:#001a10;flex-shrink:0;}
+
+/* ── APPROVAL CHAIN (display) ── */
+.apc{display:flex;flex-direction:column;}
+.aps{display:flex;align-items:stretch;}
+.apl{display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;}
+.apn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:11px;font-weight:700;flex-shrink:0;border:2px solid var(--border2);background:var(--bg3);color:var(--text3);}
+.apn.done{border-color:var(--green);background:rgba(46,204,113,.1);color:var(--green);}
+.apn.curr{border-color:var(--amber);background:rgba(240,165,0,.1);color:var(--amber);}
+.apn.skip{border-color:var(--border);opacity:.5;}
+.apl-ln{width:2px;flex:1;background:var(--border);margin:3px 0;}
+.apl-ln.done{background:var(--green);}
+.aps:last-child .apl-ln{display:none;}
+.apb{flex:1;padding:2px 0 14px 12px;}
+.ap-role{font-size:14px;font-weight:500;}
+.ap-person{font-size:11px;color:var(--text3);margin-top:1px;}
+.ap-desc{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.ap-meta{font-size:11px;margin-top:4px;}
+
+/* ── GAS LOG ── */
+.gas-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.gas-tbl th,.gas-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);text-align:left;}
+.gas-tbl th{font-family:var(--cond);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);}
+.pass{color:var(--green);font-weight:600;font-family:var(--cond);font-size:10px;}
+.fail{color:var(--red);font-weight:600;font-family:var(--cond);font-size:10px;}
+
+/* ── SETTINGS ── */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);gap:12px;}
+.setting-row:last-child{border-bottom:none;}
+.setting-label{font-size:13px;}
+.setting-desc{font-size:11px;color:var(--text3);margin-top:2px;}
+.user-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;background:var(--bg3);}
+.role-pill{padding:2px 8px;border-radius:3px;font-family:var(--cond);font-size:10px;font-weight:700;background:rgba(0,194,168,.1);color:var(--acc);border:1px solid rgba(0,194,168,.25);}
+
+/* ── WORKER TABLE ── */
+.ws-tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.ws-tbl th,.ws-tbl td{padding:6px 8px;border:1px solid var(--border);}
+.ws-tbl th{font-family:var(--cond);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);background:var(--bg3);}
+.ws-tbl td input,.ws-tbl td select{background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:4px 6px;border-radius:4px;font-size:11px;font-family:var(--font);}
+
+/* ── MISC ── */
+.mob-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:105;}
+.dash-split{display:grid;grid-template-columns:1fr 300px;gap:12px;}
+.empty{padding:36px;text-align:center;color:var(--text3);font-size:13px;}
+.qr-box{width:64px;height:64px;background:repeating-linear-gradient(45deg,var(--bg4),var(--bg4) 3px,var(--bg5) 3px,var(--bg5) 9px);border-radius:var(--r);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:8px;color:var(--text3);flex-shrink:0;}
+#toast{position:fixed;bottom:18px;right:18px;z-index:999;display:none;}
+/* ── Date/time picker dark theme fix ── */
+input[type=datetime-local],input[type=date],input[type=time]{
+  color-scheme:dark;
+  background:var(--bg3);
+  color:var(--text);
+}
+input[type=datetime-local]::-webkit-calendar-picker-indicator,
+input[type=date]::-webkit-calendar-picker-indicator,
+input[type=time]::-webkit-calendar-picker-indicator{
+  filter:invert(0.8) brightness(1.5);
+  cursor:pointer;
+  padding:2px;
+  border-radius:3px;
+  opacity:0.8;
+}
+input[type=datetime-local]::-webkit-calendar-picker-indicator:hover{
+  opacity:1;
+  background:rgba(0,194,168,0.15);
+}
+@media(max-width:900px){.dash-split{grid-template-columns:1fr;}}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);}
+  .sidebar.mob-open{transform:translateX(0);}
+  .mob-ov.open{display:block;}
+  .tb-menu{display:flex!important;}
+  .f2,.f3{grid-template-columns:1fr;}
+  .ff{grid-column:1;}
+  .sg{grid-template-columns:repeat(2,1fr);}
+  .cg{grid-template-columns:1fr;}
+  .mf{flex-direction:column-reverse;}
+  .mf .btn{width:100%;justify-content:center;}
+  .content{padding:10px;}
+  table.t td:nth-child(n+4),table.t th:nth-child(n+4){display:none;}
+}
+@media(max-width:480px){
+  table.t td:nth-child(n+3),table.t th:nth-child(n+3){display:none;}
+}
+</style>
+</head>
+<body>
+<div class="mob-ov" id="mob-ov" onclick="closeMob()"></div>
+<div class="app">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar" id="sb">
+  <div class="sb-brand">
+    <div class="sb-logo-row">
+      <svg width="36" height="36" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 62 Q8 28 42 12 Q58 38 46 66 Z" fill="#5cb85c"/>
+        <path d="M92 62 Q112 28 78 12 Q62 38 74 66 Z" fill="#2196f3"/>
+        <path d="M60 8 Q77 32 71 58 Q60 46 49 58 Q43 32 60 8 Z" fill="#ff9800"/>
+        <circle cx="60" cy="70" r="17" fill="#0b0f14" stroke="#00c2a8" stroke-width="2.5"/>
+        <circle cx="60" cy="70" r="9" fill="none" stroke="#00c2a8" stroke-width="3"/>
+        <g fill="#00c2a8">
+          <rect x="58.5" y="51" width="3" height="6" rx="1.5"/>
+          <rect x="58.5" y="83" width="3" height="6" rx="1.5"/>
+          <rect x="41" y="68.5" width="6" height="3" rx="1.5"/>
+          <rect x="73" y="68.5" width="6" height="3" rx="1.5"/>
+          <rect x="47" y="54" width="3" height="6" rx="1.5" transform="rotate(45 48.5 57)"/>
+          <rect x="70" y="54" width="3" height="6" rx="1.5" transform="rotate(-45 71.5 57)"/>
+          <rect x="47" y="76" width="3" height="6" rx="1.5" transform="rotate(-45 48.5 79)"/>
+          <rect x="70" y="76" width="3" height="6" rx="1.5" transform="rotate(45 71.5 79)"/>
+        </g>
+      </svg>
+      <div>
+        <div class="sb-wm1"><span class="w">GENSER</span><span class="e">ENERGY</span></div>
+        <div class="sb-wm2">eSafe Permit to Work</div>
+      </div>
+    </div>
+    <div class="sb-ref">GEGL-MID-H&amp;S-001 · Rev.0 · 2025</div>
+  </div>
+
+  <div class="site-sw">
+    <button class="ss-b on" id="ss-pgcp" onclick="setSite('PGCP')">PGCP</button>
+    <button class="ss-b" id="ss-tnet" onclick="setSite('TNET')">TNET</button>
+  </div>
+
+  <div class="nav-grp">Permits</div>
+  <div class="ni on" id="ni-db"   onclick="go('db')"><span class="ni-ic">⊟</span>Dashboard</div>
+  <div class="ni"    id="ni-all"  onclick="go('all')"><span class="ni-ic">⊞</span>All Permits</div>
+  <div class="ni"    id="ni-pend" onclick="go('pend')"><span class="ni-ic">◷</span>Awaiting Sign-Off<span class="nb" id="nb-p">0</span></div>
+  <div class="ni"    id="ni-live" onclick="go('live')"><span class="ni-ic">▶</span>Active / Live</div>
+  <div class="nav-grp">Safety</div>
+  <div class="ni"    id="ni-iso"  onclick="go('iso')"><span class="ni-ic">⊘</span>Isolations / LOTO</div>
+  <div class="ni"    id="ni-wkr"  onclick="go('wkr')"><span class="ni-ic">○</span>Worker Sign-On</div>
+  <div class="nav-grp">Management</div>
+  <div class="ni"    id="ni-mla"  onclick="go('mla')"><span class="ni-ic">◈</span>MLA Notifications<span class="nb g">MLA</span></div>
+  <div class="ni"    id="ni-rpt"  onclick="go('rpt')"><span class="ni-ic">◫</span>Reports</div>
+  <div class="ni"    id="ni-set"  onclick="go('set')"><span class="ni-ic">⚙</span>Settings</div>
+
+  <div class="sb-foot">
+    <div class="sb-usr" onclick="window._session?null:openSessionSignIn()">
+      <div class="av empty" id="usr-av">?</div>
+      <div><div class="u-n" id="usr-n">Not signed in</div><div class="u-r" id="usr-r">Tap to sign in</div></div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="topbar">
+    <button class="tb-menu" onclick="openMob()">☰</button>
+    <div>
+      <span class="tb-title" id="tb-t">Dashboard</span>
+      <span style="font-size:11px;color:var(--text3)" id="tb-s">· PGCP</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-clk" id="clk">--:--:--</span>
+      <button class="btn btn-p btn-sm" onclick="openNewPermit()">+ New Permit</button>
+    </div>
+  </div>
+  <div class="ribbon pgcp" id="rib">
+    <div class="dot teal" id="rib-dot"></div>
+    <span id="rib-txt">Prestea Gas Conditioning Plant (PGCP) — 200 MMscfd · Modules 1–6 Active · Module 7 Future (LNG)</span>
+    <span style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--text3)">NORMAL OPS</span>
+  </div>
+  <div class="content" id="con"></div>
+</div>
+</div>
+
+<!-- ══ NEW PERMIT MODAL ══ -->
+<div class="ov" id="new-ov">
+  <div class="modal">
+    <div class="mh">
+      <div>
+        <div class="mh-t" id="new-modal-title">New Permit to Work</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px">GEGL-MID-H&amp;S-001 — Reference assigned on submission</div>
+      </div>
+      <button class="mhx" onclick="closeOv('new-ov')">✕</button>
+    </div>
+    <div class="mb">
+      <div class="wz-bar" id="wz-bar"></div>
+      <div id="wz-content"></div>
+    </div>
+    <div class="mf">
+      <button class="btn btn-g" onclick="closeOv('new-ov')">Cancel</button>
+      <button class="btn btn-g" id="wz-back" onclick="wzNav(-1)">← Back</button>
+      <button class="btn btn-p" id="wz-next" onclick="wzNav(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETAIL MODAL ══ -->
+<div class="ov" id="dtl-ov">
+  <div class="modal">
+    <div class="mh">
+      <div>
+        <div class="mh-t" id="dtl-title"></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:1px" id="dtl-sub"></div>
+      </div>
+      <button class="mhx" onclick="closeOv('dtl-ov')">✕</button>
+    </div>
+    <div class="mb" id="dtl-body"></div>
+    <div class="mf" id="dtl-footer"></div>
+  </div>
+</div>
+
+<!-- ══ SIGN-OFF MODAL ══ -->
+<div class="ov" id="sign-ov">
+  <div class="modal med">
+    <div class="mh">
+      <div class="mh-t" id="sign-title">Authorise</div>
+      <button class="mhx" onclick="closeOv('sign-ov')">✕</button>
+    </div>
+    <div class="mb" id="sign-body"></div>
+    <div class="mf" id="sign-footer"></div>
+  </div>
+</div>
+
+<!-- ══ CONFIRM MODAL ══ -->
+<div class="ov" id="conf-ov">
+  <div class="modal sm">
+    <div class="mh"><div class="mh-t" id="conf-title">Confirm</div><button class="mhx" onclick="closeOv('conf-ov')">✕</button></div>
+    <div class="mb" id="conf-body"></div>
+    <div class="mf" id="conf-footer"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// CONSTANTS — Site areas, permit types, hazards
+// ══════════════════════════════════════════════════════
+const SITE_AREAS = {
+  PGCP:[
+    'Module 1 — Inlet/Outlet (PP01-I · PP01-R · PP03-I)',
+    'Module 2 — Sweetening & Cryogenic Separation',
+    'Module 3 — Fractionation Trains',
+    'Module 4 — Utilities (Power Gen · N₂ · Air Compressor · Hot Oil · Fire & Gas · Cooling Water · Flare · SCADA · ESD)',
+    'Module 5 — Storage (GCP Prestea Terminal)',
+    'Module 6 — Loading (GCP Prestea Terminal)',
+    'Module 7 — LNG Plant & Residue Gas Compressor (FUTURE)',
+    'Control Room', 'Substation / Electrical Room',
+    'Workshop / Maintenance Area', 'Flare Stack & Header',
+    'Perimeter / Civil Works',
+  ],
+  TNET:[
+    'Module 8 — Unloading Bay (Propane Arms ×4 · Butane Arms ×2 · Transfer Pumps)',
+    'Module 9 — Tanks & Utilities (Propane 30,000 CBM · Butane 10,000 CBM)',
+    'Propane Storage Tank Farm', 'Butane Storage Tank Farm',
+    'Transfer Pump Area', 'Vaporiser Area',
+    'Control Room / Utilities Building', 'Loading Area (TNET Export)',
+    'Substation / Electrical Room', 'Jetty / Marine Area',
+    'Perimeter / Civil Works',
+  ],
+};
+
+const PERMIT_TYPES = {
+  cold:{ label:'Cold Work / General',            badge:'b-cold', ic:'❄' },
+  cse: { label:'Confined Space Entry',            badge:'b-cse',  ic:'⬡' },
+  elec:{ label:'Electrical Isolation / LOTO',     badge:'b-elec', ic:'⚡' },
+  wah: { label:'Working at Height',               badge:'b-wah',  ic:'△' },
+  excv:{ label:'Excavation / Ground Disturbance', badge:'b-excv', ic:'⬜' },
+  rad: { label:'Radiography / NDT',               badge:'b-rad',  ic:'☢' },
+};
+
+const CHEM_HAZARDS = [
+  { id:'ch1', label:'Toxic liquid',                  actions:['Drained','Flushed','Removed','Source isolated'] },
+  { id:'ch2', label:'Toxic gas',                     actions:['Vented','Purged','Source isolated'] },
+  { id:'ch3', label:'Toxic materials',               actions:['Removed','Source isolated'] },
+  { id:'ch4', label:'Sludge and scale',               actions:['Drained','Flushed','Removed'] },
+  { id:'ch5', label:'Corrosive substance',            actions:['Drained','Flushed','Removed','Source isolated'] },
+  { id:'ch6', label:'Flammable substance',            actions:['Drained','Purged','Vented','Source isolated'] },
+  { id:'ch7', label:'Explosive substance',            actions:['Removed','Source isolated','Depressurized'] },
+  { id:'ch8', label:'Asphyxiation gases (e.g. N₂)',  actions:['Vented','Purged','Source isolated'] },
+  { id:'ch9', label:'Other chemical hazard',          actions:['Removed','Source isolated','Other'] },
+];
+
+const PHYS_HAZARDS = [
+  { id:'ph1', label:'Hot substance / surface (above 50°C)',       actions:['Cooled','Shielded','Source isolated'] },
+  { id:'ph2', label:'Cryogenic liquid / cold substance (below -20°C)', actions:['Shielded','Source isolated','Drained','Removed'] },
+  { id:'ph3', label:'Hot equipment / pressurised steam',          actions:['Cooled','Shielded','Depressurized','Source isolated'] },
+  { id:'ph4', label:'High pressure (above 10 barg)',              actions:['Depressurized','Drained','Vented'] },
+  { id:'ph5', label:'Vacuum (implosion risk)',                    actions:['Vented','Source isolated'] },
+  { id:'ph6', label:'Noise above 85 dB',                         actions:['Shielded','Source isolated'] },
+  { id:'ph7', label:'Dust / particulates',                       actions:['Extracted','Removed','Shielded'] },
+  { id:'ph8', label:'High ambient temperature environment',       actions:['Ventilated','Shielded'] },
+  { id:'ph9', label:'Energized / live electrical equipment',      actions:['Source isolated','Locked out','Extracted'] },
+  { id:'ph10',label:'Other physical hazard',                      actions:['Shielded','Source isolated','Other'] },
+];
+
+const AREA_HAZARDS = [
+  { id:'ah1', label:'Flammable/combustible materials within 11m', actions:['Removed','Covered','Flooded','Hosed down','Source isolated'] },
+  { id:'ah2', label:'Sewers, drains, floor openings within 11m',  actions:['Covered','Flooded','Hosed down','Earthed'] },
+  { id:'ah3', label:'Inadequate lighting',                         actions:['Other'] },
+  { id:'ah4', label:'Rotating / moving equipment nearby',          actions:['Shielded','Source isolated','Removed'] },
+  { id:'ah5', label:'Static electricity possible',                 actions:['Earthed','Source isolated'] },
+  { id:'ah6', label:'Other work area hazard',                      actions:['Shielded','Source isolated','Other'] },
+];
+
+const PPE_OPTIONS = [
+  // Standard PPE
+  'Safety helmet','Safety boots (S3)','Safety glasses / goggles',
+  'Chemical splash goggles','Face shield / visor','FR coverall',
+  'Chemical resistant gloves','Cut-resistant gloves',
+  'HV electrical gloves (Class 4)','SCBA / BA set',
+  'Airline breathing apparatus','Full body harness + lanyard',
+  'Ear defenders (SNR ≥ 25 dB)','Hi-vis vest (Class 3)',
+  'Radiation dosimeter','Lead apron / shield','Dust mask (FFP3)',
+  'Impervious chemical suit',
+  // Cryogenic operations PPE
+  'Cryogenic gloves (EN 511 rated)',
+  'Cryogenic face shield (full face)',
+  'Cryogenic apron / splash suit',
+  'Thermally insulated coverall (cryogenic)',
+  'Safety boots — cryogenic rated',
+  'Loose-fitting clothing (no tight cuffs — cryogenic)',
+];
+
+const EMERG_OPTIONS = [
+  'Fire hose','Fire extinguisher — CO₂','Fire extinguisher — Foam',
+  'Fire extinguisher — Dry powder','Water hose',
+  'Breathing apparatus (standby set)','Resuscitator',
+  'Lifejacket','Lifebuoy','Harness / lifelines',
+  'First aid box','Stretcher / rescue equipment',
+  'Eyewash station',
+];
+
+const ROLES_LIST = ['VP','Manager','Superintendent','HSE Rep','Shift Charge','Supervisor','Operations Engineer','Analyst','Contractor'];
+
+// Workflow stages
+const STAGES = ['draft','safe_made','auth_mgr','recipient','hse_review','active','closed'];
+const STAGE_LABELS = {
+  draft:      'Draft',
+  safe_made:  'Safe Made',
+  auth_mgr:   'Auth. Manager',
+  recipient:  'Recipient',
+  hse_review: 'HSE Review',
+  active:     'Active',
+  suspended:  'Suspended',
+  closed:     'Closed',
+  rejected:   'Rejected',
+};
+
+// Next signer description for each status
+const NEXT_SIGNER = {
+  draft:      { label:'Next: Safe Maker sign-off',          roles:'Shift Charge or Superintendent',    color:'var(--blue)' },
+  safe_made:  { label:'Next: Authorizing Manager',          roles:'Superintendent / Manager / VP',     color:'var(--orange)', conditional:true },
+  auth_mgr:   { label:'Next: Recipient acceptance',         roles:'Any — Job Performer',               color:'var(--purple)' },
+  recipient:  { label:'Next: HSE Rep — JHA Review',         roles:'HSE Rep / Superintendent / Manager',color:'#c77dff' },
+  hse_review: { label:'Next: Dual Issuance',                roles:'Ops Supt + HSE Rep/Supt',           color:'var(--acc)' },
+  active:     { label:'Permit is ACTIVE — work may commence', roles:'',                                color:'var(--green)' },
+  suspended:  { label:'Suspended — re-issuance required',   roles:'Superintendent or HSE Rep',         color:'var(--amber)' },
+  closed:     { label:'Permit closed',                      roles:'',                                  color:'var(--text3)' },
+  rejected:   { label:'Rejected — edit and resubmit',       roles:'Originator',                        color:'var(--red)' },
+};
+
+function nextSignerBadge(p){
+  const ns = NEXT_SIGNER[p.status];
+  if(!ns) return '';
+  const skip = p.status==='safe_made' && !needsAuthMgr(p);
+  const label = skip ? NEXT_SIGNER['auth_mgr'].label.replace('Authorizing Manager','Recipient acceptance') : ns.label;
+  const roles = skip ? NEXT_SIGNER['auth_mgr'].roles : ns.roles;
+  const color = skip ? NEXT_SIGNER['auth_mgr'].color : ns.color;
+  return `<div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:12px;border:1px solid ${color};background:${color}18;font-size:11px;color:${color};white-space:nowrap">
+    <span style="font-weight:600">${label}</span>${roles?`<span style="opacity:.75">· ${roles}</span>`:''}
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════
+// APP STATE
+// ══════════════════════════════════════════════════════
+let appSite = 'PGCP';
+let appView = 'db';
+let activePermit = null;
+let dtlTabIdx = 0;
+let wzStep = 0;
+let wzFormState = {};   // persists across wizard navigation
+let signCallback = null;
+let pinBuffer = '';
+let permitSeq = { PGCP: 1, TNET: 1 };
+
+// ── Settings state (the "database") ──
+let APP_SETTINGS = {
+  users: [],   // { id, name, empNo, role, site, pin, active }
+  gasThresholds: { lel:10, o2min:19.5, h2s:5, co:25 },
+  musterPoints: {
+    PGCP: ['Muster Point A — Control Room','Muster Point B — Main Gate'],
+    TNET: ['Muster Point 1 — Admin Block','Muster Point 2 — Loading Bay'],
+  },
+  permitPrefix: { PGCP:'PGCP', TNET:'TNET' },
+};
+
+// ── Permits store ──
+let PERMITS = [];
+
+// ── Current signed-in user ──
+let currentUser = null;
+
+// ══════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════
+function tbadge(t){
+  const p=PERMIT_TYPES[t];
+  return p?`<span class="badge ${p.badge}">${p.ic} ${p.label.split('/')[0].split('(')[0].trim()}</span>`:'';
+}
+function rkPill(r){
+  const m={l:`<span class="rk rl">LOW</span>`,m:`<span class="rk rm">MEDIUM</span>`,h:`<span class="rk rh">HIGH</span>`,v:`<span class="rk rv">V.HIGH</span>`};
+  return m[r]||'';
+}
+function stBadge(s){
+  const m={
+    draft:`<span class="st s-draft">Draft</span>`,
+    safe_made:`<span class="st s-safe">Safe Made ✓</span>`,
+    auth_mgr:`<span class="st s-authmgr">Auth. Manager ▶</span>`,
+    recipient:`<span class="st s-recip">Awaiting Recipient</span>`,
+    hse_review:`<span class="st s-hsereview">HSE Review ▶</span>`,
+    active:`<span class="st s-active">Active</span>`,
+    suspended:`<span class="st s-suspended">Suspended</span>`,
+    closed:`<span class="st s-closed">Closed</span>`,
+    rejected:`<span class="st s-rejected">Rejected</span>`,
+  };
+  return m[s]||`<span class="st s-draft">${s}</span>`;
+}
+function progBar(p,c='var(--blue)'){
+  return`<div class="pg"><div class="pg-f" style="width:${p}%;background:${p>=100?'var(--green)':c}"></div></div>`;
+}
+function genPermitId(s){
+  const y=new Date().getFullYear();
+  const n=String(permitSeq[s]||1).padStart(4,'0');
+  permitSeq[s]=(permitSeq[s]||1)+1;
+  return`${APP_SETTINGS.permitPrefix[s]||s}-${y}-${n}`;
+}
+function toast(msg,type='s'){
+  const cols={s:'var(--green)',w:'var(--amber)',d:'var(--red)',i:'var(--blue)'};
+  const el=document.getElementById('toast');
+  el.innerHTML=`<div style="background:var(--bg3);border:1px solid ${cols[type]||cols.i};color:${cols[type]||cols.i};padding:10px 16px;border-radius:var(--r2);font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.5);max-width:360px;">${msg}</div>`;
+  el.style.display='block';
+  setTimeout(()=>{el.style.display='none';},4500);
+}
+function confirm2(title,body,cb){
+  document.getElementById('conf-title').textContent=title;
+  document.getElementById('conf-body').innerHTML=`<p style="font-size:13px;line-height:1.6;color:var(--text2)">${body}</p>`;
+  document.getElementById('conf-footer').innerHTML=`
+    <button class="btn btn-g" onclick="closeOv('conf-ov')">Cancel</button>
+    <button class="btn btn-p" onclick="closeOv('conf-ov');(${cb.toString()})()">Confirm</button>`;
+  openOv('conf-ov');
+}
+function openOv(id){document.getElementById(id).classList.add('open');}
+function closeOv(id){document.getElementById(id).classList.remove('open');}
+function openMob(){document.getElementById('sb').classList.add('mob-open');document.getElementById('mob-ov').classList.add('open');}
+function closeMob(){document.getElementById('sb').classList.remove('mob-open');document.getElementById('mob-ov').classList.remove('open');}
+function getUsersForRole(roles, site){
+  return APP_SETTINGS.users.filter(u=>
+    u.active && roles.includes(u.role) && (u.site==='Both'||u.site===site)
+  );
+}
+function needsAuthMgr(p){
+  return p.dur==='28 Days' || p.csecat==='B' || p.type==='rad';
+}
+
+// ══════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════
+function go(v){
+  appView=v;
+  document.querySelectorAll('.ni').forEach(e=>e.classList.remove('on'));
+  const el=document.getElementById('ni-'+v); if(el) el.classList.add('on');
+  const titles={db:'Dashboard',all:'All Permits',pend:'Awaiting Sign-Off',live:'Active / Live',
+    iso:'Isolations / LOTO',wkr:'Worker Sign-On',
+    mla:'MLA Notifications',rpt:'Reports',set:'Settings'};
+  document.getElementById('tb-t').textContent=titles[v]||v;
+  const views={db:vDashboard,all:vAllPermits,pend:vPending,live:vLive,
+    iso:vISO,wkr:vWorkers,mla:vMLA,rpt:vReports,set:vSettings};
+  const fn=views[v];
+  document.getElementById('con').innerHTML=fn?fn():`<div class="empty">Coming soon.</div>`;
+  closeMob(); updateBadges();
+}
+
+function setSite(s){
+  appSite=s;
+  document.getElementById('ss-pgcp').classList.toggle('on',s==='PGCP');
+  document.getElementById('ss-tnet').classList.toggle('on',s==='TNET');
+  const rib=document.getElementById('rib');
+  if(s==='PGCP'){
+    rib.className='ribbon pgcp';
+    document.getElementById('rib-dot').className='dot teal';
+    document.getElementById('rib-txt').textContent='Prestea Gas Conditioning Plant (PGCP) — 200 MMscfd · Modules 1–6 Active · Module 7 Future (LNG)';
+  } else {
+    rib.className='ribbon tnet';
+    document.getElementById('rib-dot').className='dot amber';
+    document.getElementById('rib-txt').textContent='Takoradi NGL Terminal (TNET) — Module 8: Unloading Bay · Module 9: Tanks & Utilities · MLA Area';
+  }
+  document.getElementById('tb-s').textContent='· '+s;
+  go(appView); updateBadges();
+}
+
+function updateBadges(){
+  const pend=PERMITS.filter(p=>
+    p.site===appSite &&
+    ['safe_made','auth_mgr','recipient','hse_review'].includes(p.status)
+  ).length;
+  document.getElementById('nb-p').textContent=pend;
+}
+
+// ══════════════════════════════════════════════════════
+// VIEWS
+// ══════════════════════════════════════════════════════
+function vDashboard(){
+  const sp=PERMITS.filter(p=>p.site===appSite);
+  const active=sp.filter(p=>p.status==='active').length;
+  const pend=sp.filter(p=>['safe_made','auth_mgr','recipient','hse_review'].includes(p.status)).length;
+  const closed=sp.filter(p=>p.status==='closed').length;
+  const draft=sp.filter(p=>p.status==='draft').length;
+  const isTNET=appSite==='TNET';
+  const hasUsers=APP_SETTINGS.users.length>0;
+
+  return`
+  ${!hasUsers?`<div class="al al-w"><b>⚙ Setup required:</b> No users have been configured yet. Go to <b>Settings</b> to add users, assign roles, and set PINs before issuing permits.</div>`:''}
+  ${isTNET?`<div class="al al-d"><b>⚠ ATEX ZONE:</b> All work in Module 9 Tank Farm (Zone 1) — enhanced gas monitoring every 15 min. Confirm active permit gas tests are current.</div>`:''}
+  <div class="sg">
+    <div class="sc c-green"><div class="sc-l">Active</div><div class="sc-n">${active}</div><div class="sc-s">Work in progress</div></div>
+    <div class="sc c-amber"><div class="sc-l">Awaiting Sign-Off</div><div class="sc-n">${pend}</div><div class="sc-s">In authorization chain</div></div>
+    <div class="sc c-blue"><div class="sc-l">Draft</div><div class="sc-n">${draft}</div><div class="sc-s">Not submitted</div></div>
+    <div class="sc"><div class="sc-l">Closed</div><div class="sc-n" style="color:var(--text)">${closed}</div><div class="sc-s">Completed safely</div></div>
+    <div class="sc"><div class="sc-l">Total</div><div class="sc-n" style="color:var(--text)">${sp.length}</div><div class="sc-s">All records · ${appSite}</div></div>
+  </div>
+  <div class="dash-split">
+    <div>
+      <div class="card">
+        <div class="ch"><div class="ct">Recent Permits — ${appSite}</div><button class="btn btn-g btn-sm" onclick="go('all')">View All</button></div>
+        <div class="tw">
+          <table class="t"><thead><tr><th>Permit No.</th><th>Type</th><th>Area / Module</th><th>Risk</th><th>Status</th><th>Progress</th></tr></thead>
+          <tbody>${sp.length===0
+            ?`<tr><td colspan="6"><div class="empty">No permits yet for ${appSite}.<br>Create the first permit using <b>+ New Permit</b>.</div></td></tr>`
+            :sp.slice(0,7).map(p=>`<tr onclick="openDetail('${p.id}')">
+              <td><span class="pid">${p.id}</span></td>
+              <td>${tbadge(p.type)}</td>
+              <td><div style="font-size:12px;font-weight:500">${(p.area||'').split('—')[0].trim()}</div><div style="font-size:11px;color:var(--text3)">${p.equip||''}</div></td>
+              <td>${rkPill(p.risk)}</td>
+              <td>${stBadge(p.status)}</td>
+              <td>${progBar(p.prog||0)}<div style="font-size:10px;color:var(--text3);margin-top:2px">${p.prog||0}%</div></td>
+            </tr>`).join('')
+          }</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      ${renderMyActions()}
+      ${renderShiftSummary()}
+    </div>
+  </div>`;
+}
+
+// ── My Actions & Shift Summary ──
+function renderMyActions(){
+  const session = window._session;
+  const sp = PERMITS.filter(p=>p.site===appSite);
+
+  if(!session){
+    return`<div class="card">
+      <div class="ch"><div class="ct">My Actions</div></div>
+      <div style="padding:14px 16px">
+        <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Sign in to see your personalised actions.</div>
+        <button class="btn btn-p" style="width:100%" onclick="openSessionSignIn()">Sign In</button>
+      </div>
+    </div>`;
+  }
+
+  // Find permits awaiting THIS user's role
+  const role = session.role;
+  const stagesForRole = [];
+  if(['Shift Charge','Supervisor','Superintendent','HSE Rep'].includes(role))
+    stagesForRole.push('draft'); // Safe Maker
+  if(['Superintendent','Manager','VP'].includes(role))
+    stagesForRole.push('safe_made'); // Auth Manager
+  if(['HSE Rep','Superintendent','Manager'].includes(role))
+    stagesForRole.push('recipient'); // HSE Review
+  if(['Superintendent','Manager'].includes(role))
+    stagesForRole.push('hse_review'); // Issuer Ops
+  if(['HSE Rep','Superintendent','Manager'].includes(role))
+    stagesForRole.push('hse_review'); // Issuer HSE
+  // Anyone can be recipient
+  stagesForRole.push('safe_made','auth_mgr');
+
+  const myPending = [...new Set(stagesForRole)].reduce((acc,s)=>{
+    return acc.concat(sp.filter(p=>p.status===s));
+  },[]).filter((p,i,a)=>a.findIndex(x=>x.id===p.id)===i);
+
+  const myActive = sp.filter(p=>p.status==='active');
+
+  return`<div class="card">
+    <div class="ch">
+      <div>
+        <div class="ct">My Actions</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:2px">Signed in as <b style="color:var(--acc)">${session.name}</b> · ${session.role}</div>
+      </div>
+      <button class="btn btn-g btn-sm" onclick="endSession()">Sign Out</button>
+    </div>
+    <div style="padding:10px 14px">
+      ${myPending.length===0&&myActive.length===0
+        ?`<div style="font-size:13px;color:var(--text3);padding:8px 0">No actions required from you right now.</div>`
+        :`${myPending.length>0?`
+        <div style="font-size:12px;font-weight:600;color:var(--amber);margin-bottom:8px;font-family:var(--cond);letter-spacing:.05em;text-transform:uppercase">Awaiting Your Sign-Off</div>
+        ${myPending.slice(0,4).map(p=>`
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:12px;color:var(--acc)">${p.id}</div>
+            <div style="font-size:12px;margin-top:1px">${(p.area||'').split('—')[0].trim()}</div>
+            <div style="font-size:11px;color:var(--text3)">${STAGE_LABELS[p.status]||p.status}</div>
+          </div>
+          <button class="btn btn-s btn-sm" onclick="doSignOff('${p.id}')">Sign Off</button>
+        </div>`).join('')}
+        ${myPending.length>4?`<div style="font-size:11px;color:var(--text3);padding:6px 0">+${myPending.length-4} more — <span style="color:var(--acc);cursor:pointer" onclick="go('pend')">View all</span></div>`:''}
+        `:''}
+        ${myActive.length>0?`
+        <div style="font-size:12px;font-weight:600;color:var(--green);margin-top:${myPending.length>0?'12':'0'}px;margin-bottom:8px;font-family:var(--cond);letter-spacing:.05em;text-transform:uppercase">Active Permits On Site</div>
+        ${myActive.map(p=>`
+        <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">
+          <div class="st s-active" style="font-size:12px">Active</div>
+          <div style="flex:1">
+            <div style="font-family:var(--mono);font-size:12px;color:var(--acc)">${p.id}</div>
+            <div style="font-size:11px;color:var(--text3)">${(p.area||'').split('—')[0].trim()}</div>
+          </div>
+          <button class="btn btn-g btn-sm" onclick="openDetail('${p.id}')">View</button>
+        </div>`).join('')}
+        `:''}
+      `}
+    </div>
+  </div>`;
+}
+
+function renderShiftSummary(){
+  const sp = PERMITS.filter(p=>p.site===appSite);
+  const active = sp.filter(p=>p.status==='active');
+  const totalWorkers = active.reduce((a,p)=>a+(p.workers||[]).length,0);
+  const expiringSoon = active.filter(p=>{
+    if(!p.endDate) return false;
+    const end = new Date(p.endDate.replace(' ','T'));
+    const diff = (end - new Date())/1000/60/60;
+    return diff>0 && diff<2;
+  });
+  const lastTests = sp.filter(p=>p.status==='active'&&p.lastGasTest);
+
+  return`<div class="card">
+    <div class="ch"><div class="ct">Shift Summary — ${appSite}</div></div>
+    <div style="padding:10px 14px">
+      ${[
+        {label:'Active Permits',     val:active.length,      col:'var(--green)',  sub:'Work in progress'},
+        {label:'Workers Signed On',  val:totalWorkers,        col:'var(--acc)',    sub:'Across all active permits'},
+        {label:'Expiring in 2h',     val:expiringSoon.length, col:expiringSoon.length>0?'var(--red)':'var(--text3)', sub:expiringSoon.length>0?'Action required':'All permits have time'},
+      ].map(r=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div>
+          <div style="font-size:13px">${r.label}</div>
+          <div style="font-size:11px;color:var(--text3)">${r.sub}</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:22px;font-weight:400;color:${r.col}">${r.val}</div>
+      </div>`).join('')}
+      ${expiringSoon.length>0?`
+      <div class="al al-d" style="margin-top:8px;margin-bottom:0">
+        <b>⏰ Expiring soon:</b> ${expiringSoon.map(p=>p.id).join(', ')}
+      </div>`:''}
+    </div>
+  </div>`;
+}
+
+// ── Session management ──
+window._session = null;
+
+function openSessionSignIn(){
+  const users = APP_SETTINGS.users.filter(u=>u.active&&(u.site===appSite||u.site==='Both'));
+  if(!users.length){
+    toast('No users configured. Add users in Settings first.','w');
+    go('set'); return;
+  }
+  document.getElementById('conf-title').textContent = 'Sign In';
+  document.getElementById('conf-body').innerHTML = `
+  <div style="font-size:13px;color:var(--text2);margin-bottom:12px">Select your name and enter your PIN to sign in for this session.</div>
+  <div class="fg">
+    <label class="fl">Your Name</label>
+    <select class="fs" id="sess-sel" onchange="sessSelChange()">
+      <option value="">-- Select your name --</option>
+      ${users.map(u=>`<option value="${u.id}">${u.name} — ${u.role}</option>`).join('')}
+    </select>
+  </div>
+  <div id="sess-pin-wrap" style="display:none">
+    <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Enter your 4-digit PIN:</div>
+    <div class="pin-dots" id="sess-dots">
+      <div class="pin-dot" id="sesd0"></div><div class="pin-dot" id="sesd1"></div>
+      <div class="pin-dot" id="sesd2"></div><div class="pin-dot" id="sesd3"></div>
+    </div>
+    <div class="pin-numpad" style="margin-top:8px">
+      ${[1,2,3,4,5,6,7,8,9,'←',0,'✓'].map(k=>`<button class="pnb" onclick="sessPinKey('${k}')">${k}</button>`).join('')}
+    </div>
+    <div id="sess-err" style="font-size:11px;color:var(--red);margin-top:6px;display:none"></div>
+  </div>`;
+  document.getElementById('conf-footer').innerHTML=`<button class="btn btn-g" onclick="closeOv('conf-ov')">Cancel</button>`;
+  window._sessBuf=''; window._sessUser=null;
+  openOv('conf-ov');
+}
+
+function sessSelChange(){
+  const sel=document.getElementById('sess-sel');
+  window._sessUser=APP_SETTINGS.users.find(u=>u.id===sel.value)||null;
+  window._sessBuf='';
+  sessDots();
+  document.getElementById('sess-pin-wrap').style.display=window._sessUser?'block':'none';
+  const e=document.getElementById('sess-err'); if(e) e.style.display='none';
+}
+
+function sessPinKey(k){
+  const err=document.getElementById('sess-err');
+  if(err) err.style.display='none';
+  if(k==='←'){window._sessBuf=window._sessBuf.slice(0,-1);}
+  else if(k==='✓'){
+    if(!window._sessUser) return;
+    if(window._sessBuf.length!==4){
+      if(err){err.textContent='Enter your full 4-digit PIN.';err.style.display='block';} return;
+    }
+    if(window._sessBuf!==window._sessUser.pin){
+      if(err){err.textContent='Incorrect PIN.';err.style.display='block';}
+      window._sessBuf=''; sessDots(); return;
+    }
+    window._session={...window._sessUser};
+    // Update sidebar user display
+    document.getElementById('usr-av').textContent=(window._session.name||'?').split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase();
+    document.getElementById('usr-av').className='av';
+    document.getElementById('usr-n').textContent=window._session.name;
+    document.getElementById('usr-r').textContent=window._session.role+' · '+appSite;
+    closeOv('conf-ov');
+    toast('Signed in as '+window._session.name,'s');
+    go('db');
+    return;
+  }
+  else if(window._sessBuf.length<4){window._sessBuf+=k;}
+  sessDots();
+}
+
+function sessDots(){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('sesd'+i);
+    if(d) d.className='pin-dot'+(window._sessBuf.length>i?' filled':'');
+  }
+}
+
+function endSession(){
+  window._session=null;
+  document.getElementById('usr-av').textContent='?';
+  document.getElementById('usr-av').className='av empty';
+  document.getElementById('usr-n').textContent='Not signed in';
+  document.getElementById('usr-r').textContent='Sign in via Dashboard';
+  toast('Signed out.','i');
+  go('db');
+}
+
+function gasRowsHTML(){
+  const isTNET=appSite==='TNET';
+  const t=APP_SETTINGS.gasThresholds;
+  const rows=[
+    {n:'CH₄/LEL', v:isTNET?12:2, alarm:t.lel,   unit:'%LEL'},
+    {n:'H₂S',     v:0,           alarm:t.h2s,   unit:'ppm'},
+    {n:'O₂',      v:20.9,        alarm:t.o2min, unit:'%', rev:true},
+    {n:'CO',       v:3,           alarm:t.co,    unit:'ppm'},
+    ...(isTNET?[{n:'C₃H₈',v:12,alarm:t.lel,unit:'%LEL',hi:true}]:[]),
+  ];
+  return rows.map(g=>{
+    const ok=g.rev?g.v>=g.alarm:g.v<g.alarm;
+    const col=ok?'var(--green)':g.hi?'var(--amber)':'var(--red)';
+    const pct=Math.min(100,(g.v/(g.rev?25:100))*100);
+    return`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:11px;width:62px;flex-shrink:0">${g.n}</div>
+      <div style="flex:1;height:4px;background:var(--bg5);border-radius:2px">
+        <div style="height:100%;border-radius:2px;background:${col};width:${pct.toFixed(0)}%"></div>
+      </div>
+      <div style="font-family:var(--mono);font-size:11px;width:64px;text-align:right;color:${col}">${g.v}${g.unit}</div>
+      <div style="font-size:9px;color:var(--text3);width:58px">Alm:${g.alarm}${g.unit}</div>
+    </div>`;
+  }).join('');
+}
+
+function vAllPermits(){
+  const sp=PERMITS.filter(p=>p.site===appSite);
+  return`
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
+    <select class="fi" style="width:auto;padding:6px 10px;font-size:12px" onchange="filterPermits()">
+      <option value="">All Types</option>
+      ${Object.entries(PERMIT_TYPES).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}
+    </select>
+    <select class="fi" style="width:auto;padding:6px 10px;font-size:12px" onchange="filterPermits()">
+      <option value="">All Status</option>
+      ${Object.keys(STAGE_LABELS).map(s=>`<option value="${s}">${STAGE_LABELS[s]}</option>`).join('')}
+    </select>
+    <input class="fi" style="width:160px;padding:6px 10px;font-size:12px" placeholder="Search ID / area…" oninput="filterPermits()" id="permit-search">
+    <button class="btn btn-p btn-sm" style="margin-left:auto" onclick="openNewPermit()">+ New Permit</button>
+  </div>
+  <div class="card"><div class="tw">
+    <table class="t"><thead><tr><th>Permit No.</th><th>Type</th><th>Area / Module</th><th>Duration</th><th>Risk</th><th>Originator</th><th>Status</th></tr></thead>
+    <tbody id="permit-tbody">${renderPermitRows(sp)}</tbody></table>
+  </div></div>`;
+}
+
+function renderPermitRows(ps){
+  if(!ps.length) return`<tr><td colspan="7"><div class="empty">No permits found.</div></td></tr>`;
+  return ps.map(p=>`<tr onclick="openDetail('${p.id}')">
+    <td><span class="pid">${p.id}</span></td>
+    <td>${tbadge(p.type)}</td>
+    <td><div style="font-size:12px;font-weight:500">${(p.area||'').split('—')[0].trim()}</div><div style="font-size:11px;color:var(--text3)">${p.equip||''}</div></td>
+    <td style="font-size:11px;color:var(--text3)">${p.dur||''}</td>
+    <td>${rkPill(p.risk)}</td>
+    <td style="font-size:12px">${p.origName||'—'}</td>
+    <td>${stBadge(p.status)}</td>
+  </tr>`).join('');
+}
+
+function filterPermits(){
+  const typeEl=document.querySelector('#permit-tbody')?.closest('.card')?.previousElementSibling?.querySelector('select:first-child');
+  const statEl=document.querySelector('#permit-tbody')?.closest('.card')?.previousElementSibling?.querySelector('select:nth-child(2)');
+  const srEl=document.getElementById('permit-search');
+  let sp=PERMITS.filter(p=>p.site===appSite);
+  if(typeEl?.value) sp=sp.filter(p=>p.type===typeEl.value);
+  if(statEl?.value) sp=sp.filter(p=>p.status===statEl.value);
+  if(srEl?.value){
+    const q=srEl.value.toLowerCase();
+    sp=sp.filter(p=>p.id.toLowerCase().includes(q)||(p.area||'').toLowerCase().includes(q));
+  }
+  const tb=document.getElementById('permit-tbody');
+  if(tb) tb.innerHTML=renderPermitRows(sp);
+}
+
+function vPending(){
+  const sp=PERMITS.filter(p=>p.site===appSite&&['safe_made','auth_mgr','recipient','hse_review'].includes(p.status));
+  return`
+  <div class="al al-i">⏱ <b>${sp.length} permit(s)</b> in the authorization chain for ${appSite}. Each must be reviewed before the Shift Change Gate Meeting.</div>
+  <div class="card"><div class="tw"><table class="t">
+    <thead><tr><th>Permit No.</th><th>Type</th><th>Area</th><th>Risk</th><th>Originator</th><th>Current Stage</th><th>Actions</th></tr></thead>
+    <tbody>${!sp.length
+      ?`<tr><td colspan="7"><div class="empty">No permits awaiting sign-off for ${appSite}.</div></td></tr>`
+      :sp.map(p=>`<tr>
+        <td><span class="pid" style="cursor:pointer" onclick="openDetail('${p.id}')">${p.id}</span></td>
+        <td>${tbadge(p.type)}</td>
+        <td style="font-size:12px;font-weight:500">${(p.area||'').split('—')[0].trim()}</td>
+        <td>${rkPill(p.risk)}</td>
+        <td style="font-size:12px">${p.origName||'—'}</td>
+        <td>${stBadge(p.status)}<div style="margin-top:4px">${nextSignerBadge(p)}</div></td>
+        <td style="white-space:nowrap">
+          <button class="btn btn-s btn-sm" style="margin-right:4px" onclick="doSignOff('${p.id}')">✓ Sign Off</button>
+          <button class="btn btn-d btn-sm" onclick="doReject('${p.id}')">✕ Reject</button>
+        </td>
+      </tr>`).join('')
+    }</tbody>
+  </table></div></div>`;
+}
+
+function vLive(){
+  const sp=PERMITS.filter(p=>p.site===appSite&&p.status==='active');
+  return`
+  <div class="sg" style="grid-template-columns:repeat(3,1fr)">
+    <div class="sc c-green"><div class="sc-l">Active Now</div><div class="sc-n">${sp.length}</div></div>
+    <div class="sc c-amber"><div class="sc-l">Expiring &lt; 2h</div><div class="sc-n">0</div></div>
+    <div class="sc"><div class="sc-l">Workers On Task</div><div class="sc-n" style="color:var(--text)">${sp.reduce((a,p)=>a+(p.workers||[]).length,0)}</div></div>
+  </div>
+  <div class="card"><div class="tw"><table class="t">
+    <thead><tr><th>Permit No.</th><th>Type</th><th>Area</th><th>Risk</th><th>Expires</th><th>Workers</th><th>Action</th></tr></thead>
+    <tbody>${!sp.length
+      ?`<tr><td colspan="7"><div class="empty">No active permits on ${appSite}.</div></td></tr>`
+      :sp.map(p=>`<tr>
+        <td><span class="pid" style="cursor:pointer" onclick="openDetail('${p.id}')">${p.id}</span></td>
+        <td>${tbadge(p.type)}</td>
+        <td style="font-size:12px;font-weight:500">${(p.area||'').split('—')[0].trim()}</td>
+        <td>${rkPill(p.risk)}</td>
+        <td style="font-family:var(--mono);font-size:11px;color:var(--amber)">${p.endDate||'—'}</td>
+        <td style="font-size:11px">${(p.workers||[]).length} signed on</td>
+        <td><button class="btn btn-a btn-sm" onclick="doSuspend('${p.id}')">⏸ Suspend</button></td>
+      </tr>`).join('')
+    }</tbody>
+  </table></div></div>`;
+}
+
+function vGas(){
+  const isTNET=appSite==='TNET';
+  return`
+  ${isTNET?`<div class="al al-d"><b>🔴 PROPANE ELEVATED:</b> C₃H₈ reading at Module 9 Tank Farm perimeter. Verify all active permits have current gas tests. Suspend any planned work in Zone 1 until cleared.</div>`:''}
+  <div class="sg" style="grid-template-columns:repeat(4,1fr)">
+    <div class="sc ${isTNET?'c-amber':'c-green'}"><div class="sc-l">CH₄/LEL</div><div class="sc-n">${isTNET?'12%':'2%'}</div><div class="sc-s">Alarm: ${APP_SETTINGS.gasThresholds.lel}%</div></div>
+    <div class="sc c-green"><div class="sc-l">H₂S</div><div class="sc-n">0 ppm</div><div class="sc-s">Alarm: ${APP_SETTINGS.gasThresholds.h2s} ppm</div></div>
+    <div class="sc c-green"><div class="sc-l">O₂</div><div class="sc-n">20.9%</div><div class="sc-s">Min: ${APP_SETTINGS.gasThresholds.o2min}%</div></div>
+    <div class="sc c-green"><div class="sc-l">CO</div><div class="sc-n">3 ppm</div><div class="sc-s">Alarm: ${APP_SETTINGS.gasThresholds.co} ppm</div></div>
+  </div>
+  <div class="card" style="max-width:600px;margin-bottom:14px">
+    <div class="ch"><div class="ct">Continuous Monitor — ${appSite}</div></div>
+    <div style="padding:12px 16px">${gasRowsHTML()}<div style="margin-top:10px;font-size:10px;color:var(--text3);font-family:var(--mono)">Updated: ${new Date().toLocaleTimeString()} · MSA Altair 5X (SN-2041)</div></div>
+  </div>
+  <div class="card" style="max-width:600px">
+    <div class="ch"><div class="ct">Gas Test Log — Section H</div><button class="btn btn-p btn-sm" onclick="openSignOff('Gas Tester Declaration',['Superintendent','Shift Charge','Supervisor','Operations Engineer'],()=>toast('Gas test entry logged.','s'))">+ Log Test</button></div>
+    <div style="padding:0 14px">
+      <table class="gas-tbl">
+        <thead><tr><th>Date</th><th>Time</th><th>%LEL</th><th>%O₂</th><th>H₂S ppm</th><th>Temp °C</th><th>Monitor No.</th><th>Result</th><th>Tested By</th></tr></thead>
+        <tbody><tr><td colspan="9"><div class="empty" style="padding:16px">No gas tests logged yet. Use "+ Log Test" to record.</div></td></tr></tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function vISO(){
+  const isos=PERMITS.filter(p=>p.site===appSite&&p.isoRef&&p.isoRef!=='N/A').map(p=>p.isoRef? {id:p.isoRef,permit:p.id,equip:p.equip,verified:'Pending',status:p.status==='active'?'active':'pending'}:null).filter(Boolean);
+  return`
+  <div class="al al-w"><b>⚠ LOTO Protocol:</b> All isolation certificates must be verified by the Safe Maker and countersigned by the Issuing Authority before work commences. Personal LOTO padlocks remain until permit is closed.</div>
+  <div class="card">
+    <div class="ch"><div class="ct">Isolation Register — ${appSite}</div></div>
+    <div class="tw"><table class="t"><thead><tr><th>Certificate</th><th>Linked Permit</th><th>Equipment</th><th>Verified</th><th>Status</th></tr></thead>
+    <tbody>${!isos.length
+      ?`<tr><td colspan="5"><div class="empty">No isolation certificates for ${appSite}.</div></td></tr>`
+      :isos.map(i=>`<tr>
+        <td><span class="pid">${i.id}</span></td>
+        <td><span class="pid">${i.permit}</span></td>
+        <td style="font-size:12px">${i.equip||'—'}</td>
+        <td style="font-size:12px;color:${i.verified==='Pending'?'var(--amber)':'var(--text)'}">${i.verified}</td>
+        <td>${i.status==='active'?`<span class="st s-active">Verified</span>`:`<span class="st s-safe">Pending</span>`}</td>
+      </tr>`).join('')
+    }</tbody></table></div>
+  </div>`;
+}
+
+function vWorkers(){
+  const sp=PERMITS.filter(p=>p.site===appSite&&p.status==='active');
+  if(!sp.length) return`<div class="empty">No active permits on ${appSite}.<br>Worker sign-on is only available for active permits.</div>`;
+  return sp.map(p=>`
+  <div class="card" style="margin-bottom:12px">
+    <div class="ch">
+      <div><div style="font-size:12px;font-weight:500">${p.id} · ${p.equip||''}</div><div style="font-size:11px;color:var(--text3)">${tbadge(p.type)} ${rkPill(p.risk)} · Valid until ${p.endDate||'—'}</div></div>
+    </div>
+    <div style="padding:12px 16px">
+      <table class="ws-tbl">
+        <thead><tr><th>#</th><th>Name</th><th>Company</th><th>Emp. No.</th><th>Sign-On Date</th><th>Time</th><th>Lock No.</th><th>Sign-On</th><th>Sign-Off</th></tr></thead>
+        <tbody>
+          ${((p.workers||[]).length
+            ?(p.workers||[]).map((w,i)=>`<tr>
+              <td style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text3)">${i+1}</td>
+              <td><input value="${w.name||''}" placeholder="Name…"></td>
+              <td><input value="${w.company||''}" placeholder="Company"></td>
+              <td><input value="${w.empNo||''}" placeholder="Emp. No." style="width:80px"></td>
+              <td><input value="${w.signOnDate||''}" placeholder="Date" style="width:82px"></td>
+              <td><input value="${w.signOnTime||''}" placeholder="Time" style="width:62px"></td>
+              <td><input value="${w.lockNo||''}" placeholder="Lock #" style="width:62px"></td>
+              <td><button class="btn btn-s btn-sm" onclick="openSignOff('Task Executor Sign-On',['Supervisor','Shift Charge','Operations Engineer','Contractor'],()=>toast('Worker signed on.','s'))">Sign</button></td>
+              <td><button class="btn btn-g btn-sm" onclick="openSignOff('Task Executor Sign-Off',['Supervisor','Shift Charge','Operations Engineer','Contractor'],()=>toast('Worker signed off.','s'))">Sign</button></td>
+            </tr>`)
+            :[`<tr><td colspan="9"><div class="empty" style="padding:10px">No workers signed on yet.</div></td></tr>`]
+          ).join('')}
+          <tr>
+            <td style="text-align:center;font-family:var(--mono);font-size:10px;color:var(--text3)">${((p.workers||[]).length)+1}</td>
+            <td><input placeholder="Add worker name…"></td>
+            <td><input placeholder="Company"></td>
+            <td><input placeholder="Emp. No." style="width:80px"></td>
+            <td><input placeholder="Date" style="width:82px"></td>
+            <td><input placeholder="Time" style="width:62px"></td>
+            <td><input placeholder="Lock #" style="width:62px"></td>
+            <td><button class="btn btn-s btn-sm" onclick="openSignOff('Task Executor Sign-On',['Supervisor','Shift Charge','Operations Engineer','Contractor'],()=>toast('Worker signed on.','s'))">Sign</button></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>`).join('');
+}
+
+function vMLA(){
+  return`
+  <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;">
+    <div style="font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--purple);margin-bottom:6px">MLA AREA — MARSHAL OIL & GAS</div>
+    <div style="font-size:12px;line-height:1.7;color:var(--text2)">Genser does not issue PTW for MLA work. Per the Service Level Agreement for MLA use during Genser LPG export, Genser must be notified of any maintenance, testing, or modifications to the MLAs that could affect export schedule or personnel safety.</div>
+  </div>
+  <div class="sg" style="grid-template-columns:repeat(3,1fr)">
+    <div class="sc" style=""><div class="sc-l">Notifications (MTD)</div><div class="sc-n" style="color:var(--purple)">0</div></div>
+    <div class="sc c-amber"><div class="sc-l">Pending Acknowledgment</div><div class="sc-n">0</div></div>
+    <div class="sc"><div class="sc-l">Active Restrictions</div><div class="sc-n" style="color:var(--text)">0</div></div>
+  </div>
+  <div class="card">
+    <div class="ch"><div class="ct">MLA Notification Log</div><button class="btn btn-p btn-sm" onclick="toast('MLA notification logging — add via Settings.','i')">+ Log Notification</button></div>
+    <div class="empty">No MLA notifications logged yet.</div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <div class="ch"><div class="ct">SLA Safety Interface Requirements</div></div>
+    <div style="padding:14px 16px;font-size:12px;color:var(--text2);line-height:1.8">
+      <b style="color:var(--text)">1. Advance Notice:</b> Marshal to notify Genser minimum 48 hours before MLA maintenance that restricts export.<br>
+      <b style="color:var(--text)">2. Genser Presence:</b> Genser HSE Rep to be informed of any MLA work during active Genser export operations.<br>
+      <b style="color:var(--text)">3. SIMOPS:</b> No hot work on MLA systems while Genser is actively loading LPG. Formal SIMOPS assessment required.<br>
+      <b style="color:var(--text)">4. Emergency Contact:</b> Marshal emergency contact and Genser OIM on standby during all Genser export operations using MLAs.<br>
+      <b style="color:var(--text)">5. Incident Reporting:</b> Any MLA incident during Genser operations must be jointly reported per both companies' procedures.
+    </div>
+  </div>`;
+}
+
+function vReports(){
+  const sp=PERMITS.filter(p=>p.site===appSite);
+  return`
+  <div class="sg" style="grid-template-columns:repeat(4,1fr)">
+    <div class="sc c-green"><div class="sc-l">Total Issued</div><div class="sc-n">${sp.length}</div></div>
+    <div class="sc c-blue"><div class="sc-l">Active</div><div class="sc-n">${sp.filter(p=>p.status==='active').length}</div></div>
+    <div class="sc"><div class="sc-l">Closed Safely</div><div class="sc-n" style="color:var(--text)">${sp.filter(p=>p.status==='closed').length}</div></div>
+    <div class="sc c-amber"><div class="sc-l">Rejected</div><div class="sc-n">${sp.filter(p=>p.status==='rejected').length}</div></div>
+  </div>
+  <div class="card"><div class="ch"><div class="ct">Export</div></div>
+    <div style="padding:14px 16px;display:flex;gap:8px;flex-wrap:wrap">
+      ${['Daily PTW Log (PDF)','Weekly HSE Summary','Isolation Register','Gas Test Log','Worker Sign-On Log','Audit Trail','MLA Notification Log'].map(r=>`<button class="btn btn-g" onclick="toast('Generating: ${r}…','i')">↓ ${r}</button>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════
+// SETTINGS VIEW
+// ══════════════════════════════════════════════════════
+function vSettings(){
+  return renderSettingsInner();
+}
+
+function renderSettingsLock(){
+  const eligible = APP_SETTINGS.users.filter(u=>
+    u.active && AUTH_ROLES.settings.includes(u.role)
+  );
+  return`
+  <div style="max-width:380px;margin:60px auto 0">
+    <div class="card">
+      <div style="padding:24px">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-family:var(--cond);font-size:14px;font-weight:700;letter-spacing:.06em;color:var(--acc);margin-bottom:6px">⚙ SETTINGS — RESTRICTED ACCESS</div>
+          <div style="font-size:12px;color:var(--text2)">Settings access requires Superintendent, HSE Rep, Manager, or VP authorization. Enter your name and PIN to continue.</div>
+        </div>
+        ${!eligible.length
+          ? `<div class="al al-w">No authorized users configured yet. Add at least one VP, Manager, Superintendent, or HSE Rep user to access settings.</div>
+             <div style="margin-top:10px"><button class="btn btn-g" style="width:100%" onclick="forceOpenSettings()">⚠ First-Time Setup (bypass)</button></div>`
+          : `<div class="auth-block" id="settings-auth-block">
+              <div class="auth-stage-label">Identify yourself</div>
+              <div class="auth-name-row">
+                <div class="fg" style="flex:1;margin-bottom:0">
+                  <label class="fl">Select your name</label>
+                  <select class="fs" id="set-name-sel" onchange="onSetNameChange()">
+                    <option value="">-- Select --</option>
+                    ${eligible.map(u=>`<option value="${u.id}">${u.name} — ${u.role}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+              <div id="set-pin-section" style="display:none">
+                <div style="font-size:11px;color:var(--text2);margin:10px 0 6px">Enter your 4-digit PIN:</div>
+                <div class="pin-dots" id="set-pin-dots">
+                  <div class="pin-dot" id="ssd0"></div>
+                  <div class="pin-dot" id="ssd1"></div>
+                  <div class="pin-dot" id="ssd2"></div>
+                  <div class="pin-dot" id="ssd3"></div>
+                </div>
+                <div class="pin-numpad">
+                  ${[1,2,3,4,5,6,7,8,9,'←',0,'✓'].map(k=>`<button class="pnb" onclick="settingsPinKey('${k}')">${k}</button>`).join('')}
+                </div>
+                <div id="set-pin-err" style="font-size:11px;color:var(--red);margin-top:8px;display:none"></div>
+              </div>
+            </div>`
+        }
+      </div>
+    </div>
+  </div>`;
+}
+
+let _setBuffer='', _setUser=null;
+
+function forceOpenSettings(){
+  // Only if no users exist at all
+  if(APP_SETTINGS.users.length===0){
+    settingsUnlocked=true;
+    go('set');
+  }
+}
+
+function onSetNameChange(){
+  const sel=document.getElementById('set-name-sel');
+  _setUser=APP_SETTINGS.users.find(u=>u.id===sel.value)||null;
+  _setBuffer='';
+  updateSetDots();
+  document.getElementById('set-pin-section').style.display=_setUser?'block':'none';
+}
+
+function settingsPinKey(k){
+  const err=document.getElementById('set-pin-err');
+  if(err) err.style.display='none';
+  if(k==='←'){_setBuffer=_setBuffer.slice(0,-1);}
+  else if(k==='✓'){
+    if(!_setUser){return;}
+    if(_setBuffer.length!==4){
+      if(err){err.textContent='Enter your full 4-digit PIN.';err.style.display='block';}
+      return;
+    }
+    if(_setBuffer!==_setUser.pin){
+      if(err){err.textContent='Incorrect PIN. Please try again.';err.style.display='block';}
+      _setBuffer=''; updateSetDots(); return;
+    }
+    // Correct — unlock
+    settingsUnlocked=true;
+    toast('Settings unlocked by '+_setUser.name,'s');
+    go('set');
+    return;
+  }
+  else if(_setBuffer.length<4){_setBuffer+=k;}
+  updateSetDots();
+}
+
+function updateSetDots(){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('ssd'+i);
+    if(d) d.className='pin-dot'+(_setBuffer.length>i?' filled':'');
+  }
+}
+
+function renderSettingsInner(){
+  return`
+  <div class="tabs" id="set-tabs">
+    <div class="tab on" onclick="setTab(0)">Users & Roles</div>
+    <div class="tab" onclick="setTab(1)">Gas Thresholds</div>
+    <div class="tab" onclick="setTab(2)">Site Config</div>
+    <div class="tab" onclick="setTab(3)">Export & SharePoint</div>
+  </div>
+  <div id="set-content">${settingsTab0()}</div>`;
+}
+
+function lockSettings(){
+  settingsUnlocked=false;
+  go('set');
+}
+
+function setTab(i){
+  document.querySelectorAll('#set-tabs .tab').forEach((t,ti)=>t.classList.toggle('on',ti===i));
+  const fns=[settingsTab0,settingsTab1,settingsTab2,settingsTab3];
+  document.getElementById('set-content').innerHTML=(fns[i]||settingsTab0)();
+}
+
+function settingsTab0(){
+  const users=APP_SETTINGS.users;
+  return`
+  <div class="al al-i"><b>Users must be added here before they can sign any permit.</b> Assign each person a role and 4-digit PIN. The PIN is used to validate every authorization step in the PTW workflow.</div>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
+    <button class="btn btn-p" onclick="openAddUser()">+ Add User</button>
+  </div>
+  ${!users.length?`<div class="empty">No users configured yet. Add users to enable permit authorization.</div>`
+  :users.map(u=>`
+  <div class="user-row">
+    <div class="av" style="width:32px;height:32px;font-size:11px;font-family:var(--cond)">${(u.name||'?').split(' ').map(x=>x[0]).join('').substring(0,2).toUpperCase()}</div>
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:500">${u.name}</div>
+      <div style="font-size:11px;color:var(--text3)">${u.empNo||'—'} · ${u.site||'—'}</div>
+    </div>
+    <span class="role-pill">${u.role}</span>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text3)">PIN: ●●●●</div>
+    <div style="display:flex;gap:6px">
+      <button class="btn btn-g btn-sm" onclick="editUser('${u.id}')">Edit</button>
+      <button class="btn btn-d btn-sm" onclick="deleteUser('${u.id}')">✕</button>
+    </div>
+  </div>`).join('')}`;
+}
+
+function settingsTab1(){
+  const t=APP_SETTINGS.gasThresholds;
+  return`
+  <div class="al al-w">Changes to gas alarm thresholds apply to all new gas test entries. Contact your HSE Superintendent before modifying these values.</div>
+  <div class="card"><div style="padding:16px">
+    ${[
+      ['LEL Alarm (%)', 'lel', t.lel],
+      ['O₂ Minimum (%)', 'o2min', t.o2min],
+      ['H₂S Alarm (ppm)', 'h2s', t.h2s],
+      ['CO Alarm (ppm)', 'co', t.co],
+    ].map(([label,key,val])=>`
+    <div class="setting-row">
+      <div><div class="setting-label">${label}</div></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input class="fi" style="width:80px;text-align:center" type="number" value="${val}" id="thresh-${key}">
+        <button class="btn btn-p btn-sm" onclick="saveThreshold('${key}')">Save</button>
+      </div>
+    </div>`).join('')}
+  </div></div>`;
+}
+
+function settingsTab2(){
+  return`
+  <div class="card"><div style="padding:16px">
+    <div class="fsec-t">Permit Number Prefix</div>
+    <div class="f2">
+      <div class="fg"><label class="fl">PGCP Prefix</label><div style="display:flex;gap:8px"><input class="fi" id="pref-pgcp" value="${APP_SETTINGS.permitPrefix.PGCP}"><button class="btn btn-p btn-sm" onclick="savePrefix('PGCP')">Save</button></div></div>
+      <div class="fg"><label class="fl">TNET Prefix</label><div style="display:flex;gap:8px"><input class="fi" id="pref-tnet" value="${APP_SETTINGS.permitPrefix.TNET}"><button class="btn btn-p btn-sm" onclick="savePrefix('TNET')">Save</button></div></div>
+    </div>
+    <div class="fsec-t" style="margin-top:14px">Muster Points — PGCP</div>
+    ${APP_SETTINGS.musterPoints.PGCP.map((m,i)=>`<div style="display:flex;gap:8px;margin-bottom:6px"><input class="fi" value="${m}" id="mp-pgcp-${i}"><button class="btn btn-p btn-sm" onclick="saveMuster('PGCP',${i})">Save</button></div>`).join('')}
+    <div class="fsec-t" style="margin-top:14px">Muster Points — TNET</div>
+    ${APP_SETTINGS.musterPoints.TNET.map((m,i)=>`<div style="display:flex;gap:8px;margin-bottom:6px"><input class="fi" value="${m}" id="mp-tnet-${i}"><button class="btn btn-p btn-sm" onclick="saveMuster('TNET',${i})">Save</button></div>`).join('')}
+  </div></div>`;
+}
+
+function settingsTab3(){
+  return`
+  <div class="fsec"><div class="fsec-t">SharePoint / Azure Export</div>
+  <div class="al al-i">Completed permits can be pushed automatically to a SharePoint document library. You will need an Azure App Registration with Sites.ReadWrite.All permission. Contact your IT administrator for the Client ID, Tenant ID, and Client Secret.</div>
+  <div class="f2">
+    <div class="fg"><label class="fl">SharePoint Site URL</label>
+      <input class="fi" id="sp-siteurl" placeholder="https://yourcompany.sharepoint.com/sites/HSE" value="${APP_SETTINGS.sharepoint?.siteUrl||''}"></div>
+    <div class="fg"><label class="fl">Document Library Name</label>
+      <input class="fi" id="sp-library" placeholder="e.g. PTW Records" value="${APP_SETTINGS.sharepoint?.library||'PTW Records'}"></div>
+    <div class="fg"><label class="fl">Azure Tenant ID</label>
+      <input class="fi" id="sp-tenantid" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value="${APP_SETTINGS.sharepoint?.tenantId||''}"></div>
+    <div class="fg"><label class="fl">Azure Client ID</label>
+      <input class="fi" id="sp-clientid" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value="${APP_SETTINGS.sharepoint?.clientId||''}"></div>
+    <div class="fg"><label class="fl">Client Secret</label>
+      <input class="fi" id="sp-secret" type="password" placeholder="Azure app client secret" value="${APP_SETTINGS.sharepoint?.clientSecret||''}"></div>
+    <div class="fg"><label class="fl">Auto-push on Permit Close?</label>
+      <select class="fs" id="sp-autopush">
+        <option value="Yes" ${APP_SETTINGS.sharepoint?.autopush==='Yes'?'selected':''}>Yes — automatically upload when permit is closed</option>
+        <option value="No" ${APP_SETTINGS.sharepoint?.autopush!=='Yes'?'selected':''}>No — manual export only</option>
+      </select></div>
+  </div>
+  <button class="btn btn-p" onclick="saveSharePointConfig()" style="margin-top:4px">Save SharePoint Config</button>
+  </div>
+  <div class="fsec"><div class="fsec-t">Manual Export Formats</div>
+  <div style="font-size:12px;color:var(--text2);margin-bottom:12px">Export individual permits from the permit detail view. Bulk export is available from the Reports page.</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <div class="card" style="padding:14px;flex:1;min-width:160px">
+      <div style="font-family:var(--cond);font-size:11px;font-weight:700;color:var(--acc);margin-bottom:6px">Excel (.xlsx)</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5">All permit fields in structured rows. Suitable for record-keeping and audit. Opens in Microsoft Excel.</div>
+    </div>
+    <div class="card" style="padding:14px;flex:1;min-width:160px">
+      <div style="font-family:var(--cond);font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px">Word (.docx)</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5">Formatted permit document matching GEGL-MID-H&S-001 layout. Includes all sections, signatures, and gas test log.</div>
+    </div>
+    <div class="card" style="padding:14px;flex:1;min-width:160px">
+      <div style="font-family:var(--cond);font-size:11px;font-weight:700;color:var(--purple);margin-bottom:6px">SharePoint Push</div>
+      <div style="font-size:11px;color:var(--text2);line-height:1.5">Upload directly to the configured SharePoint document library. Requires Azure credentials above.</div>
+    </div>
+  </div>
+  </div>`;
+}
+
+function saveSharePointConfig(){
+  if(!APP_SETTINGS.sharepoint) APP_SETTINGS.sharepoint={};
+  APP_SETTINGS.sharepoint.siteUrl=document.getElementById('sp-siteurl')?.value||'';
+  APP_SETTINGS.sharepoint.library=document.getElementById('sp-library')?.value||'PTW Records';
+  APP_SETTINGS.sharepoint.tenantId=document.getElementById('sp-tenantid')?.value||'';
+  APP_SETTINGS.sharepoint.clientId=document.getElementById('sp-clientid')?.value||'';
+  APP_SETTINGS.sharepoint.clientSecret=document.getElementById('sp-secret')?.value||'';
+  APP_SETTINGS.sharepoint.autopush=document.getElementById('sp-autopush')?.value||'No';
+  toast('SharePoint configuration saved.','s');
+}
+
+function saveThreshold(key){
+  const el=document.getElementById('thresh-'+key);
+  if(el){APP_SETTINGS.gasThresholds[key]=parseFloat(el.value);toast('Threshold saved.','s');}
+}
+function savePrefix(site){
+  const el=document.getElementById('pref-'+site.toLowerCase());
+  if(el){APP_SETTINGS.permitPrefix[site]=el.value;toast('Prefix saved.','s');}
+}
+function saveMuster(site,i){
+  const el=document.getElementById('mp-'+site.toLowerCase()+'-'+i);
+  if(el){APP_SETTINGS.musterPoints[site][i]=el.value;toast('Muster point saved.','s');}
+}
+
+// ── Add / Edit / Delete User — PIN gated ──
+// Only VP, Manager, Superintendent, HSE Rep can authorise user management actions
+const USER_MGMT_ROLES = ['VP','Manager','Superintendent','HSE Rep'];
+
+function openAddUser(userId){
+  // Gate: require senior PIN to add/edit users
+  const eligible = APP_SETTINGS.users.filter(u => u.active && USER_MGMT_ROLES.includes(u.role));
+  if(eligible.length === 0){
+    // No senior users exist yet — first-time setup bypass
+    _openUserForm(userId);
+    return;
+  }
+  // Show PIN gate first
+  _showUserMgmtPinGate('Add / Edit User', () => _openUserForm(userId));
+}
+
+function _showUserMgmtPinGate(action, onSuccess){
+  const eligible = APP_SETTINGS.users.filter(u => u.active && USER_MGMT_ROLES.includes(u.role));
+  let pgBuf = '', pgUser = null;
+  document.getElementById('conf-title').textContent = action + ' — Authorization Required';
+  document.getElementById('conf-body').innerHTML = `
+  <div style="font-size:12px;color:var(--text2);margin-bottom:12px">This action requires authorization from a VP, Manager, Superintendent, or HSE Rep.</div>
+  <div class="fg">
+    <label class="fl">Select your name</label>
+    <select class="fs" id="umg-sel" onchange="umgSelChange()">
+      <option value="">-- Select --</option>
+      ${eligible.map(u=>`<option value="${u.id}">${u.name} — ${u.role}</option>`).join('')}
+    </select>
+  </div>
+  <div id="umg-pin-wrap" style="display:none">
+    <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Enter your 4-digit PIN:</div>
+    <div class="pin-dots" id="umg-dots">
+      <div class="pin-dot" id="umgd0"></div><div class="pin-dot" id="umgd1"></div>
+      <div class="pin-dot" id="umgd2"></div><div class="pin-dot" id="umgd3"></div>
+    </div>
+    <div class="pin-numpad" style="margin-top:8px">
+      ${[1,2,3,4,5,6,7,8,9,'←',0,'✓'].map(k=>`<button class="pnb" onclick="umgPinKey('${k}')">${k}</button>`).join('')}
+    </div>
+    <div id="umg-err" style="font-size:11px;color:var(--red);margin-top:6px;display:none"></div>
+  </div>`;
+  document.getElementById('conf-footer').innerHTML = `<button class="btn btn-g" onclick="closeOv('conf-ov')">Cancel</button>`;
+  // Store callback globally for pin key handler
+  window._umgCallback = onSuccess;
+  window._umgBuf = '';
+  window._umgUser = null;
+  openOv('conf-ov');
+}
+
+function umgSelChange(){
+  const sel = document.getElementById('umg-sel');
+  window._umgUser = APP_SETTINGS.users.find(u => u.id === sel.value) || null;
+  window._umgBuf = '';
+  umgUpdateDots();
+  document.getElementById('umg-pin-wrap').style.display = window._umgUser ? 'block' : 'none';
+  const err = document.getElementById('umg-err');
+  if(err) err.style.display = 'none';
+}
+
+function umgPinKey(k){
+  const err = document.getElementById('umg-err');
+  if(err) err.style.display = 'none';
+  if(k === '←'){ window._umgBuf = window._umgBuf.slice(0,-1); }
+  else if(k === '✓'){
+    if(!window._umgUser){ return; }
+    if(window._umgBuf.length !== 4){
+      if(err){ err.textContent='Enter your full 4-digit PIN.'; err.style.display='block'; } return;
+    }
+    if(window._umgBuf !== window._umgUser.pin){
+      if(err){ err.textContent='Incorrect PIN. Please try again.'; err.style.display='block'; }
+      window._umgBuf = ''; umgUpdateDots(); return;
+    }
+    closeOv('conf-ov');
+    if(window._umgCallback) window._umgCallback();
+    return;
+  }
+  else if(window._umgBuf.length < 4){ window._umgBuf += k; }
+  umgUpdateDots();
+}
+
+function umgUpdateDots(){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('umgd'+i);
+    if(d) d.className='pin-dot'+(window._umgBuf.length>i?' filled':'');
+  }
+}
+
+function _openUserForm(userId){
+  const u = userId ? APP_SETTINGS.users.find(x=>x.id===userId) : {};
+  document.getElementById('conf-title').textContent = userId ? 'Edit User' : 'Add User';
+  document.getElementById('conf-body').innerHTML=`
+  <div class="f2">
+    <div class="fg ff"><label class="fl">Full Name<span class="req">*</span></label>
+      <input class="fi" id="u-name" value="${(u&&u.name)||''}" placeholder="Full name"></div>
+    <div class="fg"><label class="fl">Employee No.</label>
+      <input class="fi" id="u-emp" value="${(u&&u.empNo)||''}" placeholder="e.g. GE-0001"></div>
+    <div class="fg"><label class="fl">Role<span class="req">*</span></label>
+      <select class="fs" id="u-role">
+        <option value="">-- Select Role --</option>
+        ${ROLES_LIST.map(r=>`<option value="${r}" ${u&&u.role===r?'selected':''}>${r}</option>`).join('')}
+      </select></div>
+    <div class="fg"><label class="fl">Site<span class="req">*</span></label>
+      <select class="fs" id="u-site">
+        <option value="PGCP" ${u&&u.site==='PGCP'?'selected':''}>PGCP Only</option>
+        <option value="TNET" ${u&&u.site==='TNET'?'selected':''}>TNET Only</option>
+        <option value="Both" ${u&&u.site==='Both'?'selected':''}>Both Sites</option>
+      </select></div>
+    <div class="fg"><label class="fl">4-Digit PIN<span class="req">*</span></label>
+      <input class="fi" id="u-pin" type="password" maxlength="4" pattern="[0-9]{4}" placeholder="4 digits" value="${(u&&u.pin)||''}"></div>
+    <div class="fg"><label class="fl">Confirm PIN<span class="req">*</span></label>
+      <input class="fi" id="u-pin2" type="password" maxlength="4" pattern="[0-9]{4}" placeholder="Repeat PIN"></div>
+  </div>
+  <div id="u-err" style="font-size:11px;color:var(--red);margin-top:6px"></div>`;
+  document.getElementById('conf-footer').innerHTML=`
+    <button class="btn btn-g" onclick="closeOv('conf-ov')">Cancel</button>
+    <button class="btn btn-p" onclick="saveUser('${userId||''}')">Save User</button>`;
+  openOv('conf-ov');
+}
+
+function editUser(id){openAddUser(id);}
+function deleteUser(id){
+  const u = APP_SETTINGS.users.find(x=>x.id===id);
+  _showUserMgmtPinGate('Delete User: '+(u?.name||''), ()=>{
+    confirm2('Confirm Delete','Remove <b>'+(u?.name||'this user')+'</b>? This cannot be undone.',()=>{
+      APP_SETTINGS.users=APP_SETTINGS.users.filter(x=>x.id!==id);
+      toast('User removed.','w'); go('set');
+    });
+  });
+}
+function saveUser(existingId){
+  const name=document.getElementById('u-name').value.trim();
+  const emp=document.getElementById('u-emp').value.trim();
+  const role=document.getElementById('u-role').value;
+  const site=document.getElementById('u-site').value;
+  const pin=document.getElementById('u-pin').value;
+  const pin2=document.getElementById('u-pin2').value;
+  const errEl=document.getElementById('u-err');
+  if(!name||!role||!site){errEl.textContent='Name, role, and site are required.';return;}
+  if(!existingId&&!pin){errEl.textContent='PIN is required.';return;}
+  if(pin&&pin.length!==4){errEl.textContent='PIN must be exactly 4 digits.';return;}
+  if(pin&&!/^\d{4}$/.test(pin)){errEl.textContent='PIN must be 4 numeric digits.';return;}
+  if(pin&&pin!==pin2){errEl.textContent='PINs do not match.';return;}
+  // Check for duplicate PIN — do not reveal which user has it (security)
+  if(pin){
+    const duplicate = APP_SETTINGS.users.find(u => u.pin===pin && u.id!==existingId);
+    if(duplicate){errEl.textContent='This PIN is already in use. Please choose a different PIN.';return;}
+  }
+  if(existingId){
+    const u=APP_SETTINGS.users.find(x=>x.id===existingId);
+    if(u){u.name=name;u.empNo=emp;u.role=role;u.site=site;if(pin)u.pin=pin;u.active=true;}
+    toast('User updated.','s');
+  } else {
+    APP_SETTINGS.users.push({id:'u'+Date.now(),name,empNo:emp,role,site,pin,active:true});
+    toast('User added: '+name,'s');
+  }
+  closeOv('conf-ov'); go('set');
+}
+
+// ══════════════════════════════════════════════════════
+// SIGN-OFF MODAL (PIN-based authorization)
+// ══════════════════════════════════════════════════════
+let _signRoles=[], _signCB=null, _signBuffer='', _signSelectedUser=null;
+
+function openSignOff(title, roles, cb){
+  _signRoles=roles; _signCB=cb; _signBuffer=''; _signSelectedUser=null;
+  const eligible=getUsersForRole(roles, appSite);
+  document.getElementById('sign-title').textContent=title;
+  document.getElementById('sign-body').innerHTML=`
+  <div class="auth-block" id="auth-main-block">
+    <div class="auth-stage-label">${title}</div>
+    ${!eligible.length
+      ?`<div class="al al-w">No users with the required role (${roles.join(' / ')}) have been configured for ${appSite}. Go to Settings → Users & Roles to add them.</div>`
+      :`<div class="auth-name-row">
+        <div class="fg" style="flex:1;margin-bottom:0">
+          <label class="fl">Select your name</label>
+          <select class="fs" id="sign-name-sel" onchange="onSignNameChange()">
+            <option value="">-- Select name --</option>
+            ${eligible.map(u=>`<option value="${u.id}">${u.name} — ${u.role}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div id="pin-section" style="display:none">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Enter your 4-digit PIN:</div>
+        <div class="pin-dots" id="sign-pin-dots">
+          <div class="pin-dot" id="spd0"></div>
+          <div class="pin-dot" id="spd1"></div>
+          <div class="pin-dot" id="spd2"></div>
+          <div class="pin-dot" id="spd3"></div>
+        </div>
+        <div class="pin-numpad">
+          ${[1,2,3,4,5,6,7,8,9,'←',0,'✓'].map(k=>`<button class="pnb" onclick="signPinKey('${k}')">${k}</button>`).join('')}
+        </div>
+        <div class="auth-decl">
+          <input type="checkbox" id="sign-decl">
+          <label for="sign-decl">I have read and understood this permit and accept responsibility as assigned above</label>
+        </div>
+        <div id="sign-err" style="font-size:11px;color:var(--red);margin-top:6px;display:none"></div>
+      </div>`
+    }
+  </div>`;
+  document.getElementById('sign-footer').innerHTML=`<button class="btn btn-g" onclick="closeOv('sign-ov')">Cancel</button>`;
+  openOv('sign-ov');
+}
+
+function onSignNameChange(){
+  const sel=document.getElementById('sign-name-sel');
+  _signSelectedUser=APP_SETTINGS.users.find(u=>u.id===sel.value)||null;
+  _signBuffer='';
+  updateSignDots();
+  document.getElementById('pin-section').style.display=_signSelectedUser?'block':'none';
+}
+
+function signPinKey(k){
+  const err=document.getElementById('sign-err');
+  if(err) err.style.display='none';
+  if(k==='←'){_signBuffer=_signBuffer.slice(0,-1);}
+  else if(k==='✓'){
+    const decl=document.getElementById('sign-decl');
+    if(!decl?.checked){showSignErr('Please tick the declaration checkbox.');return;}
+    if(_signBuffer.length!==4){showSignErr('Please enter your full 4-digit PIN.');return;}
+    if(!_signSelectedUser){showSignErr('Please select your name.');return;}
+    if(_signBuffer!==_signSelectedUser.pin){
+      showSignErr('Incorrect PIN. Please try again.');
+      _signBuffer=''; updateSignDots();
+      return;
+    }
+    // Success
+    const ts=new Date().toLocaleString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    closeOv('sign-ov');
+    if(_signCB) _signCB({
+      userId:_signSelectedUser.id,
+      name:_signSelectedUser.name,
+      role:_signSelectedUser.role,
+      empNo:_signSelectedUser.empNo,
+      timestamp:ts,
+    });
+    return;
+  }
+  else if(_signBuffer.length<4){_signBuffer+=k;}
+  updateSignDots();
+}
+
+function showSignErr(msg){
+  const el=document.getElementById('sign-err');
+  if(el){el.textContent=msg;el.style.display='block';}
+}
+
+function updateSignDots(){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('spd'+i);
+    if(d) d.className='pin-dot'+(_signBuffer.length>i?' filled':'');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// DETAIL MODAL
+// ══════════════════════════════════════════════════════
+function openDetail(id){
+  activePermit=PERMITS.find(p=>p.id===id);
+  if(!activePermit) return;
+  dtlTabIdx=0;
+  document.getElementById('dtl-title').textContent=activePermit.id;
+  document.getElementById('dtl-sub').innerHTML=
+    (PERMIT_TYPES[activePermit.type]?.label||'')+' · '+(activePermit.area||'').split('—')[0].trim()+' · '+siteName(activePermit.site)+
+    '<br><div style="margin-top:5px">'+nextSignerBadge(activePermit)+'</div>';
+  renderDetailBody();
+  renderDetailFooter();
+  openOv('dtl-ov');
+}
+
+function siteName(s){return s==='PGCP'?'Prestea PGCP':'TNET Takoradi';}
+
+function renderDetailBody(){
+  const p=activePermit;
+  const tabs=['Details','Hazards','Isolations','Emergency','JHA','Auth Chain','Gas Tests'];
+  document.getElementById('dtl-body').innerHTML=`
+    ${p.risk==='v'?`<div class="al al-d"><b>🔴 V.HIGH RISK:</b> Authorizing Manager countersign mandatory. Two Standby Level 2 required. Formal rescue plan must be approved before entry.</div>`:''}
+    ${p.type==='cse'&&p.csecat==='B'?`<div class="al al-w"><b>⚠ Cat B Confined Space:</b> Inert atmosphere. Full BA required. Authorizing Manager sign-off required before issuance.</div>`:''}
+    ${p.type==='rad'?`<div class="al al-w"><b>☢ Radiography — treated as Hot Work:</b> Exclusion zone required. All other active permits in affected area temporarily suspended during RT.</div>`:''}
+    <div class="tabs" id="dtl-tabs">
+      ${tabs.map((t,i)=>`<div class="tab ${i===0?'on':''}" onclick="switchDtlTab(${i})">${t}</div>`).join('')}
+    </div>
+    <div id="dtl-tab-body">${renderDtlTab(0)}</div>`;
+}
+
+function switchDtlTab(i){
+  dtlTabIdx=i;
+  document.querySelectorAll('#dtl-tabs .tab').forEach((t,ti)=>t.classList.toggle('on',ti===i));
+  document.getElementById('dtl-tab-body').innerHTML=renderDtlTab(i);
+}
+
+function renderDtlTab(i){
+  const p=activePermit;
+  if(i===0) return`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+      ${[
+        ['Permit Type',tbadge(p.type)+(p.csecat?` <span style="font-size:11px;color:var(--amber)">Cat ${p.csecat}</span>`:'')],
+        ['Risk Rating',rkPill(p.risk)],
+        ['Status',stBadge(p.status)],
+        ['Site',siteName(p.site)],
+        ['Module / Area',`<span style="font-size:12px">${p.area||'—'}</span>`],
+        ['Equipment',`<span style="font-family:var(--mono);font-size:12px">${p.equip||'—'}</span>`],
+        ['Originator',p.origName||'—'],
+        ['Work Carried Out By',p.workBy||(p.contractor?'Contractor — '+p.contractor:'—')],
+        ['Duration',p.dur||'—'],
+        ['Isolation Cert',`<span style="font-family:var(--mono);font-size:12px;color:var(--amber)">${p.isoRef||'N/A'}</span>`],
+        ['Valid From',`<span style="font-family:var(--mono);font-size:12px">${p.startDate||'—'}</span>`],
+        ['Valid Until',`<span style="font-family:var(--mono);font-size:12px;color:var(--amber)">${p.endDate||'—'}</span>`],
+        ['Gas Test',`<span style="font-size:12px;color:var(--green)">${p.lastGasTest||'Pending'}</span>`],
+      ].map(([k,v])=>`<div><div style="font-family:var(--cond);font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:3px">${k}</div><div>${v}</div></div>`).join('')}
+    </div>
+    <div style="padding:10px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--border);font-size:13px;line-height:1.6;margin-bottom:12px">${p.taskDesc||'No description provided.'}</div>
+    ${p.ppe?.length?`<div style="margin-bottom:10px"><div style="font-family:var(--cond);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:5px">Required PPE</div><div style="display:flex;gap:5px;flex-wrap:wrap">${p.ppe.map(pp=>`<span style="display:inline-block;padding:3px 8px;border-radius:4px;font-size:11px;background:var(--bg3);border:1px solid var(--border2);color:var(--blue)">🛡 ${pp}</span>`).join('')}</div></div>`:''}
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-top:10px">
+      <div>${progBar(p.prog||0,'var(--acc)')}<div style="font-size:10px;color:var(--text3);margin-top:3px">${p.prog||0}% complete</div></div>
+      <div style="text-align:right"><div class="qr-box">QR</div><div style="font-size:10px;color:var(--text3);margin-top:3px">Scan to verify</div></div>
+    </div>`;
+
+  if(i===1) return renderHazardView(p);
+  if(i===2) return`<div style="font-size:13px;color:var(--text2)">Isolation certificate: <span style="font-family:var(--mono);color:var(--amber)">${p.isoRef||'N/A'}</span><br><br>Full isolation details recorded at permit creation. Verify physical isolation before commencing work.</div>`;
+  if(i===3) return`<div style="font-size:13px;color:var(--text2)">Emergency equipment specified at permit creation.<br><br>${(p.emerg||[]).map(e=>`<span style="display:inline-block;margin:3px;padding:3px 8px;border-radius:4px;font-size:11px;background:var(--bg3);border:1px solid var(--border2);color:var(--red)">✦ ${e}</span>`).join('')||'None specified.'}</div>`;
+  if(i===4) return renderJHAView(p);
+  if(i===5) return renderAuthChain(p);
+  if(i===6) return`<div class="al al-i">Gas tests logged per Section H requirements. Minimum every 30 min for Cold/WAH/Excv/Rad. Continuous for CSE.</div><div class="empty">No gas tests logged for this permit yet.</div>`;
+  return '';
+}
+
+function renderHazardView(p){
+  const saved=p.hazards||{};
+  const sections=[
+    {title:'Chemical Hazards',items:CHEM_HAZARDS,key:'chem'},
+    {title:'Physical Hazards',items:PHYS_HAZARDS,key:'phys'},
+    {title:'Work Area Hazards',items:AREA_HAZARDS,key:'area'},
+  ];
+  return sections.map(sec=>`
+    <div class="fsec-t" style="margin-top:10px">${sec.title}</div>
+    ${sec.items.map(h=>{
+      const data=(saved[sec.key]||{})[h.id]||{};
+      if(!data.present) return`<div class="hz-item"><div class="hz-header"><input class="hz-check" type="checkbox" disabled><span class="hz-label" style="color:var(--text3)">${h.label}</span><span class="hz-expand">Not present</span></div></div>`;
+      return`<div class="hz-item active">
+        <div class="hz-header"><input class="hz-check" type="checkbox" checked disabled><span class="hz-label">${h.label}</span><span class="hz-expand" style="color:var(--amber)">▲ Present</span></div>
+        <div class="hz-detail">
+          <div style="font-size:11px;color:var(--text2)"><b>Specify:</b> ${data.specify||'—'}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:4px"><b>Treatment:</b> ${(data.actions||[]).join(', ')||'—'}</div>
+          <div style="font-size:11px;color:${data.eliminated?'var(--green)':'var(--amber)'};margin-top:4px"><b>Eliminated:</b> ${data.eliminated?'Yes':'No'}</div>
+          ${!data.eliminated&&data.precautions?`<div style="font-size:11px;color:var(--text2);margin-top:4px"><b>Precautions:</b> ${data.precautions}</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}`).join('');
+}
+
+function renderJHAView(p){
+  const jha=p.jha||[];
+  if(!jha.length) return`<div class="empty">JHA not completed for this permit.</div>`;
+  const jhaAuth = (p.authChain||{}).hse_review;
+  return`<div style="overflow-x:auto;overflow-y:auto;max-height:380px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:14px">
+  <table style="width:100%;min-width:700px;border-collapse:collapse;font-size:14px">
+    <thead><tr>${['#','Task Step','Hazard Identified','Initial Risk','Control Measures','Residual Risk'].map(h=>`<th style="padding:7px 10px;border:1px solid var(--border);background:var(--bg3);font-family:var(--cond);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);white-space:nowrap">${h}</th>`).join('')}</tr></thead>
+    <tbody>${jha.map(j=>`<tr>
+      <td style="padding:7px 10px;border:1px solid var(--border);font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center">${j.n||''}</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);font-size:13px">${j.step||''}</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);color:var(--amber);font-size:12px">${j.hazard||''}</td>
+      <td style="padding:7px 10px;border:1px solid var(--border)">${rkPill(j.initRisk||'m')}</td>
+      <td style="padding:7px 10px;border:1px solid var(--border);font-size:12px;color:var(--text2)">${j.controls||''}</td>
+      <td style="padding:7px 10px;border:1px solid var(--border)">${rkPill(j.residRisk||'l')}</td>
+    </tr>`).join('')}</tbody>
+  </table></div>
+  <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:14px">
+    <div style="font-family:var(--cond);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-bottom:10px">JHA Authorization — HSE Representative Only</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.5">The HSE Representative must independently review this JHA and confirm that all hazards have been identified, risks are adequately controlled to ALARP, and control measures are appropriate before the permit proceeds to issuance.</div>
+    ${jhaAuth
+      ? `<div class="auth-signed-info">
+          <div class="auth-signed-tick">✓</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:var(--green)">JHA reviewed and approved by HSE Representative</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">${jhaAuth.name} · ${jhaAuth.empNo||''} · ${jhaAuth.timestamp}</div>
+          </div>
+        </div>`
+      : `<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:13px;color:var(--amber);font-weight:500">⏳ Awaiting HSE Representative sign-off</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px">This JHA review is completed as part of Stage 5 — HSE Review in the authorization chain.</div>
+          </div>
+          ${['hse_review','active','closed'].includes(p.status)||!['draft','safe_made','auth_mgr','recipient'].includes(p.status)
+            ? `<button class="btn btn-s" onclick="closeOv('dtl-ov');doSignOff('${p.id}')">Sign JHA as HSE Rep</button>` : ''}
+        </div>`
+    }
+  </div>`;
+}
+
+function renderAuthChain(p){
+  const auth=p.authChain||{};
+  const requiresAuthMgr=needsAuthMgr(p);
+  const stages=[
+    {key:'originator',   label:'Originator',               desc:'Submitted permit with all sections completed.',  alwaysRequired:true},
+    {key:'safe_maker',   label:'Safe Maker / Shift Charge', desc:'Confirmed equipment safe, tagged, and identified.',alwaysRequired:true},
+    {key:'auth_manager', label:'Authorizing Manager',       desc:'Required: 28-day · Cat B CSE · Radiography / Flare work.', alwaysRequired:requiresAuthMgr, skip:!requiresAuthMgr},
+    {key:'recipient',    label:'Recipient / Job Performer', desc:'Accepted permit conditions. Team briefed. Equipment tagged and verified.',alwaysRequired:true},
+    {key:'hse_review',   label:'HSE Rep — JHA Review',      desc:'Reviewed JHA and risk assessment. Independent HSE sign-off.',alwaysRequired:true},
+    {key:'issuer_ops',   label:'Issuer — Ops Superintendent',desc:'Dual sign-off part 1: Operations Superintendent authorises work to commence.',alwaysRequired:true},
+    {key:'issuer_hse',   label:'Issuer — HSE Superintendent/Rep',desc:'Dual sign-off part 2: HSE Superintendent co-issues permit. Work may now commence.',alwaysRequired:true},
+  ];
+  // Show rejection history if present
+  const rejHistory = (auth.rejection_history||[]);
+  const historyHtml = rejHistory.length ? `
+    <div class="al al-d" style="margin-bottom:12px">
+      <div><b>Rejection History:</b> This permit was previously rejected ${rejHistory.length} time(s).<br>
+      ${rejHistory.map((r,i)=>`Rejection ${i+1}: ${r.name||'Unknown'} at ${r.stage||'unknown stage'} — ${r.timestamp||''}`).join('<br>')}
+      </div>
+    </div>` : '';
+
+  return historyHtml+`<div class="apc">${stages.map((s,idx,arr)=>{
+    const signed=auth[s.key];
+    const isCurr=!signed&&!s.skip;
+    return`<div class="aps">
+      <div class="apl">
+        <div class="apn ${signed?'done':s.skip?'skip':isCurr?'curr':''}">${signed?'✓':s.skip?'—':idx+1}</div>
+        ${idx<arr.length-1?`<div class="apl-ln ${signed?'done':''}"></div>`:''}
+      </div>
+      <div class="apb">
+        <div class="ap-role">${s.label}${s.skip?' <span style="font-size:10px;color:var(--text3)">(N/A)</span>':''}</div>
+        <div class="ap-desc">${s.desc}</div>
+        ${signed
+          ?`<div class="ap-meta" style="color:var(--green)">✓ ${signed.name} · ${signed.empNo||''} · ${signed.timestamp}</div>`
+          :s.skip
+            ?`<div class="ap-meta" style="color:var(--text3)">Not required for this permit type</div>`
+            :`<div class="ap-meta" style="color:var(--text3)">Pending</div>`
+        }
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderDetailFooter(){
+  const p=activePermit;
+  let btns=`<button class="btn btn-g" onclick="closeOv('dtl-ov')">Close</button>`;
+  // Export buttons — available on closed permits and active permits
+  if(['active','closed'].includes(p.status)){
+    btns+=`<button class="btn btn-g btn-sm" onclick="exportPermitExcel('${p.id}')">↓ Excel</button>`;
+    btns+=`<button class="btn btn-g btn-sm" onclick="exportPermitWord('${p.id}')">↓ Word</button>`;
+    btns+=`<button class="btn btn-g btn-sm" onclick="exportPermitSharePoint('${p.id}')">↑ SharePoint</button>`;
+  }
+  if(['safe_made','auth_mgr','recipient','hse_review'].includes(p.status)){
+    btns+=`<button class="btn btn-d" onclick="doReject('${p.id}')">✕ Reject</button>`;
+    btns+=`<button class="btn btn-s" onclick="doSignOff('${p.id}')">✓ Sign Off</button>`;
+  } else if(p.status==='active'){
+    btns+=`<button class="btn btn-a" onclick="doSuspend('${p.id}')">⏸ Suspend</button>`;
+    btns+=`<button class="btn btn-s" onclick="doClose('${p.id}')">✓ Close Permit</button>`;
+  } else if(p.status==='draft'){
+    btns+=`<button class="btn btn-p" onclick="doSubmitDraft('${p.id}')">Submit for Authorization</button>`;
+  } else if(p.status==='rejected'){
+    btns+=`<button class="btn btn-p" onclick="doEditResubmit('${p.id}')">✏ Edit &amp; Resubmit</button>`;
+  }
+  // "Work may NOT commence" banner for non-active permits
+  const dtlB=document.getElementById('dtl-body');
+  const existing=dtlB?.querySelector('.work-status-banner');
+  if(existing) existing.remove();
+  if(!['active','closed','rejected'].includes(p.status)){
+    const banner=document.createElement('div');
+    banner.className='al al-d work-status-banner';
+    banner.style.cssText='position:sticky;top:0;z-index:10;margin-bottom:0;border-radius:0;';
+    banner.innerHTML='<b>🚫 WORK MAY NOT COMMENCE</b> — This permit has not yet completed all authorization stages. Current stage: '+STAGE_LABELS[p.status];
+    if(dtlB) dtlB.insertBefore(banner,dtlB.firstChild);
+  } else if(p.status==='active'){
+    const banner=document.createElement('div');
+    banner.className='al al-s work-status-banner';
+    banner.style.cssText='position:sticky;top:0;z-index:10;margin-bottom:0;border-radius:0;';
+    banner.innerHTML='<b>✓ WORK AUTHORISED TO COMMENCE</b> — All authorization levels completed. Permit is ACTIVE.';
+    if(dtlB) dtlB.insertBefore(banner,dtlB.firstChild);
+  }
+  document.getElementById('dtl-footer').innerHTML=btns;
+}
+
+// ══════════════════════════════════════════════════════
+// WORKFLOW ACTIONS
+// ══════════════════════════════════════════════════════
+
+// Maps each status to: what role signs next, what the next status becomes
+const STAGE_FLOW = {
+  // Stage key: what roles can sign, what status it advances to, what auth key it records
+  draft:      { roles:['Shift Charge','Supervisor','Superintendent','HSE Rep'],
+                nextStatus:'safe_made', authKey:'safe_maker', label:'Safe Maker Sign-Off' },
+  safe_made:  { roles:['Superintendent','Manager','VP'],
+                nextStatus:'auth_mgr',  authKey:'auth_manager', label:'Authorizing Manager Sign-Off' },
+  auth_mgr:   { roles:['VP','Manager','Superintendent','HSE Rep','Shift Charge','Supervisor','Operations Engineer','Analyst','Contractor'],
+                nextStatus:'recipient', authKey:'recipient', label:'Recipient Acceptance' },
+  recipient:  { roles:['HSE Rep','Superintendent','Manager'],
+                nextStatus:'hse_review', authKey:'hse_review', label:'HSE Rep — JHA Review' },
+  hse_review: { roles:['Superintendent','Manager'],
+                nextStatus:'active', authKey:'issuer_ops', label:'Ops Superintendent — Issue Permit (1 of 2)' },
+};
+// Auth matrix for specific actions
+const AUTH_ROLES = {
+  settings:     ['VP','Manager','Superintendent','HSE Rep'],
+  auth_manager: ['Superintendent','Manager','VP'],
+  hse_review:   ['HSE Rep','Superintendent','Manager'],
+  issuer_ops:   ['Superintendent','Manager'],
+  issuer_hse:   ['HSE Rep','Superintendent','Manager'],
+  suspend:      ['Superintendent','HSE Rep','Shift Charge','Supervisor'],
+  close:        ['Superintendent','HSE Rep','Shift Charge','Supervisor'],
+  reject:       ['Superintendent','HSE Rep','Shift Charge','Supervisor'],
+};
+
+function doSignOff(id){
+  const p=PERMITS.find(x=>x.id===id);
+  if(!p) return;
+  closeOv('dtl-ov');
+
+  // If we need dual issuance (hse_review → active needs two people)
+  if(p.status==='hse_review'){
+    // Check if ops has already signed
+    if(!(p.authChain||{}).issuer_ops){
+      _doSingleSignOff(p,'hse_review',{roles:AUTH_ROLES.issuer_ops,authKey:'issuer_ops',label:'Ops Superintendent — Issue Permit (1 of 2)'},()=>{
+        // now get HSE sign
+        setTimeout(()=>{
+          _doSingleSignOff(p,'hse_review',{roles:AUTH_ROLES.issuer_hse,authKey:'issuer_hse',label:'HSE Superintendent / Rep — Issue Permit (2 of 2)'},()=>{
+            p.status='active'; p.prog=10;
+            toast(`${p.id} fully authorised and issued. ✓ WORK MAY NOW COMMENCE.`,'s');
+            go(appView); updateBadges();
+          });
+        },200);
+      });
+      return;
+    }
+  }
+
+  const flow=STAGE_FLOW[p.status];
+  if(!flow){toast('No action available for current status.','w');return;}
+
+  // Skip auth_mgr if not required
+  if(p.status==='safe_made'&&!needsAuthMgr(p)){
+    // jump straight to recipient
+    p.status='auth_mgr'; // set temporarily so next call advances correctly
+  }
+
+  _doSingleSignOff(p,p.status,flow,(sigData)=>{
+    if(!p.authChain) p.authChain={};
+    p.authChain[flow.authKey]=sigData;
+    // Advance status
+    if(p.status==='safe_made'&&!needsAuthMgr(p)){
+      p.status='recipient';
+    } else {
+      p.status=flow.nextStatus;
+    }
+    toast(`${p.id} — ${flow.label} complete. Advanced to next stage.`,'s');
+    go(appView); updateBadges();
+  });
+}
+
+function _doSingleSignOff(p, currentStatus, flow, cb){
+  openSignOff(flow.label, flow.roles, (sigData)=>{
+    cb(sigData);
+  });
+}
+
+function doSubmitDraft(id){
+  const p=PERMITS.find(x=>x.id===id);
+  if(!p) return;
+  closeOv('dtl-ov');
+  openSignOff('Originator — Submit Permit',['VP','Manager','Superintendent','Shift Charge','Supervisor','Operations Engineer','Analyst','Contractor'],(sigData)=>{
+    if(!p.authChain) p.authChain={};
+    p.authChain.originator=sigData;
+    p.status='safe_made';
+    p.origName=sigData.name;
+    toast(`${p.id} submitted by ${sigData.name}. Awaiting Safe Maker sign-off.`,'s');
+    go(appView); updateBadges();
+  });
+}
+
+function doReject(id){
+  confirm2('Reject Permit',`Reject this permit? The originator will be notified. Per procedure, no corrections are permitted — a new permit must be raised.`,()=>{
+    closeOv('dtl-ov');
+    openSignOff('Rejection Authorization',AUTH_ROLES.reject,(sigData)=>{
+      const p=PERMITS.find(x=>x.id===id);
+      if(p){
+        p.status='rejected';
+        if(!p.authChain) p.authChain={};
+        p.authChain.rejected={...sigData, reason:'Rejected at '+STAGE_LABELS[p.status]};
+        toast(`${id} rejected by ${sigData.name}.`,'d');
+        go(appView); updateBadges();
+      }
+    });
+  });
+}
+
+function doSuspend(id){
+  confirm2('Suspend Active Permit',`Suspending this permit will immediately halt all associated work. All workers must stand down and sign off.`,()=>{
+    closeOv('dtl-ov');
+    openSignOff('Suspension Authorization',AUTH_ROLES.suspend,(sigData)=>{
+      const p=PERMITS.find(x=>x.id===id);
+      if(p){
+        p.prevStatus=p.status;
+        p.status='suspended';
+        toast(`${id} suspended by ${sigData.name}. All work must cease immediately.`,'w');
+        go(appView); updateBadges();
+      }
+    });
+  });
+}
+
+function doClose(id){
+  closeOv('dtl-ov');
+  openSignOff('Close Permit — Recipient',AUTH_ROLES.close,(sig1)=>{
+    setTimeout(()=>{
+      openSignOff('Close Permit — Issuer Confirmation',AUTH_ROLES.issuer_ops,(sig2)=>{
+        const p=PERMITS.find(x=>x.id===id);
+        if(p){
+          p.status='closed'; p.prog=100;
+          if(!p.authChain) p.authChain={};
+          p.authChain.close_recipient=sig1;
+          p.authChain.close_issuer=sig2;
+          toast(`${id} closed by ${sig2.name}. Records retained for 3 months per GEGL-MID-GCP-HS-PRO-001.`,'s');
+          go(appView); updateBadges();
+        }
+      });
+    },200);
+  });
+}
+
+function doEditResubmit(id){
+  const p = PERMITS.find(x=>x.id===id);
+  if(!p) return;
+  closeOv('dtl-ov');
+  confirm2('Edit & Resubmit Permit',
+    `<b>${id}</b> was rejected. You may edit all sections and resubmit. The authorization chain will restart from Stage 1 (Safe Maker). The rejection history will be preserved. Proceed?`,
+    ()=>{
+      // Reset to draft for editing — preserve rejection history
+      if(!p.authChain) p.authChain = {};
+      p.authChain.rejection_history = [
+        ...(p.authChain.rejection_history||[]),
+        { ...(p.authChain.rejected||{}), restored_at: new Date().toLocaleString('en-GB') }
+      ];
+      // Clear current auth chain stages (keep history)
+      ['safe_maker','auth_manager','recipient','hse_review','issuer_ops','issuer_hse','originator','rejected'].forEach(k=>{
+        delete p.authChain[k];
+      });
+      p.status = 'draft';
+      p.prog = 0;
+      toast(`${id} reopened for editing. All sections are now editable.`,'i');
+      // Open wizard pre-filled with existing data
+      wzFormState = _permitToFormState(p);
+      wzStep = 0;
+      renderWizard();
+      document.getElementById('new-modal-title').textContent = 'Edit & Resubmit — '+id;
+      // Override submit to update instead of create new
+      window._resubmitId = id;
+      openOv('new-ov');
+    }
+  );
+}
+
+function _permitToFormState(p){
+  // Map permit object back to wizard form state for editing
+  const fs = {
+    hazards: JSON.parse(JSON.stringify(p.hazards||{chem:{},phys:{},area:{}})),
+    jha: (p.jha||[]).map(j=>({...j})),
+    'w-type': p.type||'',
+    'w-area': p.area||'',
+    'w-equip': p.equip||'',
+    'w-taskdesc': p.taskDesc||'',
+    'w-dur': p.dur||'24 Hours',
+    'w-csecat': p.csecat||'',
+    'w-start': p.startDate||'',
+    'w-end': p.endDate||'',
+    'w-isoref': p.isoRef!=='N/A'?p.isoRef:'',
+    'w-isoreq': p.isoRef&&p.isoRef!=='N/A',
+  };
+  (p.ppe||[]).forEach(pp=>{ fs['ppe-'+pp.replace(/\s/g,'_')]=true; });
+  (p.emerg||[]).forEach(e=>{ fs['emerg-'+e.replace(/\s/g,'_')]=true; });
+  return fs;
+}
+
+// ══════════════════════════════════════════════════════
+// NEW PERMIT WIZARD
+// ══════════════════════════════════════════════════════
+const WZ_LABELS=['§A Permit','§B Equipment','§C Hazards','§D Isolation','§E Emergency','§F JHA','§G Submit'];
+
+function openNewPermit(){
+  if(!APP_SETTINGS.users.length){
+    toast('Please add users in Settings before creating permits.','w');
+    go('set'); return;
+  }
+  wzStep=0; wzFormState={hazards:{chem:{},phys:{},area:{}}};
+  renderWizard();
+  document.getElementById('new-modal-title').textContent='New Permit to Work — '+appSite;
+  openOv('new-ov');
+}
+
+function renderWizard(){
+  // Steps bar
+  document.getElementById('wz-bar').innerHTML=WZ_LABELS.map((l,i)=>`
+    <div class="wz-step ${i===wzStep?'curr':i<wzStep?'done':''}" onclick="wzJump(${i})">
+      <span class="wz-n">${i<wzStep?'✓':i+1}</span>
+      <span class="wz-lbl">${i<wzStep?'✓ ':''} ${l}</span>
+    </div>`).join('');
+  // Content
+  const renderers=[wzTab0,wzTab1,wzTab2,wzTab3,wzTab4,wzTab5,wzTab6];
+  document.getElementById('wz-content').innerHTML=(renderers[wzStep]||wzTab0)();
+  document.getElementById('wz-back').style.display=wzStep===0?'none':'inline-flex';
+  document.getElementById('wz-next').textContent=wzStep===WZ_LABELS.length-1?'✓ Submit Permit':'Next →';
+}
+
+function wzJump(i){
+  // Save current step state
+  wzSaveStep();
+  wzStep=i;
+  renderWizard();
+}
+function wzNav(dir){
+  wzSaveStep();
+  wzStep=Math.max(0,Math.min(WZ_LABELS.length-1,wzStep+dir));
+  if(wzStep===WZ_LABELS.length-1&&dir>0){
+    renderWizard();
+  } else if(dir>0&&wzStep===WZ_LABELS.length-1){
+    wzSubmit();
+  } else {
+    renderWizard();
+  }
+  // If on last step and pressed Next
+  if(wzStep===WZ_LABELS.length-1){
+    document.getElementById('wz-next').textContent='✓ Submit Permit';
+    document.getElementById('wz-next').onclick=()=>wzSubmit();
+  } else {
+    document.getElementById('wz-next').onclick=()=>wzNav(1);
+  }
+}
+
+function wzSaveStep(){
+  // Save all inputs in the current step
+  document.querySelectorAll('#wz-content input,#wz-content select,#wz-content textarea').forEach(el=>{
+    if(el.id||el.dataset.key){
+      const key=el.id||el.dataset.key;
+      wzFormState[key]=el.type==='checkbox'?el.checked:el.value;
+    }
+  });
+}
+
+function wzRestore(id,def=''){
+  return wzFormState[id]!==undefined?wzFormState[id]:def;
+}
+
+function wzTab0(){
+  const users=APP_SETTINGS.users.filter(u=>u.active&&(u.site===appSite||u.site==='Both'));
+  const areas=SITE_AREAS[appSite]||[];
+  return`
+  <div class="fsec"><div class="fsec-t">Section A — Permit Type & Identification</div>
+  <div class="f2">
+    <div class="fg"><label class="fl">Permit Type<span class="req">*</span></label>
+      <select class="fs" id="w-type">
+        <option value="">-- Select --</option>
+        ${Object.entries(PERMIT_TYPES).map(([k,v])=>`<option value="${k}" ${wzRestore('w-type')===k?'selected':''}>${v.ic} ${v.label}</option>`).join('')}
+      </select></div>
+    <div class="fg"><label class="fl">CSE Category (if applicable)</label>
+      <select class="fs" id="w-csecat">
+        <option value="">N/A</option>
+        <option value="A" ${wzRestore('w-csecat')==='A'?'selected':''}>Category A — Area can be made safe</option>
+        <option value="B" ${wzRestore('w-csecat')==='B'?'selected':''}>Category B — Inert / BA required (Auth. Manager needed)</option>
+      </select></div>
+    <div class="fg"><label class="fl">Permit Duration<span class="req">*</span></label>
+      <select class="fs" id="w-dur">
+        <option value="24 Hours" ${wzRestore('w-dur','24 Hours')==='24 Hours'?'selected':''}>24 Hours</option>
+        <option value="7 Days" ${wzRestore('w-dur')==='7 Days'?'selected':''}>7 Days</option>
+        <option value="28 Days" ${wzRestore('w-dur')==='28 Days'?'selected':''}>28 Days ⚠ (Authorizing Manager required)</option>
+      </select></div>
+    <div class="fg"><label class="fl">Modification Involved?</label>
+      <select class="fs" id="w-mod" onchange="toggleMOC(this.value)">
+        <option value="No" ${wzRestore('w-mod','No')==='No'?'selected':''}>No</option>
+        <option value="Yes" ${wzRestore('w-mod')==='Yes'?'selected':''}>Yes — MOC number required</option>
+      </select></div>
+    <div class="fg" id="w-moc-row" style="display:${wzRestore('w-mod','No')==='Yes'?'flex':'none'}">
+      <label class="fl">MOC Number<span class="req">*</span></label>
+      <input class="fi" id="w-moc" placeholder="MOC reference number" value="${wzRestore('w-moc')}">
+    </div>
+    <div class="fg"><label class="fl">Other permits on same equipment?</label>
+      <select class="fs" id="w-otherpermit">
+        <option value="No" ${wzRestore('w-otherpermit','No')==='No'?'selected':''}>No</option>
+        <option value="Yes" ${wzRestore('w-otherpermit')==='Yes'?'selected':''}>Yes — note in task description</option>
+      </select></div>
+    <div class="fg"><label class="fl">Valid From<span class="req">*</span></label>
+      <input class="fi" id="w-start" type="datetime-local" value="${wzRestore('w-start')}"></div>
+    <div class="fg"><label class="fl">Valid Until<span class="req">*</span></label>
+      <input class="fi" id="w-end" type="datetime-local" value="${wzRestore('w-end')}"></div>
+    <div class="fg"><label class="fl">Continuing from permit no.</label>
+      <input class="fi" id="w-contfrom" placeholder="Previous permit no. (if continuation)" value="${wzRestore('w-contfrom')}"></div>
+  </div></div>
+  <div class="fsec"><div class="fsec-t">Personnel</div>
+  <div class="f2">
+    <div class="fg"><label class="fl">Originator / Safe Maker<span class="req">*</span></label>
+      <select class="fs" id="w-orig">
+        <option value="">-- Select --</option>
+        ${users.map(u=>`<option value="${u.id}" ${wzRestore('w-orig')===u.id?'selected':''}>${u.name} — ${u.role}</option>`).join('')}
+      </select></div>
+    <div class="fg"><label class="fl">Work Carried Out By<span class="req">*</span></label>
+      <select class="fs" id="w-workby" onchange="toggleContractorField(this.value)">
+        <option value="">-- Select --</option>
+        <option value="GEGL Operations" ${wzRestore('w-workby')==='GEGL Operations'?'selected':''}>GEGL Operations</option>
+        <option value="GEGL Maintenance — Electrical" ${wzRestore('w-workby')==='GEGL Maintenance — Electrical'?'selected':''}>GEGL Maintenance — Electrical</option>
+        <option value="GEGL Maintenance — C&I" ${wzRestore('w-workby')==='GEGL Maintenance — C&I'?'selected':''}>GEGL Maintenance — C&I (Control &amp; Instrumentation)</option>
+        <option value="GEGL Maintenance — Mechanical" ${wzRestore('w-workby')==='GEGL Maintenance — Mechanical'?'selected':''}>GEGL Maintenance — Mechanical</option>
+        <option value="Contractor" ${wzRestore('w-workby')==='Contractor'?'selected':''}>Contractor</option>
+      </select></div>
+    <div class="fg" id="w-contractor-row" style="display:${wzRestore('w-workby')==='Contractor'?'flex':'none'}">
+      <label class="fl">Contractor Company Name<span class="req">*</span></label>
+      <input class="fi" id="w-contractor" placeholder="Company name" value="${wzRestore('w-contractor')}">
+    </div>
+    <div class="fg"><label class="fl">Estimated No. of Workers<span class="req">*</span></label>
+      <input class="fi" id="w-numworkers" type="number" min="1" placeholder="e.g. 4" value="${wzRestore('w-numworkers')}"></div>
+  </div></div>`;
+}
+
+function wzTab1(){
+  const areas=SITE_AREAS[appSite]||[];
+  return`
+  <div class="fsec"><div class="fsec-t">Section B — Equipment & Work Description</div>
+  <div class="f2">
+    <div class="fg"><label class="fl">Area / Module<span class="req">*</span></label>
+      <select class="fs" id="w-area">
+        <option value="">-- Select --</option>
+        ${areas.map(a=>`<option value="${a}" ${wzRestore('w-area')===a?'selected':''}>${a}</option>`).join('')}
+      </select></div>
+    <div class="fg"><label class="fl">Equipment Tag Number<span class="req">*</span></label>
+      <input class="fi" id="w-equip" placeholder="e.g. V-201, SG-04, T-401" value="${wzRestore('w-equip')}"></div>
+    <div class="fg"><label class="fl">Work Order / Notification No.</label>
+      <input class="fi" id="w-wo" placeholder="SAP work order or notification no." value="${wzRestore('w-wo')}"></div>
+    <div class="fg"><label class="fl">Operating Pressure</label>
+      <input class="fi" id="w-pressure" placeholder="e.g. 85 barg" value="${wzRestore('w-pressure')}"></div>
+    <div class="fg"><label class="fl">Process Fluid / Medium</label>
+      <input class="fi" id="w-fluid" placeholder="e.g. Lean gas, Propane, 11kV" value="${wzRestore('w-fluid')}"></div>
+    <div class="fg"><label class="fl">Temperature (°C)</label>
+      <input class="fi" id="w-temp" placeholder="e.g. 35°C" value="${wzRestore('w-temp')}"></div>
+    <div class="fg"><label class="fl">Physical Equipment Identification Tag Required?</label>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:5px;line-height:1.5">A numbered tag must be physically attached to the equipment confirming the correct item has been identified, isolated, and shown to the task executor before work commences.</div>
+      <select class="fs" id="w-postag" onchange="toggleTagNo(this.value)">
+        <option value="No" ${wzRestore('w-postag','No')==='No'?'selected':''}>No — not required for this task</option>
+        <option value="Yes" ${wzRestore('w-postag')==='Yes'?'selected':''}>Yes — tag number(s) required</option>
+      </select></div>
+    <div class="fg" id="w-tagno-row" style="display:${wzRestore('w-postag')==='Yes'?'flex':'none'}">
+      <label class="fl">Tag Number(s)<span class="req">*</span></label>
+      <input class="fi" id="w-tagno" placeholder="e.g. TAG-001, TAG-002" value="${wzRestore('w-tagno')}">
+    </div>
+    <div class="fg ff"><label class="fl">Task Description<span class="req">*</span></label>
+      <textarea class="fta" id="w-taskdesc" placeholder="Full scope of work, method, objectives, and any specific constraints…">${wzRestore('w-taskdesc')}</textarea></div>
+    <div class="fg ff"><label class="fl">Special Precautions from Issuer</label>
+      <textarea class="fta" id="w-specialprec" placeholder="Any site-specific precautions or conditions the work team must be aware of…">${wzRestore('w-specialprec')}</textarea></div>
+  </div></div>`;
+}
+
+function wzTab2(){
+  // Simplified hazard checklist — only show detail for ticked items
+  const saved=wzFormState.hazards||{chem:{},phys:{},area:{}};
+  function renderSection(title,items,secKey){
+    return`<div class="fsec">
+      <div class="fsec-t">${title}</div>
+      ${items.map(h=>{
+        const d=saved[secKey][h.id]||{};
+        const isActive=d.present||false;
+        return`<div class="hz-item ${isActive?'active':''}" id="hzitem-${h.id}">
+          <div class="hz-header" onclick="toggleHazard('${h.id}','${secKey}')">
+            <input class="hz-check" type="checkbox" ${isActive?'checked':''} onclick="event.stopPropagation();toggleHazard('${h.id}','${secKey}')">
+            <span class="hz-label">${h.label}</span>
+            <span class="hz-expand">${isActive?'▲ tap to edit':'+ tap to mark present'}</span>
+          </div>
+          <div class="hz-detail">
+            <div class="fg"><label class="fl">Specify the hazard</label>
+              <input class="hz-spec" id="hz-spec-${h.id}" placeholder="Describe specifically…" value="${d.specify||''}" oninput="saveHazardField('${h.id}','${secKey}','specify',this.value)">
+            </div>
+            <div style="font-size:11px;color:var(--text2);margin-bottom:5px">Treatment actions applied:</div>
+            <div class="hz-chips">
+              ${h.actions.map(a=>`<div class="hz-chip ${(d.actions||[]).includes(a)?'on':''}" onclick="toggleHazardAction('${h.id}','${secKey}','${a}')">${a}</div>`).join('')}
+            </div>
+            <div class="fg"><label class="fl">Elimination technique used</label>
+              <input class="hz-spec" id="hz-tech-${h.id}" placeholder="Describe technique…" value="${d.technique||''}" oninput="saveHazardField('${h.id}','${secKey}','technique',this.value)">
+            </div>
+            <div class="hz-elim">
+              <span style="font-size:11px;color:var(--text2);margin-right:6px">Hazard eliminated?</span>
+              <div class="hz-elim-btn ${d.eliminated===true?'yes':''}" onclick="setHazardElim('${h.id}','${secKey}',true)">Yes</div>
+              <div class="hz-elim-btn ${d.eliminated===false?'no':''}" onclick="setHazardElim('${h.id}','${secKey}',false)">No</div>
+            </div>
+            ${d.eliminated===false?`<div class="fg" style="margin-top:8px"><label class="fl">Precautions if not eliminated</label>
+              <input class="hz-spec" id="hz-prec-${h.id}" placeholder="Specify control measures…" value="${d.precautions||''}" oninput="saveHazardField('${h.id}','${secKey}','precautions',this.value)">
+            </div>`:''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+  return`
+  <div class="al al-i" style="margin-bottom:12px">Tick each hazard that is present. Only ticked items expand for detail. Leave unticked if the hazard is not applicable to this task.</div>
+  ${renderSection('Chemical Hazards',CHEM_HAZARDS,'chem')}
+  ${renderSection('Physical Hazards',PHYS_HAZARDS,'phys')}
+  ${renderSection('Work Area Hazards',AREA_HAZARDS,'area')}
+  <div class="fsec"><div class="fsec-t">Required PPE</div>
+  <div class="cg">${PPE_OPTIONS.map(p=>{
+    const saved=(wzFormState['ppe-'+p.replace(/\s/g,'_')])||false;
+    return`<div class="ci ${saved?'on':''}" onclick="this.classList.toggle('on');this.querySelector('input').checked=!this.querySelector('input').checked;wzFormState['ppe-${p.replace(/\s/g,'_')}']=this.classList.contains('on')"><input type="checkbox" ${saved?'checked':''}><label>${p}</label></div>`;
+  }).join('')}</div></div>`;
+}
+
+function toggleHazard(hzId, secKey){
+  if(!wzFormState.hazards) wzFormState.hazards={chem:{},phys:{},area:{}};
+  if(!wzFormState.hazards[secKey]) wzFormState.hazards[secKey]={};
+  const cur=wzFormState.hazards[secKey][hzId]||{};
+  cur.present=!cur.present;
+  wzFormState.hazards[secKey][hzId]=cur;
+  const item=document.getElementById('hzitem-'+hzId);
+  if(item){
+    item.classList.toggle('active',cur.present);
+    const cb=item.querySelector('.hz-check');if(cb) cb.checked=cur.present;
+    const exp=item.querySelector('.hz-expand');
+    if(exp) exp.textContent=cur.present?'▲ tap to edit':'+ tap to mark present';
+    const detail=item.querySelector('.hz-detail');
+    if(detail) detail.style.display=cur.present?'block':'none';
+  }
+}
+function saveHazardField(hzId,secKey,field,val){
+  if(!wzFormState.hazards) wzFormState.hazards={chem:{},phys:{},area:{}};
+  if(!wzFormState.hazards[secKey]) wzFormState.hazards[secKey]={};
+  if(!wzFormState.hazards[secKey][hzId]) wzFormState.hazards[secKey][hzId]={};
+  wzFormState.hazards[secKey][hzId][field]=val;
+}
+function toggleHazardAction(hzId,secKey,action){
+  if(!wzFormState.hazards[secKey]) wzFormState.hazards[secKey]={};
+  if(!wzFormState.hazards[secKey][hzId]) wzFormState.hazards[secKey][hzId]={};
+  const h=wzFormState.hazards[secKey][hzId];
+  if(!h.actions) h.actions=[];
+  const idx=h.actions.indexOf(action);
+  if(idx>=0) h.actions.splice(idx,1); else h.actions.push(action);
+  // Update chip display
+  document.querySelectorAll(`#hzitem-${hzId} .hz-chip`).forEach(c=>{
+    c.classList.toggle('on',h.actions.includes(c.textContent));
+  });
+}
+function setHazardElim(hzId,secKey,val){
+  if(!wzFormState.hazards[secKey]) wzFormState.hazards[secKey]={};
+  if(!wzFormState.hazards[secKey][hzId]) wzFormState.hazards[secKey][hzId]={};
+  wzFormState.hazards[secKey][hzId].eliminated=val;
+  renderWizard(); // re-render to show/hide precautions field
+}
+
+function wzTab3(){
+  const ptype=wzFormState['w-type']||'';
+  const isoReq=wzFormState['w-isoreq']||false;
+  const cseApplicable=wzFormState['w-cseapplicable']||ptype==='cse'||false;
+  const radType=ptype==='rad';
+  // Default gas monitoring to ON for CSE and RAD, off otherwise
+  if(wzFormState['w-gasreq']===undefined){
+    wzFormState['w-gasreq'] = (ptype==='cse'||ptype==='rad') ? true : false;
+  }
+  return`
+  <div class="fsec"><div class="fsec-t">Section D — Energy Isolation</div>
+  <div class="ci ${isoReq?'on':''}" style="margin-bottom:12px;display:inline-flex" onclick="toggleIsolation(this)">
+    <input type="checkbox" id="w-isoreq" ${isoReq?'checked':''}>
+    <label style="font-size:13px;font-weight:500">Isolation required for this task</label>
+  </div>
+  <div id="iso-fields" style="display:${isoReq?'block':'none'}">
+    <div class="al al-w" style="margin-bottom:10px">Record the isolation certificate number — the physical certificate must accompany the field copy of the permit at all times.</div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Isolation Certificate No.<span class="req">*</span></label>
+        <input class="fi" id="w-isoref" placeholder="e.g. EI-PGCP-2025-001" value="${wzRestore('w-isoref')}"></div>
+      <div class="fg"><label class="fl">Isolation Appendix Attached?</label>
+        <select class="fs" id="w-isoattached">
+          <option value="Yes" ${wzRestore('w-isoattached','Yes')==='Yes'?'selected':''}>Yes</option>
+          <option value="No" ${wzRestore('w-isoattached')==='No'?'selected':''}>No — attach before issuance</option>
+        </select></div>
+      <div class="fg"><label class="fl">Isolation Type</label>
+        <select class="fs" id="w-isotype">
+          <option value="Electrical" ${wzRestore('w-isotype')==='Electrical'?'selected':''}>Electrical (LOTO)</option>
+          <option value="Process" ${wzRestore('w-isotype')==='Process'?'selected':''}>Process (Valve / Blind / Spade)</option>
+          <option value="Mechanical" ${wzRestore('w-isotype')==='Mechanical'?'selected':''}>Mechanical</option>
+          <option value="Combined" ${wzRestore('w-isotype')==='Combined'?'selected':''}>Combined (multiple types)</option>
+        </select></div>
+      <div class="fg"><label class="fl">Lock Number Range</label>
+        <input class="fi" id="w-lockrange" placeholder="e.g. Lock 01 to Lock 04" value="${wzRestore('w-lockrange')}"></div>
+      <div class="fg ff"><label class="fl">Isolation Details / Purging / Special Conditions</label>
+        <textarea class="fta" id="w-isodetail" placeholder="Specify isolation points, purging requirements, blind/spade locations, lock numbers, bump test confirmation, etc.">${wzRestore('w-isodetail')}</textarea></div>
+    </div>
+  </div>
+  </div>
+
+  <div class="fsec">
+    <div class="fsec-t">Confined Space Entry</div>
+    <div class="ci ${cseApplicable?'on':''}" style="display:inline-flex;margin-bottom:10px" onclick="toggleCSE(this)">
+      <input type="checkbox" id="w-cseapplicable" ${cseApplicable?'checked':''}>
+      <label style="font-size:13px;font-weight:500">Confined Space Entry applicable to this task</label>
+    </div>
+    <div id="cse-fields" style="display:${cseApplicable?'block':'none'}">
+      <div class="al al-w" style="margin-bottom:10px">Cat A: area can be made safe and maintained safe. Cat B: inert atmosphere — continuous BA mandatory and Authorizing Manager sign-off required.</div>
+      <div class="f2">
+        <div class="fg"><label class="fl">CSE Category</label>
+          <select class="fs" id="w-csecat">
+            <option value="A" ${wzRestore('w-csecat','A')==='A'?'selected':''}>Category A — Area can be made safe</option>
+            <option value="B" ${wzRestore('w-csecat')==='B'?'selected':''}>Category B — Inert atmosphere / BA mandatory (Auth. Manager required)</option>
+          </select></div>
+        <div class="fg"><label class="fl">Manhole / Access Point Barricading</label>
+          <select class="fs" id="w-barricade">
+            <option value="Yes" ${wzRestore('w-barricade','Yes')==='Yes'?'selected':''}>Yes — installed</option>
+            <option value="No" ${wzRestore('w-barricade')==='No'?'selected':''}>No — required before entry</option>
+          </select></div>
+        <div class="fg"><label class="fl">Natural Flow Ventilation</label>
+          <select class="fs" id="w-natvent">
+            <option value="Yes" ${wzRestore('w-natvent')==='Yes'?'selected':''}>Yes</option>
+            <option value="No" ${wzRestore('w-natvent','No')==='No'?'selected':''}>No</option>
+          </select></div>
+        <div class="fg"><label class="fl">Forced Flow (Pull-Through) Ventilation</label>
+          <select class="fs" id="w-ventilation">
+            <option value="Yes" ${wzRestore('w-ventilation')==='Yes'?'selected':''}>Yes</option>
+            <option value="No" ${wzRestore('w-ventilation','No')==='No'?'selected':''}>No</option>
+          </select></div>
+        <div class="fg"><label class="fl">Utilities Connected Inside Space?</label>
+          <select class="fs" id="w-utilities">
+            <option value="No" ${wzRestore('w-utilities','No')==='No'?'selected':''}>No — all disconnected</option>
+            <option value="Yes" ${wzRestore('w-utilities')==='Yes'?'selected':''}>Yes — specify below</option>
+          </select></div>
+        <div class="fg"><label class="fl">Rescue Plan Available?</label>
+          <select class="fs" id="w-rescueplan">
+            <option value="Yes" ${wzRestore('w-rescueplan','Yes')==='Yes'?'selected':''}>Yes — attached to permit</option>
+            <option value="No" ${wzRestore('w-rescueplan')==='No'?'selected':''}>No — required before entry</option>
+          </select></div>
+        <div class="fg"><label class="fl">Inert Atmosphere (Cat B)?</label>
+          <select class="fs" id="w-inert">
+            <option value="No" ${wzRestore('w-inert','No')==='No'?'selected':''}>No</option>
+            <option value="Yes" ${wzRestore('w-inert')==='Yes'?'selected':''}>Yes — BA mandatory, Auth. Manager required</option>
+          </select></div>
+        <div class="fg"><label class="fl">Access Controller Assigned?</label>
+          <select class="fs" id="w-accessctrl2">
+            <option value="Yes" ${wzRestore('w-accessctrl2','Yes')==='Yes'?'selected':''}>Yes — name in Emergency section</option>
+            <option value="No" ${wzRestore('w-accessctrl2')==='No'?'selected':''}>No — assign before entry</option>
+          </select></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fsec" id="rad-section" style="display:${radType?'block':'none'}">
+    <div class="fsec-t">Radiography / NDT Preparation</div>
+    <div class="al al-w" style="margin-bottom:10px">Radiography permits are classified as Hot Work. All other active permits in the affected area must be temporarily suspended during RT. Exclusion zone minimum 15m.</div>
+    <div class="f2">
+      <div class="fg"><label class="fl">Radioactive Source Status</label>
+        <select class="fs" id="w-radsource">
+          <option value="Removed" ${wzRestore('w-radsource','Removed')==='Removed'?'selected':''}>Removed from equipment</option>
+          <option value="Isolated" ${wzRestore('w-radsource')==='Isolated'?'selected':''}>Isolated in position</option>
+        </select></div>
+      <div class="fg"><label class="fl">Radiography Certificate No.</label>
+        <input class="fi" id="w-radcert" placeholder="RSO cert no." value="${wzRestore('w-radcert')}"></div>
+      <div class="fg"><label class="fl">Exclusion Zone Established?</label>
+        <select class="fs" id="w-exczone">
+          <option value="Yes" ${wzRestore('w-exczone','Yes')==='Yes'?'selected':''}>Yes — 15m minimum</option>
+          <option value="No" ${wzRestore('w-exczone')==='No'?'selected':''}>No — required before work starts</option>
+        </select></div>
+      <div class="fg"><label class="fl">Work Window</label>
+        <select class="fs" id="w-radwindow">
+          <option value="Night" ${wzRestore('w-radwindow','Night')==='Night'?'selected':''}>Night work (22:00–06:00)</option>
+          <option value="Day" ${wzRestore('w-radwindow')==='Day'?'selected':''}>Day work</option>
+          <option value="Shutdown" ${wzRestore('w-radwindow')==='Shutdown'?'selected':''}>Shutdown / plant offline</option>
+        </select></div>
+      <div class="fg"><label class="fl">Dosimeters Issued to All Personnel?</label>
+        <select class="fs" id="w-dosimeters">
+          <option value="Yes" ${wzRestore('w-dosimeters','Yes')==='Yes'?'selected':''}>Yes</option>
+          <option value="No" ${wzRestore('w-dosimeters')==='No'?'selected':''}>No — required before entry</option>
+        </select></div>
+      <div class="fg"><label class="fl">Adjacent Permits Suspended?</label>
+        <select class="fs" id="w-adjsuspend">
+          <option value="Yes" ${wzRestore('w-adjsuspend','Yes')==='Yes'?'selected':''}>Yes — control room notified</option>
+          <option value="No" ${wzRestore('w-adjsuspend')==='No'?'selected':''}>No — required before RT commences</option>
+        </select></div>
+    </div>
+  </div>
+
+  <div class="fsec">
+    <div class="fsec-t">Section H — Gas Monitoring</div>
+    <div class="ci ${wzFormState['w-gasreq']!==false?'on':''}" style="display:inline-flex;margin-bottom:12px"
+         onclick="toggleGasMonitoring(this)">
+      <input type="checkbox" id="w-gasreq" ${wzFormState['w-gasreq']!==false?'checked':''}>
+      <label style="font-size:14px;font-weight:500">Gas monitoring required for this task</label>
+    </div>
+    <div id="gas-monitor-fields" style="display:${wzFormState['w-gasreq']!==false?'block':'none'}">
+    <div class="f2">
+      <div class="fg"><label class="fl">Explosive / LEL Monitoring Frequency</label>
+        <select class="fs" id="w-lelfreq">
+          <option value="Continuous" ${wzRestore('w-lelfreq','Continuous')==='Continuous'?'selected':''}>Continuous (required for CSE)</option>
+          <option value="Every 15 min" ${wzRestore('w-lelfreq')==='Every 15 min'?'selected':''}>Every 15 minutes (ATEX zone)</option>
+          <option value="Every 30 min" ${wzRestore('w-lelfreq')==='Every 30 min'?'selected':''}>Every 30 minutes</option>
+          <option value="Every 60 min" ${wzRestore('w-lelfreq')==='Every 60 min'?'selected':''}>Every 60 minutes</option>
+          <option value="Pre-work only" ${wzRestore('w-lelfreq')==='Pre-work only'?'selected':''}>Pre-work test only</option>
+          <option value="N/A" ${wzRestore('w-lelfreq')==='N/A'?'selected':''}>N/A</option>
+        </select></div>
+      <div class="fg"><label class="fl">Oxygen (O₂) Monitoring Frequency</label>
+        <select class="fs" id="w-o2freq">
+          <option value="Continuous" ${wzRestore('w-o2freq')==='Continuous'?'selected':''}>Continuous</option>
+          <option value="Every 30 min" ${wzRestore('w-o2freq','Every 30 min')==='Every 30 min'?'selected':''}>Every 30 minutes</option>
+          <option value="Pre-work only" ${wzRestore('w-o2freq')==='Pre-work only'?'selected':''}>Pre-work test only</option>
+          <option value="N/A" ${wzRestore('w-o2freq')==='N/A'?'selected':''}>N/A</option>
+        </select></div>
+      <div class="fg"><label class="fl">Toxic Gas (H₂S / CO) Monitoring</label>
+        <select class="fs" id="w-toxfreq">
+          <option value="Continuous" ${wzRestore('w-toxfreq')==='Continuous'?'selected':''}>Continuous</option>
+          <option value="Every 30 min" ${wzRestore('w-toxfreq','Every 30 min')==='Every 30 min'?'selected':''}>Every 30 minutes</option>
+          <option value="Pre-work only" ${wzRestore('w-toxfreq')==='Pre-work only'?'selected':''}>Pre-work test only</option>
+          <option value="N/A" ${wzRestore('w-toxfreq')==='N/A'?'selected':''}>N/A</option>
+        </select></div>
+      <div class="fg"><label class="fl">Gas Monitor Instrument No.</label>
+        <input class="fi" id="w-monno" placeholder="e.g. MSA-2041" value="${wzRestore('w-monno')}"></div>
+      <div class="fg"><label class="fl">Gas Tester Name</label>
+        <input class="fi" id="w-gastester" placeholder="Designated gas tester for this permit" value="${wzRestore('w-gastester')}"></div>
+      <div class="fg"><label class="fl">Emergency Management Presence Required?</label>
+        <select class="fs" id="w-emgpresence">
+          <option value="No" ${wzRestore('w-emgpresence','No')==='No'?'selected':''}>No</option>
+          <option value="Yes" ${wzRestore('w-emgpresence')==='Yes'?'selected':''}>Yes</option>
+        </select></div>
+    </div>
+    </div>
+  </div>`;
+}
+
+function wzTab4(){
+  return`
+  <div class="fsec"><div class="fsec-t">Section E — Emergency Equipment</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Select all emergency equipment that will be present at the work site:</div>
+      <div class="cg">${EMERG_OPTIONS.map(e=>{
+        const saved=wzFormState['emerg-'+e.replace(/\s/g,'_')]||false;
+        return`<div class="ci ${saved?'on':''}" onclick="this.classList.toggle('on');this.querySelector('input').checked=!this.querySelector('input').checked;wzFormState['emerg-${e.replace(/\s/g,'_')}']=this.classList.contains('on')"><input type="checkbox" ${saved?'checked':''}><label>${e}</label></div>`;
+      }).join('')}</div>
+    </div>
+    <div>
+      <div class="fg"><label class="fl">Fire Brigade Notified?</label>
+        <select class="fs" id="w-firebrigade">
+          <option value="N/A" ${wzRestore('w-firebrigade','N/A')==='N/A'?'selected':''}>N/A</option>
+          <option value="Yes" ${wzRestore('w-firebrigade')==='Yes'?'selected':''}>Yes</option>
+          <option value="No" ${wzRestore('w-firebrigade')==='No'?'selected':''}>No</option>
+        </select></div>
+      <div class="fg"><label class="fl">Paramedics / First Aiders On Site?</label>
+        <select class="fs" id="w-paramedic">
+          <option value="Yes" ${wzRestore('w-paramedic','Yes')==='Yes'?'selected':''}>Yes</option>
+          <option value="No" ${wzRestore('w-paramedic')==='No'?'selected':''}>No</option>
+        </select></div>
+      <div class="fg"><label class="fl">Foam extinguisher (%)</label>
+        <input class="fi" id="w-foam" placeholder="e.g. 20%" value="${wzRestore('w-foam')}"></div>
+      <div class="fg"><label class="fl">CO₂ extinguisher (%)</label>
+        <input class="fi" id="w-co2ext" placeholder="e.g. 80%" value="${wzRestore('w-co2ext')}"></div>
+      <div class="fg"><label class="fl">Other extinguisher type / %</label>
+        <input class="fi" id="w-otherext" placeholder="Type and %" value="${wzRestore('w-otherext')}"></div>
+    </div>
+  </div></div>
+  <div class="fsec"><div class="fsec-t">Emergency Muster Point</div>
+    <div class="fg">
+      <label class="fl">Muster Point for this Task<span class="req">*</span></label>
+      <select class="fs" id="w-muster">
+        ${(APP_SETTINGS.musterPoints[appSite]||[]).map(m=>`<option value="${m}" ${wzRestore('w-muster')===m?'selected':''}>${m}</option>`).join('')}
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">OIM / Shift Controller Contact</label>
+      <input class="fi" id="w-oimcontact" placeholder="Name and radio channel" value="${wzRestore('w-oimcontact')}">
+    </div>
+    <div class="fg">
+      <label class="fl">Special Emergency Instructions</label>
+      <textarea class="fta" id="w-emerginstr" placeholder="e.g. For CSE emergency: Do not enter without BA. Call OIM on Channel 4. Rescue team standby at Muster Alpha." style="min-height:70px">${wzRestore('w-emerginstr')}</textarea>
+    </div>
+  </div>`;
+}
+
+
+function wzTab5(){
+  if(!wzFormState.jha||wzFormState.jha.length===0){
+    wzFormState.jha=[{n:1},{n:2},{n:3}];
+  }
+  const jha=wzFormState.jha;
+  return`
+  <div class="fsec"><div class="fsec-t">Job Hazard Analysis — Task Steps</div>
+  <div class="al al-i" style="margin-bottom:14px">Add one step at a time. Click a step card to expand and fill in details. Minimum 3 steps required. All workers must be briefed on this JHA before starting work.</div>
+  <div id="jha-accordion">
+    ${jha.map((j,i)=>renderJHACard(j,i)).join('')}
+  </div>
+  <button class="btn btn-g btn-sm" style="margin-top:10px" onclick="addJHAStep()">+ Add Step</button>
+  </div>`;
+}
+
+function renderJHACard(j, i){
+  const isOpen = wzFormState['jha-open-'+i]||false;
+  const hasData = j.step||j.hazard;
+  const riskLabels={l:'Low',m:'Medium',h:'High',v:'Very High'};
+  const summary = j.step ? j.step.substring(0,50)+(j.step.length>50?'…':'') : 'Click to fill in step '+(i+1);
+  return`<div style="border:1px solid ${isOpen?'rgba(0,194,168,.35)':'var(--border)'};border-radius:var(--r2);margin-bottom:6px;overflow:hidden;transition:border-color .15s" id="jha-card-${i}">
+    <!-- Step Header -->
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;background:${isOpen?'rgba(0,194,168,.06)':'var(--bg3)'};transition:background .15s"
+         onclick="toggleJHACard(${i})">
+      <div style="width:24px;height:24px;border-radius:50%;background:${hasData?'var(--acc)':'var(--bg5)'};display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:500;color:${hasData?'#001a15':'var(--text3)'};flex-shrink:0">${i+1}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;color:${hasData?'var(--text)':'var(--text3)'}">${summary}</div>
+        ${hasData&&!isOpen?`<div style="font-size:10px;color:var(--text3);margin-top:2px">
+          ${j.initRisk?`Initial risk: <span style="color:var(--amber)">${riskLabels[j.initRisk]||j.initRisk}</span> · `:''}
+          ${j.residRisk?`Residual: <span style="color:var(--green)">${riskLabels[j.residRisk]||j.residRisk}</span>`:''}
+        </div>`:''}
+      </div>
+      <div style="font-size:18px;color:var(--text3);transition:transform .2s;transform:rotate(${isOpen?'180':'0'}deg)">⌄</div>
+    </div>
+    <!-- Step Detail (accordion body) -->
+    ${isOpen?`<div style="padding:14px;border-top:1px solid var(--border)">
+      <div class="f2">
+        <div class="fg ff"><label class="fl">Task Step Description<span class="req">*</span></label>
+          <input class="fi" placeholder="Describe what will be done in this step…"
+            value="${(j.step||'').replace(/"/g,'&quot;')}"
+            oninput="saveJHAField(${i},'step',this.value)"></div>
+        <div class="fg ff"><label class="fl">Hazards Identified</label>
+          <input class="fi" placeholder="What could go wrong? What hazards exist for this step?"
+            value="${(j.hazard||'').replace(/"/g,'&quot;')}"
+            oninput="saveJHAField(${i},'hazard',this.value)"></div>
+        <div class="fg"><label class="fl">Initial Risk (before controls)</label>
+          <select class="fs" onchange="saveJHAField(${i},'initRisk',this.value)">
+            <option value="">-- Select --</option>
+            <option value="l" ${j.initRisk==='l'?'selected':''}>Low</option>
+            <option value="m" ${j.initRisk==='m'?'selected':''}>Medium</option>
+            <option value="h" ${j.initRisk==='h'?'selected':''}>High</option>
+            <option value="v" ${j.initRisk==='v'?'selected':''}>Very High</option>
+          </select></div>
+        <div class="fg"><label class="fl">Residual Risk (after controls)</label>
+          <select class="fs" onchange="saveJHAField(${i},'residRisk',this.value)">
+            <option value="">-- Select --</option>
+            <option value="l" ${j.residRisk==='l'?'selected':''}>Low</option>
+            <option value="m" ${j.residRisk==='m'?'selected':''}>Medium</option>
+            <option value="h" ${j.residRisk==='h'?'selected':''}>High</option>
+          </select></div>
+        <div class="fg ff"><label class="fl">Control Measures (Hierarchy: Eliminate → Substitute → Engineer → Admin → PPE)</label>
+          <textarea class="fta" style="min-height:70px" placeholder="Describe specific controls that will reduce this risk to ALARP…"
+            oninput="saveJHAField(${i},'controls',this.value)">${j.controls||''}</textarea></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+        <button class="btn btn-g btn-sm" onclick="toggleJHACard(${i})">✓ Done — collapse step</button>
+        ${wzFormState.jha.length>3?`<button class="btn btn-d btn-sm" onclick="removeJHAStep(${i})">✕ Remove step</button>`:''}
+      </div>
+    </div>`:''}
+  </div>`;
+}
+
+function toggleJHACard(i){
+  wzFormState['jha-open-'+i]=!wzFormState['jha-open-'+i];
+  const acc=document.getElementById('jha-accordion');
+  if(acc) acc.innerHTML=wzFormState.jha.map((j,idx)=>renderJHACard(j,idx)).join('');
+}
+
+function addJHAStep(){
+  if(!wzFormState.jha) wzFormState.jha=[];
+  const newIdx=wzFormState.jha.length;
+  wzFormState.jha.push({n:newIdx+1});
+  wzFormState['jha-open-'+newIdx]=true; // open new step automatically
+  const acc=document.getElementById('jha-accordion');
+  if(acc) acc.innerHTML=wzFormState.jha.map((j,i)=>renderJHACard(j,i)).join('');
+}
+
+function removeJHAStep(i){
+  wzFormState.jha.splice(i,1);
+  // Re-number
+  wzFormState.jha.forEach((j,idx)=>{ j.n=idx+1; });
+  // Reindex open states
+  const newOpen={};
+  wzFormState.jha.forEach((_,idx)=>{
+    newOpen['jha-open-'+idx]=wzFormState['jha-open-'+(idx>=i?idx+1:idx)]||false;
+  });
+  Object.keys(wzFormState).filter(k=>k.startsWith('jha-open-')).forEach(k=>delete wzFormState[k]);
+  Object.assign(wzFormState,newOpen);
+  const acc=document.getElementById('jha-accordion');
+  if(acc) acc.innerHTML=wzFormState.jha.map((j,idx)=>renderJHACard(j,idx)).join('');
+}
+
+function saveJHAField(i,field,val){
+  if(!wzFormState.jha) wzFormState.jha=[{},{},{},{},{}];
+  while(wzFormState.jha.length<=i) wzFormState.jha.push({});
+  wzFormState.jha[i]={...(wzFormState.jha[i]||{}),n:i+1,[field]:val};
+}
+
+
+function wzTab6(){
+  const fs=wzFormState;
+  const origUser=APP_SETTINGS.users.find(u=>u.id===fs['w-orig']);
+  const type=fs['w-type']||'—';
+  const area=fs['w-area']||'—';
+  const equip=fs['w-equip']||'—';
+  const dur=fs['w-dur']||'24 Hours';
+  const csecat=fs['w-csecat']||'';
+  const needsAM=dur==='28 Days'||csecat==='B'||type==='rad';
+  return`
+  <div class="fsec"><div class="fsec-t">Section G — Review & Submit</div>
+  <div class="al al-i" style="margin-bottom:14px">Review the permit summary below. Once submitted, the permit enters the authorization workflow. No corrections are permitted on a submitted permit — a new permit must be raised if corrections are needed.</div>
+
+  <div class="card" style="margin-bottom:14px">
+    <div style="padding:14px 16px">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-size:12px">
+        ${[
+          ['Site',appSite],['Type',type?PERMIT_TYPES[type]?.label||type:'—'],
+          ['Area',area.split('—')[0].trim()],['Equipment',equip],
+          ['Duration',dur],['CSE Category',csecat||'N/A'],
+          ['Originator',origUser?origUser.name:'—'],['Valid From',fs['w-start']||'—'],
+        ].map(([k,v])=>`<div><div style="font-family:var(--cond);font-size:10px;color:var(--text3);letter-spacing:.06em;margin-bottom:2px">${k}</div><div style="font-weight:500">${v}</div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="fsec-t">Authorization Chain for This Permit</div>
+  <div class="apc">
+    ${[
+      {n:1,label:'Originator submits',desc:'You (the originator) sign to submit.',req:true},
+      {n:2,label:'Safe Maker / Shift Charge',desc:'Confirms equipment safe, tagged, and identified.',req:true},
+      {n:3,label:'Authorizing Manager',desc:'Required: 28-day / Cat B CSE / Radiography.',req:needsAM,skip:!needsAM},
+      {n:4,label:'Recipient / Job Performer',desc:'Accepts permit conditions and confirms team briefed.',req:true},
+      {n:5,label:'HSE Rep — JHA Review',desc:'Independent HSE review of JHA and risk assessment.',req:true},
+      {n:6,label:'Dual Issuance',desc:'Ops Superintendent + HSE Superintendent/Rep — work may commence.',req:true},
+    ].map((s,i,a)=>`<div class="aps">
+      <div class="apl">
+        <div class="apn ${s.skip?'skip':''}" style="${!s.skip?'border-color:var(--acc);color:var(--acc)':''}">${s.skip?'—':s.n}</div>
+        ${i<a.length-1?`<div class="apl-ln"></div>`:``}
+      </div>
+      <div class="apb">
+        <div class="ap-role">${s.label}${s.skip?' <span style="font-size:10px;color:var(--text3)">(N/A — not required)</span>':''}</div>
+        <div class="ap-desc">${s.desc}</div>
+      </div>
+    </div>`).join('')}
+  </div>
+
+  <div style="margin-top:16px;padding:12px;background:rgba(240,165,0,.06);border:1px solid rgba(240,165,0,.2);border-radius:var(--r);">
+    <div style="font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Originator Declaration</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:12px">By submitting, I confirm: all information provided is accurate and complete; the JHA will be briefed to all workers before commencement; all preconditions have been communicated; work MUST NOT commence until all required authorization levels are complete; I accept full responsibility for the accuracy of this submission.</div>
+    <button class="btn btn-p" onclick="wzSubmit()">✓ Sign &amp; Submit Permit</button>
+  </div></div>`;
+}
+
+function wzSubmit(){
+  wzSaveStep();
+  const fs=wzFormState;
+  if(!fs['w-type']){toast('Please select a permit type.','w');return;}
+  if(!fs['w-area']){toast('Please select the work area.','w');return;}
+  if(!fs['w-equip']){toast('Please enter the equipment tag number.','w');return;}
+  if(!fs['w-orig']){toast('Please select the originator.','w');return;}
+  if(!fs['w-taskdesc']){toast('Please provide a task description.','w');return;}
+
+  openSignOff('Originator — Submit Permit',
+    ['VP','Manager','Superintendent','Shift Charge','Supervisor','Operations Engineer','Analyst','Contractor'],
+    (sigData)=>{
+      const ppe=PPE_OPTIONS.filter(pp=>wzFormState['ppe-'+pp.replace(/\s/g,'_')]);
+      const emerg=EMERG_OPTIONS.filter(e=>wzFormState['emerg-'+e.replace(/\s/g,'_')]);
+      const isResubmit = !!window._resubmitId;
+      let targetPermit = isResubmit ? PERMITS.find(x=>x.id===window._resubmitId) : null;
+
+      const permitData = {
+        type:fs['w-type'], area:fs['w-area']||'', equip:fs['w-equip']||'',
+        taskDesc:fs['w-taskdesc']||'', dur:fs['w-dur']||'24 Hours',
+        csecat:fs['w-csecat']||'', risk:deriveRisk(fs),
+        origName:sigData.name, origEmp:sigData.empNo,
+        workBy:fs['w-workby']||'',
+        contractor:fs['w-workby']==='Contractor'?fs['w-contractor']||'':'',
+        startDate:fs['w-start']||'', endDate:fs['w-end']||'',
+        isoRef:fs['w-isoreq']&&fs['w-isoref']?fs['w-isoref']:'N/A',
+        gasMonRequired:fs['w-gasreq']||false,
+        ppe, emerg,
+        hazards:JSON.parse(JSON.stringify(wzFormState.hazards||{})),
+        jha:(wzFormState.jha||[]).filter(j=>j.step),
+        prog:5, status:'safe_made',
+      };
+
+      if(isResubmit && targetPermit){
+        // Update existing permit, preserve id + rejection history
+        Object.assign(targetPermit, permitData);
+        targetPermit.authChain = {
+          ...(targetPermit.authChain||{}),
+          originator: sigData,
+        };
+        window._resubmitId = null;
+        closeOv('new-ov');
+        toast(`${targetPermit.id} resubmitted by ${sigData.name}. Authorization chain restarted from Stage 1.`,'s');
+      } else {
+        const id=genPermitId(appSite);
+        const newPermit={ id, site:appSite, workers:[], ...permitData, authChain:{ originator:sigData } };
+        PERMITS.unshift(newPermit);
+        closeOv('new-ov');
+        toast(`Permit <b>${id}</b> submitted by ${sigData.name}. Awaiting Safe Maker sign-off.`,'s');
+      }
+      go('pend'); updateBadges();
+    }
+  );
+}
+
+function deriveRisk(fs){
+  // Simple risk derivation from JHA
+  const jha=fs.jha||[];
+  if(jha.some(j=>j.initRisk==='v')) return 'v';
+  if(jha.some(j=>j.initRisk==='h')) return 'h';
+  if(jha.some(j=>j.initRisk==='m')) return 'm';
+  return 'l';
+}
+
+// ══════════════════════════════════════════════════════
+// CONDITIONAL FIELD TOGGLES
+// ══════════════════════════════════════════════════════
+function toggleMOC(val){
+  const row=document.getElementById('w-moc-row');
+  if(row) row.style.display=val==='Yes'?'flex':'none';
+  wzFormState['w-mod']=val;
+}
+
+function toggleIsolation(el){
+  el.classList.toggle('on');
+  const chk=el.querySelector('input');
+  if(chk) chk.checked=el.classList.contains('on');
+  wzFormState['w-isoreq']=el.classList.contains('on');
+  const fields=document.getElementById('iso-fields');
+  if(fields) fields.style.display=el.classList.contains('on')?'block':'none';
+}
+
+function toggleTagNo(val){
+  const row=document.getElementById('w-tagno-row');
+  if(row) row.style.display=val==='Yes'?'flex':'none';
+  wzFormState['w-postag']=val;
+}
+
+function toggleContractorField(val){
+  const row=document.getElementById('w-contractor-row');
+  if(row) row.style.display=val==='Contractor'?'flex':'none';
+  wzFormState['w-workby']=val;
+}
+
+function toggleGasMonitoring(el){
+  el.classList.toggle('on');
+  const chk=el.querySelector('input');
+  if(chk) chk.checked=el.classList.contains('on');
+  wzFormState['w-gasreq']=el.classList.contains('on');
+  const fields=document.getElementById('gas-monitor-fields');
+  if(fields) fields.style.display=el.classList.contains('on')?'block':'none';
+}
+
+function toggleCSE(el){
+  el.classList.toggle('on');
+  const chk=el.querySelector('input');
+  if(chk) chk.checked=el.classList.contains('on');
+  wzFormState['w-cseapplicable']=el.classList.contains('on');
+  const fields=document.getElementById('cse-fields');
+  if(fields) fields.style.display=el.classList.contains('on')?'block':'none';
+}
+
+// ══════════════════════════════════════════════════════
+// EXPORT FUNCTIONS
+// ══════════════════════════════════════════════════════
+function exportPermitExcel(id){
+  const p=PERMITS.find(x=>x.id===id);
+  if(!p){toast('Permit not found.','d');return;}
+  // Build CSV (Excel-compatible)
+  const rows=[
+    ['GENSER ENERGY GHANA LIMITED — PERMIT TO WORK'],
+    ['Ref: GEGL-MID-H&S-001'],
+    [''],
+    ['Permit No.',p.id],
+    ['Site',p.site],
+    ['Type',PERMIT_TYPES[p.type]?.label||p.type],
+    ['Area',p.area||''],
+    ['Equipment',p.equip||''],
+    ['Duration',p.dur||''],
+    ['CSE Category',p.csecat||'N/A'],
+    ['Risk Rating',{l:'Low',m:'Medium',h:'High',v:'Very High'}[p.risk]||''],
+    ['Status',STAGE_LABELS[p.status]||p.status],
+    ['Originator',p.origName||''],
+    ['Valid From',p.startDate||''],
+    ['Valid Until',p.endDate||''],
+    ['Isolation Cert',p.isoRef||'N/A'],
+    ['Task Description',p.taskDesc||''],
+    [''],
+    ['REQUIRED PPE'],
+    ...(p.ppe||[]).map(pp=>['',pp]),
+    [''],
+    ['EMERGENCY EQUIPMENT'],
+    ...(p.emerg||[]).map(e=>['',e]),
+    [''],
+    ['JHA — JOB HAZARD ANALYSIS'],
+    ['#','Task Step','Hazard','Initial Risk','Control Measures','Residual Risk'],
+    ...(p.jha||[]).map(j=>[j.n,j.step,j.hazard,j.initRisk,j.controls,j.residRisk]),
+    [''],
+    ['AUTHORIZATION CHAIN'],
+    ['Stage','Name','Role','Emp No.','Timestamp'],
+    ...Object.entries(p.authChain||{}).map(([k,v])=>[k,v.name||'',v.role||'',v.empNo||'',v.timestamp||'']),
+  ];
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`${p.id}_PTW.csv`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  toast(`${p.id} exported as Excel/CSV.`,'s');
+}
+
+function exportPermitWord(id){
+  const p=PERMITS.find(x=>x.id===id);
+  if(!p){toast('Permit not found.','d');return;}
+  const auth=p.authChain||{};
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <style>
+    body{font-family:Arial,sans-serif;font-size:11pt;margin:2cm;}
+    h1{font-size:14pt;text-align:center;border-bottom:2px solid #000;padding-bottom:8px;}
+    h2{font-size:11pt;background:#1a3a5c;color:#fff;padding:4px 8px;margin-top:16px;}
+    table{width:100%;border-collapse:collapse;margin-top:8px;}
+    td,th{border:1px solid #ccc;padding:5px 8px;font-size:10pt;}
+    th{background:#f0f0f0;font-weight:bold;}
+    .sig{height:40px;border:1px solid #999;width:200px;}
+    .logo{font-size:18pt;font-weight:bold;color:#1a3a5c;}
+    .ref{font-size:9pt;color:#666;}
+  </style></head><body>
+  <p class="logo">GENSER ENERGY GHANA LIMITED</p>
+  <p class="ref">PERMIT TO WORK · Ref: GEGL-MID-H&S-001 · Rev.0</p>
+  <h1>PERMIT TO WORK — ${p.id}</h1>
+  <h2>SECTION A — PERMIT IDENTIFICATION</h2>
+  <table>
+    <tr><td><b>Permit No.</b></td><td>${p.id}</td><td><b>Site</b></td><td>${p.site}</td></tr>
+    <tr><td><b>Type</b></td><td>${PERMIT_TYPES[p.type]?.label||p.type}</td><td><b>CSE Category</b></td><td>${p.csecat||'N/A'}</td></tr>
+    <tr><td><b>Duration</b></td><td>${p.dur||''}</td><td><b>Risk</b></td><td>${{l:'Low',m:'Medium',h:'High',v:'Very High'}[p.risk]||''}</td></tr>
+    <tr><td><b>Valid From</b></td><td>${p.startDate||''}</td><td><b>Valid Until</b></td><td>${p.endDate||''}</td></tr>
+    <tr><td><b>Status</b></td><td colspan="3">${STAGE_LABELS[p.status]||p.status}</td></tr>
+  </table>
+  <h2>SECTION B — EQUIPMENT & TASK</h2>
+  <table>
+    <tr><td><b>Area / Module</b></td><td colspan="3">${p.area||''}</td></tr>
+    <tr><td><b>Equipment Tag</b></td><td>${p.equip||''}</td><td><b>Isolation Cert</b></td><td>${p.isoRef||'N/A'}</td></tr>
+    <tr><td><b>Originator</b></td><td colspan="3">${p.origName||''}</td></tr>
+    <tr><td><b>Task Description</b></td><td colspan="3">${p.taskDesc||''}</td></tr>
+  </table>
+  <h2>SECTION C — REQUIRED PPE</h2>
+  <p>${(p.ppe||[]).join(' · ')||'None specified'}</p>
+  <h2>SECTION D — JOB HAZARD ANALYSIS</h2>
+  <table>
+    <tr><th>#</th><th>Task Step</th><th>Hazard</th><th>Initial Risk</th><th>Control Measures</th><th>Residual Risk</th></tr>
+    ${(p.jha||[]).map(j=>`<tr><td>${j.n||''}</td><td>${j.step||''}</td><td>${j.hazard||''}</td><td>${j.initRisk||''}</td><td>${j.controls||''}</td><td>${j.residRisk||''}</td></tr>`).join('')||'<tr><td colspan="6">No JHA steps recorded.</td></tr>'}
+  </table>
+  <h2>SECTION I — AUTHORIZATION CHAIN</h2>
+  <table>
+    <tr><th>Level</th><th>Role</th><th>Name</th><th>Emp. No.</th><th>Date / Time</th><th>Signature</th></tr>
+    ${[
+      ['L1 — Originator','Originator',auth.originator],
+      ['L2 — Safe Maker','Safe Maker',auth.safe_maker],
+      ['L3 — Auth. Manager','Auth. Manager',auth.auth_manager],
+      ['L4 — Recipient','Recipient',auth.recipient],
+      ['L5 — HSE Review','HSE Rep',auth.hse_review],
+      ['L6a — Issuer Ops','Ops Superintendent',auth.issuer_ops],
+      ['L6b — Issuer HSE','HSE Superintendent',auth.issuer_hse],
+    ].map(([lbl,role,a])=>`<tr><td>${lbl}</td><td>${role}</td><td>${a?a.name:'—'}</td><td>${a?a.empNo||'':'—'}</td><td>${a?a.timestamp:'—'}</td><td class="sig"></td></tr>`).join('')}
+  </table>
+  <p style="margin-top:20px;font-size:9pt;color:#666">Generated by eSafe PTW · GEGL-MID-H&S-001 · ${new Date().toLocaleString('en-GB')} · PAPER COPIES ARE UNCONTROLLED</p>
+  </body></html>`;
+  const blob=new Blob([html],{type:'application/msword'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`${p.id}_PTW.doc`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+  toast(`${p.id} exported as Word document.`,'s');
+}
+
+async function exportPermitSharePoint(id){
+  const sp=APP_SETTINGS.sharepoint;
+  if(!sp?.siteUrl||!sp?.tenantId||!sp?.clientId){
+    toast('SharePoint not configured. Go to Settings → Export & SharePoint.','w');
+    return;
+  }
+  const p=PERMITS.find(x=>x.id===id);
+  if(!p){toast('Permit not found.','d');return;}
+  toast('SharePoint upload requires server-side authentication. Configure Azure credentials in Settings and use the deployed web app version.','i');
+  // In production: POST to /api/upload-to-sharepoint with permit data + Azure credentials
+}
+
+// ══════════════════════════════════════════════════════
+// CLOCK
+// ══════════════════════════════════════════════════════
+setInterval(()=>{
+  const e=document.getElementById('clk');
+  if(e) e.textContent=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' GMT';
+},1000);
+
+// ══════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════
+go('db'); updateBadges();
+</script>
+</body>
+</html>
