@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>eSafe PTW : Genser Energy Ghana Limited</title>
+<title>Genser eSafe PTW : Genser Energy Ghana Limited</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 
 <!-- Firebase SDK -->
@@ -299,6 +299,20 @@ table.t tbody tr:hover td{background:rgba(255,255,255,.03);}
 .role-pill{padding:3px 10px;border-radius:3px;font-family:var(--cond);font-size:12px;font-weight:700;background:rgba(0,194,168,.1);color:var(--acc);border:1px solid rgba(0,194,168,.25);}
 .contractor-pill{background:rgba(167,139,250,.1);color:var(--purple);border-color:rgba(167,139,250,.25);}
 
+/* MULTI SELECT BOX */
+.multi-sel-box{display:flex;align-items:center;gap:8px;width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 11px;border-radius:var(--r);font-size:16px;font-family:var(--font);cursor:pointer;min-height:44px;transition:border-color .15s;}
+.multi-sel-box:hover{border-color:var(--acc);}
+.ms-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px;}
+.ms-inner{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);width:100%;max-width:480px;max-height:80vh;display:flex;flex-direction:column;}
+.ms-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.ms-list{overflow-y:auto;padding:10px 14px;flex:1;}
+.ms-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:5px;cursor:pointer;transition:all .12s;}
+.ms-item:hover{background:var(--bg3);border-color:var(--border2);}
+.ms-item.sel{background:rgba(0,194,168,.07);border-color:rgba(0,194,168,.35);}
+.ms-item input[type=checkbox]{accent-color:var(--acc);width:16px;height:16px;flex-shrink:0;}
+.ms-item label{font-size:15px;cursor:pointer;flex:1;}
+.ms-foot{padding:12px 18px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;}
+
 /* MOBILE */
 .mob-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:105;}
 .dash-split{display:grid;grid-template-columns:1fr 320px;gap:14px;}
@@ -332,22 +346,32 @@ table.t tbody tr:hover td{background:rgba(255,255,255,.03);}
 <aside class="sidebar" id="sb">
   <div class="sb-brand">
     <div class="sb-logo-row">
-      <svg width="38" height="38" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-        <path d="M28 62 Q8 28 42 12 Q58 38 46 66 Z" fill="#5cb85c"/>
-        <path d="M92 62 Q112 28 78 12 Q62 38 74 66 Z" fill="#2196f3"/>
-        <path d="M60 8 Q77 32 71 58 Q60 46 49 58 Q43 32 60 8 Z" fill="#ff9800"/>
-        <circle cx="60" cy="70" r="17" fill="#1a2332" stroke="#00c2a8" stroke-width="2.5"/>
-        <circle cx="60" cy="70" r="9" fill="none" stroke="#00c2a8" stroke-width="3"/>
-        <g fill="#00c2a8">
-          <rect x="58.5" y="51" width="3" height="6" rx="1.5"/>
-          <rect x="58.5" y="83" width="3" height="6" rx="1.5"/>
-          <rect x="41" y="68.5" width="6" height="3" rx="1.5"/>
-          <rect x="73" y="68.5" width="6" height="3" rx="1.5"/>
-        </g>
+      <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Genser turbine/gear icon recreation -->
+        <!-- Gear teeth ring -->
+        <circle cx="50" cy="50" r="22" fill="none" stroke="#1565c0" stroke-width="7"/>
+        <!-- Three swept blades -->
+        <path d="M50 50 Q30 20 15 30 Q25 48 50 50Z" fill="#1976d2"/>
+        <path d="M50 50 Q80 30 85 55 Q65 65 50 50Z" fill="#1976d2"/>
+        <path d="M50 50 Q45 82 20 78 Q22 58 50 50Z" fill="#1976d2"/>
+        <!-- Gear teeth -->
+        <rect x="46" y="22" width="8" height="7" rx="2" fill="#1565c0"/>
+        <rect x="46" y="71" width="8" height="7" rx="2" fill="#1565c0"/>
+        <rect x="22" y="46" width="7" height="8" rx="2" fill="#1565c0"/>
+        <rect x="71" y="46" width="7" height="8" rx="2" fill="#1565c0"/>
+        <!-- Center hub -->
+        <circle cx="50" cy="50" r="8" fill="#1a2332" stroke="#1976d2" stroke-width="2"/>
+        <circle cx="50" cy="50" r="3.5" fill="#1976d2"/>
       </svg>
       <div>
-        <div class="sb-wm1"><span class="w">e</span><span class="e">Safe</span></div>
-        <div class="sb-wm2">Permit to Work System</div>
+        <div style="line-height:1">
+          <div style="font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:.06em;color:#1c2e6b">GENSER</div>
+          <div style="font-family:var(--cond);font-size:10px;font-weight:700;letter-spacing:.08em;color:#1976d2">ENERGY</div>
+        </div>
+        <div style="margin-left:6px;padding-left:8px;border-left:1px solid var(--border)">
+          <div style="font-family:var(--cond);font-size:14px;font-weight:700;letter-spacing:.04em;color:var(--text)">eSafe <span style="color:var(--acc)">PTW</span></div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:.05em">Permit to Work System</div>
+        </div>
       </div>
     </div>
     <div class="sb-ref">Genser Energy Ghana Limited : GEGL-MID-H&amp;S-001</div>
@@ -396,7 +420,7 @@ table.t tbody tr:hover td{background:rgba(255,255,255,.03);}
   <div class="ribbon pgcp" id="rib">
     <div class="rdot t" id="rdot"></div>
     <span id="rib-txt">Prestea Gas Conditioning Plant (PGCP) : Modules 1-6 Active : Module 7 Future LNG</span>
-    <span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--text3)">NORMAL OPS</span>
+    
   </div>
   <div class="content" id="con"></div>
 </div>
@@ -466,13 +490,14 @@ table.t tbody tr:hover td{background:rgba(255,255,255,.03);}
 const ROLES = ['VP','Manager','Superintendent','HSE Rep','Shift Charge','Supervisor',
   'Operations Engineer','Mechanical Engineer','Electrical Engineer','C&I Engineer','Analyst','Contractor'];
 
+// Contractor EXCLUDED from applicant roles
 const APPLICANT_ROLES = ['VP','Manager','Superintendent','HSE Rep','Shift Charge','Supervisor',
-  'Operations Engineer','Mechanical Engineer','Electrical Engineer','C&I Engineer','Analyst','Contractor'];
+  'Operations Engineer','Mechanical Engineer','Electrical Engineer','C&I Engineer','Analyst'];
 
 const PERMIT_HOLDER_ROLES = ['Shift Charge','Operations Engineer','Mechanical Engineer',
   'Electrical Engineer','C&I Engineer','Contractor'];
 
-const AREA_AUTH_ROLES = ['Shift Charge','Supervisor','Superintendent'];
+const AREA_AUTH_ROLES = ['Shift Charge']; // Area Authority : Shift Charge ONLY
 const HSE_ROLES = ['HSE Rep','Manager','VP'];
 const SUPT_ROLES = ['Superintendent','Manager','VP'];
 const SETTINGS_ROLES = ['VP','Manager','Superintendent','HSE Rep'];
@@ -511,10 +536,11 @@ const PERMIT_TYPES = {
 };
 
 const DEPTS = { OPS:'Operations', MECH:'Mechanical', ELEC:'Electrical', CI:'C&I', CONT:'Contractor' };
+const GEGL_DEPTS = { OPS:'Operations', MECH:'Mechanical', ELEC:'Electrical', CI:'C&I' }; // no Contractor
 
 // GEGL RISK MATRIX 5x5
 const PROB_LABELS = ['','Remote (0-10%)','Unlikely (10-25%)','Possible (25-50%)','Probable (50-90%)','Certain (90-100%)'];
-const SEV_LABELS  = ['','No injury / <$1k','Potential MI / $1k-$50k','Potential MTI / $50k-$500k','Potential LTI / $500k-$1M','Potential Fatality / >$1M'];
+const SEV_LABELS  = ['','No injury (First Aid)','Minor injury (Medical Treatment)','Lost Time Injury (LTI)','Permanent Disability','Fatality'];
 
 function riskScore(p,s){ return p*s; }
 function riskLevel(score){
@@ -619,6 +645,7 @@ const STAGE_LABELS = {
   aa:       'Area Authority Review',
   hse:      'HSE Review',
   supt:     'Superintendent Approval',
+  toolbox:  'Awaiting Toolbox Talk',
   active:   'Active',
   suspended:'Suspended',
   closed:   'Closed',
@@ -626,15 +653,16 @@ const STAGE_LABELS = {
 };
 
 const NEXT_SIGNER = {
-  draft:    {txt:'Next : Permit Holder to complete Section 2', col:'var(--blue)'},
-  ph:       {txt:'Next : Area Authority to confirm site safety', col:'var(--orange)'},
-  aa:       {txt:'Next : HSE Rep to review controls and JHA',   col:'var(--purple)'},
-  hse:      {txt:'Next : Superintendent / Manager final approval',col:'#c77dff'},
-  supt:     {txt:'All approvals complete : ready to go ACTIVE', col:'var(--acc)'},
-  active:   {txt:'WORK AUTHORISED TO COMMENCE',                 col:'var(--blue)'},
-  suspended:{txt:'Suspended : re-issuance required',            col:'var(--amber)'},
-  closed:   {txt:'Permit closed',                               col:'var(--green)'},
-  rejected: {txt:'Rejected : edit and resubmit',                col:'var(--red)'},
+  draft:    {txt:'Next : Permit Holder to complete Section 2',        col:'var(--blue)'},
+  ph:       {txt:'Next : Area Authority to confirm site safety',      col:'var(--orange)'},
+  aa:       {txt:'Next : HSE Rep to review controls and JHA',         col:'var(--purple)'},
+  hse:      {txt:'Next : Superintendent / Manager final approval',    col:'#c77dff'},
+  supt:     {txt:'Next : Toolbox Talk and Worker Sign-On required',   col:'var(--acc)'},
+  toolbox:  {txt:'AWAITING TOOLBOX TALK : Permit Holder to initiate', col:'var(--amber)'},
+  active:   {txt:'WORK AUTHORISED TO COMMENCE',                       col:'var(--blue)'},
+  suspended:{txt:'Suspended : re-issuance required',                  col:'var(--amber)'},
+  closed:   {txt:'Permit closed',                                     col:'var(--green)'},
+  rejected: {txt:'Rejected : edit and resubmit',                      col:'var(--red)'},
 };
 
 // ═══════════════════════════════════════════════
@@ -756,6 +784,7 @@ function stBadge(s){
     aa:`<span class="st s-aa">Area Authority</span>`,
     hse:`<span class="st s-hse">HSE Review</span>`,
     supt:`<span class="st s-supt">Supt Approval</span>`,
+    toolbox:`<span class="st s-suspended">Toolbox Talk</span>`,
     active:`<span class="st s-active">Active</span>`,
     suspended:`<span class="st s-suspended">Suspended</span>`,
     closed:`<span class="st s-closed">Closed</span>`,
@@ -1004,16 +1033,16 @@ function setSite(s){
     document.getElementById('rdot').className='rdot t';
     document.getElementById('rib-txt').textContent='Prestea Gas Conditioning Plant (PGCP) : Modules 1-6 Active : Module 7 Future LNG';
   }else{
-    rib.className='ribbon tnet';
-    document.getElementById('rdot').className='rdot a';
-    document.getElementById('rib-txt').textContent='Takoradi NGL Terminal (TNET) : Module 8 Unloading Bay : Module 9 Tanks and Utilities';
+    rib.className='ribbon pgcp';
+    document.getElementById('rdot').className='rdot t';
+    document.getElementById('rib-txt').textContent='Takoradi NGL Terminal (Modules 8 and 9)';
   }
   document.getElementById('tb-s').textContent=': '+s;
   go(appView); updateBadges();
 }
 
 function updateBadges(){
-  const pend=PERMITS.filter(p=>p.site===appSite&&['ph','aa','hse','supt'].includes(p.status)).length;
+  const pend=PERMITS.filter(p=>p.site===appSite&&['ph','aa','hse','supt','toolbox'].includes(p.status)).length;
   document.getElementById('nb-p').textContent=pend;
 }
 
@@ -1079,6 +1108,7 @@ function renderMyActions(){
     if(p.status==='aa'&&AREA_AUTH_ROLES.includes(s.role)) return true;
     if(p.status==='hse'&&HSE_ROLES.includes(s.role)) return true;
     if(p.status==='supt'&&SUPT_ROLES.includes(s.role)) return true;
+    if(p.status==='toolbox'&&PERMIT_HOLDER_ROLES.includes(s.role)) return true;
     return false;
   });
 
@@ -1170,7 +1200,7 @@ function filterPermits(){
 }
 
 function vPending(){
-  const sp=PERMITS.filter(p=>p.site===appSite&&['ph','aa','hse','supt'].includes(p.status));
+  const sp=PERMITS.filter(p=>p.site===appSite&&['ph','aa','hse','supt','toolbox'].includes(p.status));
   return`
   <div class="al al-i">: <b>${sp.length} permit(s)</b> awaiting authorization on ${appSite}. Each stage must be completed in sequence before work can commence.</div>
   <div class="card"><div class="tw"><table class="t">
@@ -1681,13 +1711,57 @@ function r(id,def=''){return wzFS[id]!==undefined?wzFS[id]:def;}
 
 function wzScreen1(){
   const now=new Date();
-  const minDT=now.toISOString().slice(0,16);
+  const todayStr=now.toISOString().slice(0,10);
+  const minDT=todayStr+'T00:00';
   const users=usersForSite(appSite).filter(u=>APPLICANT_ROLES.includes(u.role));
   const areas=SITE_AREAS[appSite]||[];
   const contractors=APP.contractors.filter(c=>c.approved&&(c.site==='Both'||c.site===appSite));
 
+  // Auto-generate WO when dept and site known
+  const dept=wzFS['w-dept']||'';
+  const autoWO=dept?(appSite+'-'+dept+'-'+now.getFullYear()+'-WO'):'(select department first)';
+
+  // PIN gate state
+  const applLocked=wzFS['_appl_pin_ok']||false;
+
   return`
-  <div class="fsec"><div class="fsec-t">Section 1A : Permit Identification</div>
+  <div class="al al-i" style="margin-bottom:14px">
+    <b>Permit Applicant</b> : Select your name and enter your PIN to unlock this form. You are applying for a job to be done : the Permit Holder will complete Section 2.
+  </div>
+
+  <div class="fsec"><div class="fsec-t">Section 1A : Permit Applicant Identification</div>
+  <div class="f2">
+    <div class="fg"><label class="fl">Permit Applicant<span class="req">*</span></label>
+      <select class="fs" id="w-appl" ${applLocked?'disabled':''} onchange="wzApplChange(this.value)">
+        <option value="">-- Select your name --</option>
+        ${users.map(u=>`<option value="${u.id}" ${r('w-appl')===u.id?'selected':''}>${u.name} : ${u.role}</option>`).join('')}
+      </select></div>
+    <div class="fg"><label class="fl">Applicant Department<span class="req">*</span></label>
+      <select class="fs" id="w-appl-dept" ${applLocked?'disabled':''}>
+        <option value="">-- Select department --</option>
+        ${Object.entries(GEGL_DEPTS).map(([k,v])=>`<option value="${k}" ${r('w-appl-dept')===k?'selected':''}>${k} : ${v}</option>`).join('')}
+      </select></div>
+  </div>
+
+  <!-- PIN Gate -->
+  <div id="appl-pin-gate" style="display:${applLocked?'none':'block'}">
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:16px;margin-top:4px">
+      <div style="font-family:var(--cond);font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--acc);margin-bottom:10px">Enter Your PIN to Continue</div>
+      <div style="font-size:14px;color:var(--text2);margin-bottom:12px">Your PIN confirms your identity as the Permit Applicant. You must authenticate before filling in permit details.</div>
+      <div class="pin-dots" id="appl-dots">${[0,1,2,3].map(i=>`<div class="pin-dot" id="apd${i}"></div>`).join('')}</div>
+      <div class="pin-numpad" style="margin-top:12px">${[1,2,3,4,5,6,7,8,9,'←',0,'✓'].map(k=>`<button class="pnb" onclick="applPinKey('${k}')">${k}</button>`).join('')}</div>
+      <div id="appl-pin-err" style="font-size:13px;color:var(--red);margin-top:8px;display:none"></div>
+    </div>
+  </div>
+
+  <!-- Unlocked confirmation -->
+  ${applLocked?`<div class="al al-s" style="margin-top:8px">Authenticated as <b>${(users.find(u=>u.id===r('w-appl'))||{}).name||'Applicant'}</b>. Fill in the permit details below.</div>`:''}
+  </div>
+
+  <!-- Rest of form - only shown after PIN ──────── -->
+  <div id="s1-form" style="display:${applLocked?'block':'none'}">
+
+  <div class="fsec"><div class="fsec-t">Section 1B : Permit Identification</div>
   <div class="f2">
     <div class="fg"><label class="fl">Permit Type<span class="req">*</span></label>
       <select class="fs" id="w-type" data-req="1" onchange="wzS1TypeChange(this.value)">
@@ -1695,12 +1769,15 @@ function wzScreen1(){
         ${Object.entries(PERMIT_TYPES).map(([k,v])=>`<option value="${k}" ${r('w-type')===k?'selected':''}>${v.ic} ${v.label}</option>`).join('')}
       </select></div>
     <div class="fg"><label class="fl">Department<span class="req">*</span></label>
-      <select class="fs" id="w-dept" data-req="1">
+      <select class="fs" id="w-dept" data-req="1" onchange="wzDeptChange(this.value)">
         <option value="">-- Select department --</option>
-        ${Object.entries(DEPTS).map(([k,v])=>`<option value="${k}" ${r('w-dept')===k?'selected':''}>${k} : ${v}</option>`).join('')}
+        ${Object.entries(GEGL_DEPTS).map(([k,v])=>`<option value="${k}" ${r('w-dept')===k?'selected':''}>${k} : ${v}</option>`).join('')}
+        <option value="CONT" ${r('w-dept')==='CONT'?'selected':''}>CONT : Contractor</option>
       </select></div>
-    <div class="fg ff"><label class="fl">Task Title<span class="req">*</span></label>
-      <input class="fi" id="w-task" data-req="1" placeholder="Short descriptive title e.g. LP Separator Internal Inspection" value="${r('w-task')}"></div>
+    <div class="fg"><label class="fl">Work Order (auto-generated)</label>
+      <input class="fi" id="w-wo" readonly style="color:var(--acc);font-family:var(--mono)" value="${r('w-wo')||autoWO}" placeholder="Select department to generate"></div>
+    <div class="fg"><label class="fl">Task Title<span class="req">*</span></label>
+      <input class="fi" id="w-task" data-req="1" placeholder="Short title e.g. LP Separator Internal Inspection" value="${r('w-task')}"></div>
     <div class="fg"><label class="fl">Area / Module<span class="req">*</span></label>
       <select class="fs" id="w-area" data-req="1">
         <option value="">-- Select area --</option>
@@ -1708,8 +1785,6 @@ function wzScreen1(){
       </select></div>
     <div class="fg"><label class="fl">Equipment Tag Number<span class="req">*</span></label>
       <input class="fi" id="w-equip" data-req="1" placeholder="e.g. V-201, SG-04, T-401" value="${r('w-equip')}"></div>
-    <div class="fg"><label class="fl">Work Order Number</label>
-      <input class="fi" id="w-wo" placeholder="SAP work order or notification no." value="${r('w-wo')}"></div>
     <div class="fg"><label class="fl">Start Date and Time<span class="req">*</span></label>
       <input class="fi" type="datetime-local" id="w-start" data-req="1" min="${minDT}" value="${r('w-start')}"></div>
     <div class="fg"><label class="fl">Duration<span class="req">*</span></label>
@@ -1723,15 +1798,8 @@ function wzScreen1(){
       <input class="fi" type="number" min="1" id="w-workers" data-req="1" placeholder="e.g. 4" value="${r('w-workers')}"></div>
   </div></div>
 
-  <div class="fsec"><div class="fsec-t">Section 1B : Personnel</div>
+  <div class="fsec"><div class="fsec-t">Section 1C : Executing Party</div>
   <div class="f2">
-    <div class="fg"><label class="fl">Permit Applicant<span class="req">*</span></label>
-      <select class="fs" id="w-appl" data-req="1">
-        <option value="">-- Select applicant --</option>
-        ${users.map(u=>`<option value="${u.id}" ${r('w-appl')===u.id?'selected':''}>${u.name} : ${u.role}</option>`).join('')}
-      </select></div>
-    <div class="fg"><label class="fl">Applicant Department<span class="req">*</span></label>
-      <input class="fi" id="w-appl-dept" data-req="1" placeholder="e.g. Operations, Mechanical" value="${r('w-appl-dept')}"></div>
     <div class="fg"><label class="fl">Work Carried Out By<span class="req">*</span></label>
       <select class="fs" id="w-workby" data-req="1" onchange="wzWorkByChange(this.value)">
         <option value="">-- Select --</option>
@@ -1749,7 +1817,7 @@ function wzScreen1(){
       </select></div>
   </div></div>
 
-  <div class="fsec"><div class="fsec-t">Section 1C : Equipment Identification</div>
+  <div class="fsec"><div class="fsec-t">Section 1D : Equipment Details</div>
   <div class="f2">
     <div class="fg"><label class="fl">Process Fluid / Medium</label>
       <input class="fi" id="w-fluid" placeholder="e.g. Lean gas, Propane, 11kV" value="${r('w-fluid')}"></div>
@@ -1759,22 +1827,74 @@ function wzScreen1(){
       <select class="fs" id="w-idtag" onchange="wzIdTagChange(this.value)">
         <option value="No" ${r('w-idtag','No')==='No'?'selected':''}>No : not required</option>
         <option value="Yes" ${r('w-idtag')==='Yes'?'selected':''}>Yes : numbered tag required</option>
-      </select>
-      <div style="font-size:12px;color:var(--text3);margin-top:3px;line-height:1.5">A numbered tag physically attached to the equipment confirms the correct item has been identified, isolated, and shown to the Permit Holder before work commences.</div>
-    </div>
+      </select></div>
     <div class="fg" id="w-tagno-row" style="display:${r('w-idtag')==='Yes'?'flex':'none'}">
       <label class="fl">Tag Number(s)<span class="req">*</span></label>
       <input class="fi" id="w-tagno" placeholder="e.g. TAG-001, TAG-002" value="${r('w-tagno')}">
     </div>
   </div></div>
 
-  <div class="fsec"><div class="fsec-t">Section 1D : Nature of Work</div>
+  <div class="fsec"><div class="fsec-t">Section 1E : Nature of Work</div>
   <div class="fg"><label class="fl">Full Description of Work<span class="req">*</span></label>
     <textarea class="fta" id="w-desc" data-req="1" placeholder="Detailed description of work to be performed, method, objectives, and any specific constraints...">${r('w-desc')}</textarea></div>
   ${r('w-type')==='hot'?`<div class="al al-w"><b>HOT WORK:</b> Fire watch required. Confirm all combustible materials cleared within 11m. Fire extinguisher at work site mandatory.</div>`:''}
-  ${r('w-type')==='rad'?`<div class="al al-d"><b>RADIOGRAPHY / NDT:</b> Real-time issuance only : cannot be pre-authorized more than 2 hours before start. Exclusion zone 15m minimum.</div>`:''}
-  ${r('w-type')==='cse'?`<div class="al al-d"><b>CONFINED SPACE ENTRY:</b> Real-time issuance only. Continuous atmospheric monitoring required. Rescue plan must be in place before entry.</div>`:''}
-  </div>`;
+  ${r('w-type')==='rad'?`<div class="al al-d"><b>RADIOGRAPHY / NDT:</b> Exclusion zone 15m minimum. Real-time issuance only.</div>`:''}
+  ${r('w-type')==='cse'?`<div class="al al-d"><b>CONFINED SPACE ENTRY:</b> Real-time issuance only. Continuous atmospheric monitoring required.</div>`:''}
+  </div>
+
+  </div>`; // end s1-form
+}
+
+// PIN functions for Screen 1 applicant gate
+let _applPinBuf='';
+function wzApplChange(uid){
+  wzFS['w-appl']=uid; _applPinBuf=''; wzFS['_appl_pin_ok']=false;
+  updateApplDots();
+  const pinSection=document.getElementById('appl-pin-gate');
+  if(pinSection) pinSection.style.display=uid?'block':'none';
+}
+
+function applPinKey(k){
+  const err=document.getElementById('appl-pin-err');
+  if(err) err.style.display='none';
+  if(k==='←'){_applPinBuf=_applPinBuf.slice(0,-1);}
+  else if(k==='✓'){
+    const u=APP.users.find(x=>x.id===wzFS['w-appl']);
+    if(!u){if(err){err.textContent='Select your name first.';err.style.display='block';}return;}
+    if(_applPinBuf.length!==4){if(err){err.textContent='Enter your full 4-digit PIN.';err.style.display='block';}return;}
+    if(_applPinBuf!==u.pin){
+      if(err){err.textContent='Incorrect PIN. Please try again.';err.style.display='block';}
+      _applPinBuf=''; updateApplDots(); return;
+    }
+    // PIN correct - unlock form
+    wzFS['_appl_pin_ok']=true;
+    wzFS['_appl_pin_sig']={userId:u.id,name:u.name,role:u.role,empNo:u.empNo||'',timestamp:new Date().toLocaleString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})};
+    // Auto-set dept from user role if possible
+    document.getElementById('wz-con').innerHTML=wzScreen1();
+    document.getElementById('s1-form').style.display='block';
+    return;
+  }
+  else if(_applPinBuf.length<4){_applPinBuf+=k;}
+  updateApplDots();
+}
+
+function updateApplDots(){
+  for(let i=0;i<4;i++){
+    const d=document.getElementById('apd'+i);
+    if(d) d.className='pin-dot'+(_applPinBuf.length>i?' filled':'');
+  }
+}
+
+function wzDeptChange(val){
+  wzFS['w-dept']=val;
+  const y=new Date().getFullYear();
+  if(val){
+    const seq=String((permitSeqLocal[appSite]&&permitSeqLocal[appSite][val])||1).padStart(3,'0');
+    const wo=appSite+'-'+val+'-'+y+'-WO'+seq;
+    wzFS['w-wo']=wo;
+    const el=document.getElementById('w-wo');
+    if(el) el.value=wo;
+  }
 }
 
 function wzS1TypeChange(val){wzFS['w-type']=val;renderWizard();}
@@ -1794,57 +1914,130 @@ function wzScreen2(){
   const isHot=ptype==='hot';
   const isCSE=wzFS['w-cse']||ptype==='cse';
   const isRad=ptype==='rad';
+
+  // Multiselect display helpers
+  function msDisplay(key,list){
+    const sel=wzFS[key]||[];
+    return sel.length?sel.join(', '):'None selected';
+  }
+
+  const isoYes=wzFS['w-iso-yn']==='Yes';
+  const prepYes=wzFS['w-prep-yn']==='Yes';
+  const wapYes=wzFS['w-wap-yn']==='Yes';
   const gasReq=wzFS['w-gasreq']!==false;
 
   return`
+  <div class="al al-i" style="margin-bottom:14px">
+    <b>Permit Holder / Performing Authority</b> : Complete all sections below. You are responsible for the safety of this work. Your signature confirms all controls are in place.
+  </div>
+
+  <!-- 2A: Facilities to Isolate -->
   <div class="fsec"><div class="fsec-t">Section 2A : Facilities to be Isolated</div>
-  <div class="cg">${ISO_TYPES.map(t=>{const k='iso-'+t.replace(/\W/g,'_');return`<div class="ci ${wzFS[k]?'on':''}" onclick="toggleCI(this,'${k}')"><input type="checkbox" id="${k}" ${wzFS[k]?'checked':''}><label>${t}</label></div>`;}).join('')}</div>
+  <div class="f2" style="align-items:flex-start">
+    <div class="fg"><label class="fl">Isolation Required?<span class="req">*</span></label>
+      <select class="fs" id="w-iso-yn" onchange="wzYNChange('w-iso-yn','iso-detail')">
+        <option value="">-- Select --</option>
+        <option value="Yes" ${wzFS['w-iso-yn']==='Yes'?'selected':''}>Yes : isolation required</option>
+        <option value="No" ${wzFS['w-iso-yn']==='No'?'selected':''}>No : not applicable</option>
+      </select></div>
+  </div>
+  <div id="iso-detail" style="display:${isoYes?'block':'none'}">
+    <div class="fg"><label class="fl">Isolation Methods (select all that apply)</label>
+      <div class="multi-sel-box" id="ms-iso" onclick="openMultiSel('ms-iso','w-iso-sel',${JSON.stringify(ISO_TYPES.concat(['Other']))})">
+        <span id="ms-iso-display" style="flex:1;font-size:15px;color:${(wzFS['w-iso-sel']||[]).length?'var(--text)':'var(--text3)'}">
+          ${(wzFS['w-iso-sel']||[]).length?(wzFS['w-iso-sel']||[]).join(' : '):'Click to select isolation methods'}
+        </span>
+        <span style="color:var(--text3)">▼</span>
+      </div></div>
+    <div class="fg" id="iso-other-row" style="display:${(wzFS['w-iso-sel']||[]).includes('Other')?'block':'none'}">
+      <label class="fl">Specify Other Isolation</label>
+      <input class="fi" id="w-iso-other" placeholder="Describe isolation method..." value="${wzFS['w-iso-other']||''}">
+    </div>
+    <div class="fg"><label class="fl">Isolation Details</label>
+      <textarea class="fta" id="w-isodetail" placeholder="Isolation points, purging requirements, lock numbers..." style="min-height:60px">${wzFS['w-isodetail']||''}</textarea></div>
+    <div class="fg"><label class="fl">Isolation Certificate No.</label>
+      <input class="fi" id="w-isoref" placeholder="e.g. EI-PGCP-2025-001" value="${wzFS['w-isoref']||''}"></div>
+  </div>
   </div>
 
+  <!-- 2B: Facilities to Prepare -->
   <div class="fsec"><div class="fsec-t">Section 2B : Facilities to be Prepared</div>
-  <div class="cg">${PREP_TYPES.map(t=>{const k='prep-'+t.replace(/\W/g,'_');return`<div class="ci ${wzFS[k]?'on':''}" onclick="toggleCI(this,'${k}')"><input type="checkbox" id="${k}" ${wzFS[k]?'checked':''}><label>${t}</label></div>`;}).join('')}</div>
+  <div class="f2" style="align-items:flex-start">
+    <div class="fg"><label class="fl">Preparation Required?<span class="req">*</span></label>
+      <select class="fs" id="w-prep-yn" onchange="wzYNChange('w-prep-yn','prep-detail')">
+        <option value="">-- Select --</option>
+        <option value="Yes" ${wzFS['w-prep-yn']==='Yes'?'selected':''}>Yes : preparation required</option>
+        <option value="No" ${wzFS['w-prep-yn']==='No'?'selected':''}>No : not applicable</option>
+      </select></div>
+  </div>
+  <div id="prep-detail" style="display:${prepYes?'block':'none'}">
+    <div class="fg"><label class="fl">Preparation Methods (select all that apply)</label>
+      <div class="multi-sel-box" id="ms-prep" onclick="openMultiSel('ms-prep','w-prep-sel',${JSON.stringify(PREP_TYPES.concat(['Other']))})">
+        <span id="ms-prep-display" style="flex:1;font-size:15px;color:${(wzFS['w-prep-sel']||[]).length?'var(--text)':'var(--text3)'}">
+          ${(wzFS['w-prep-sel']||[]).length?(wzFS['w-prep-sel']||[]).join(' : '):'Click to select preparation methods'}
+        </span>
+        <span style="color:var(--text3)">▼</span>
+      </div></div>
+    <div class="fg" id="prep-other-row" style="display:${(wzFS['w-prep-sel']||[]).includes('Other')?'block':'none'}">
+      <label class="fl">Specify Other Preparation</label>
+      <input class="fi" id="w-prep-other" placeholder="Describe preparation method..." value="${wzFS['w-prep-other']||''}">
+    </div>
+    <div class="fg"><label class="fl">Preparation Notes</label>
+      <textarea class="fta" id="w-prepnotes" placeholder="Additional preparation details..." style="min-height:50px">${wzFS['w-prepnotes']||''}</textarea></div>
+  </div>
   </div>
 
+  <!-- 2C: Work Area Preparation -->
   <div class="fsec"><div class="fsec-t">Section 2C : Work Area to be Prepared</div>
-  <div class="cg">${WORK_AREA_PREP.map(t=>{const k='wap-'+t.replace(/\W/g,'_');return`<div class="ci ${wzFS[k]?'on':''}" onclick="toggleCI(this,'${k}')"><input type="checkbox" id="${k}" ${wzFS[k]?'checked':''}><label>${t}</label></div>`;}).join('')}</div>
+  <div class="f2" style="align-items:flex-start">
+    <div class="fg"><label class="fl">Work Area Preparation Required?<span class="req">*</span></label>
+      <select class="fs" id="w-wap-yn" onchange="wzYNChange('w-wap-yn','wap-detail')">
+        <option value="">-- Select --</option>
+        <option value="Yes" ${wzFS['w-wap-yn']==='Yes'?'selected':''}>Yes : preparation required</option>
+        <option value="No" ${wzFS['w-wap-yn']==='No'?'selected':''}>No : not applicable</option>
+      </select></div>
   </div>
-
-  <div class="fsec"><div class="fsec-t">Section 2D : Potential Hazards Involved</div>
-  <div class="al al-i" style="margin-bottom:12px">Tick each hazard present. The risk score is calculated automatically using the GEGL 5x5 Risk Matrix. Adjust Probability and Severity as needed.</div>
-  ${renderHazardList()}
-  </div>
-
-  <div class="fsec"><div class="fsec-t">Section 2E : Job Hazard Analysis</div>
-  <div class="al al-i" style="margin-bottom:12px">Add task steps one at a time. Click a step to expand and fill in details. Minimum 3 steps required.</div>
-  <div id="jha-acc">${renderJHAAccordion()}</div>
-  <button class="btn btn-g btn-sm" style="margin-top:8px" onclick="addJHAStep()">+ Add Step</button>
-  </div>
-
-  <div class="fsec"><div class="fsec-t">Section 2F : Personal Protective Equipment</div>
-  <div class="cg">${PPE_LIST.map(p=>{const k='ppe-'+p.replace(/\W/g,'_');return`<div class="ci ${wzFS[k]?'on':''}" onclick="toggleCI(this,'${k}')"><input type="checkbox" id="${k}" ${wzFS[k]?'checked':''}><label>${p}</label></div>`;}).join('')}</div>
-  </div>
-
-  <div class="fsec"><div class="fsec-t">Section 2G : Isolation Certificate</div>
-  <div class="ci ${wzFS['w-isoreq']?'on':''}" style="display:inline-flex;margin-bottom:12px" onclick="toggleCIKey(this,'w-isoreq','iso-fields')">
-    <input type="checkbox" id="w-isoreq" ${wzFS['w-isoreq']?'checked':''}><label style="font-size:15px;font-weight:500">Isolation / LOTO required for this task</label>
-  </div>
-  <div id="iso-fields" style="display:${wzFS['w-isoreq']?'block':'none'}">
-    <div class="f2">
-      <div class="fg"><label class="fl">Isolation Certificate No.<span class="req">*</span></label><input class="fi" id="w-isoref" placeholder="e.g. EI-PGCP-2025-001" value="${r('w-isoref')}"></div>
-      <div class="fg"><label class="fl">Isolation Type</label>
-        <select class="fs" id="w-isotype">
-          <option value="Electrical LOTO" ${r('w-isotype')==='Electrical LOTO'?'selected':''}>Electrical LOTO</option>
-          <option value="Process : Valve / Blind" ${r('w-isotype')==='Process : Valve / Blind'?'selected':''}>Process : Valve / Blind</option>
-          <option value="Mechanical" ${r('w-isotype')==='Mechanical'?'selected':''}>Mechanical</option>
-          <option value="Combined" ${r('w-isotype')==='Combined'?'selected':''}>Combined (multiple types)</option>
-        </select></div>
-      <div class="fg ff"><label class="fl">Isolation Details</label>
-        <textarea class="fta" id="w-isodetail" placeholder="Specify isolation points, purging requirements, lock numbers...">${r('w-isodetail')}</textarea></div>
+  <div id="wap-detail" style="display:${wapYes?'block':'none'}">
+    <div class="fg"><label class="fl">Work Area Actions (select all that apply)</label>
+      <div class="multi-sel-box" id="ms-wap" onclick="openMultiSel('ms-wap','w-wap-sel',${JSON.stringify(WORK_AREA_PREP.concat(['Other']))})">
+        <span id="ms-wap-display" style="flex:1;font-size:15px;color:${(wzFS['w-wap-sel']||[]).length?'var(--text)':'var(--text3)'}">
+          ${(wzFS['w-wap-sel']||[]).length?(wzFS['w-wap-sel']||[]).join(' : '):'Click to select work area actions'}
+        </span>
+        <span style="color:var(--text3)">▼</span>
+      </div></div>
+    <div class="fg" id="wap-other-row" style="display:${(wzFS['w-wap-sel']||[]).includes('Other')?'block':'none'}">
+      <label class="fl">Specify Other Work Area Action</label>
+      <input class="fi" id="w-wap-other" placeholder="Describe action..." value="${wzFS['w-wap-other']||''}">
     </div>
   </div>
   </div>
 
-  <div class="fsec"><div class="fsec-t">Section 2H : Confined Space Entry</div>
+  <!-- 2D: Hazards -->
+  <div class="fsec"><div class="fsec-t">Section 2D : Potential Hazards Involved</div>
+  <div class="al al-i" style="margin-bottom:12px">Select each hazard present. Risk score calculates automatically. Adjust probability as needed and describe your control measures.</div>
+  ${renderHazardList()}
+  </div>
+
+  <!-- 2E: JHA -->
+  <div class="fsec"><div class="fsec-t">Section 2E : Job Hazard Analysis (JHA)</div>
+  <div class="al al-i" style="margin-bottom:12px">Add task steps. Minimum 3 steps required. Click a step to expand and fill details.</div>
+  <div id="jha-acc">${renderJHAAccordion()}</div>
+  <button class="btn btn-g btn-sm" style="margin-top:8px" onclick="addJHAStep()">+ Add Step</button>
+  </div>
+
+  <!-- 2F: PPE -->
+  <div class="fsec"><div class="fsec-t">Section 2F : Personal Protective Equipment Required</div>
+  <div class="fg"><label class="fl">Select all PPE required for this task</label>
+    <div class="multi-sel-box" id="ms-ppe" onclick="openMultiSel('ms-ppe','w-ppe-sel',${JSON.stringify(PPE_LIST)})">
+      <span id="ms-ppe-display" style="flex:1;font-size:15px;color:${(wzFS['w-ppe-sel']||[]).length?'var(--text)':'var(--text3)'}">
+        ${(wzFS['w-ppe-sel']||[]).length?(wzFS['w-ppe-sel']||[]).join(' : '):'Click to select PPE'}
+      </span>
+      <span style="color:var(--text3)">▼</span>
+    </div></div>
+  </div>
+
+  <!-- 2G: CSE -->
+  <div class="fsec"><div class="fsec-t">Section 2G : Confined Space Entry</div>
   <div class="ci ${isCSE?'on':''}" style="display:inline-flex;margin-bottom:12px" onclick="toggleCIKey(this,'w-cse','cse-fields')">
     <input type="checkbox" id="w-cse" ${isCSE?'checked':''}><label style="font-size:15px;font-weight:500">Confined Space Entry applicable to this task</label>
   </div>
@@ -1853,13 +2046,13 @@ function wzScreen2(){
       <div class="fg"><label class="fl">CSE Category</label>
         <select class="fs" id="w-csecat">
           <option value="A" ${r('w-csecat','A')==='A'?'selected':''}>Category A : Area can be made safe</option>
-          <option value="B" ${r('w-csecat')==='B'?'selected':''}>Category B : Inert atmosphere / BA mandatory (senior approval required)</option>
+          <option value="B" ${r('w-csecat')==='B'?'selected':''}>Category B : Inert atmosphere / BA mandatory</option>
         </select></div>
-      <div class="fg"><label class="fl">Access Controller Assigned</label>
+      <div class="fg"><label class="fl">Access Controller</label>
         <input class="fi" id="w-accessctrl" placeholder="Name of access controller" value="${r('w-accessctrl')}"></div>
       <div class="fg"><label class="fl">Rescue Plan Available?</label>
         <select class="fs" id="w-rescue">
-          <option value="Yes" ${r('w-rescue','Yes')==='Yes'?'selected':''}>Yes : attached to permit</option>
+          <option value="Yes" ${r('w-rescue','Yes')==='Yes'?'selected':''}>Yes : attached</option>
           <option value="No" ${r('w-rescue')==='No'?'selected':''}>No : required before entry</option>
         </select></div>
       <div class="fg"><label class="fl">Forced Ventilation?</label>
@@ -1867,27 +2060,21 @@ function wzScreen2(){
           <option value="Yes" ${r('w-vent')==='Yes'?'selected':''}>Yes</option>
           <option value="No" ${r('w-vent','No')==='No'?'selected':''}>No : natural only</option>
         </select></div>
-      <div class="fg"><label class="fl">Inert Atmosphere (Cat B)?</label>
-        <select class="fs" id="w-inert">
-          <option value="No" ${r('w-inert','No')==='No'?'selected':''}>No</option>
-          <option value="Yes" ${r('w-inert')==='Yes'?'selected':''}>Yes : BA mandatory</option>
-        </select></div>
-      <div class="fg"><label class="fl">Standby Level 2 Name</label>
+      <div class="fg"><label class="fl">Standby Person Name</label>
         <input class="fi" id="w-standby" placeholder="Required for Cat B CSE" value="${r('w-standby')}"></div>
     </div>
   </div>
   </div>
 
-  ${isHot?`<div class="fsec"><div class="fsec-t">Section 2I : Hot Work Precautions</div>
+  <!-- 2H: Hot Work -->
+  ${isHot?`<div class="fsec"><div class="fsec-t">Section 2H : Hot Work Precautions</div>
   <div class="f2">
-    <div class="fg"><label class="fl">Fire Watch Required?</label>
-      <select class="fs" id="w-firewatch"><option value="Yes" ${r('w-firewatch','Yes')==='Yes'?'selected':''}>Yes : mandatory for hot work</option></select></div>
     <div class="fg"><label class="fl">Fire Watcher Name</label>
       <input class="fi" id="w-firewatcher" placeholder="Designated fire watcher" value="${r('w-firewatcher')}"></div>
     <div class="fg"><label class="fl">Combustibles cleared within 11m?</label>
       <select class="fs" id="w-combustibles">
         <option value="Yes" ${r('w-combustibles','Yes')==='Yes'?'selected':''}>Yes : confirmed clear</option>
-        <option value="No" ${r('w-combustibles')==='No'?'selected':''}>No : mitigation measures in place</option>
+        <option value="No" ${r('w-combustibles')==='No'?'selected':''}>No : mitigation in place</option>
       </select></div>
     <div class="fg"><label class="fl">Sewers / Drains within 11m sealed?</label>
       <select class="fs" id="w-drains">
@@ -1898,53 +2085,69 @@ function wzScreen2(){
   <div class="al al-w">Fire watch must continue for minimum 30 minutes after hot work ceases.</div>
   </div>`:''}
 
-  ${isRad?`<div class="fsec"><div class="fsec-t">Section 2J : Radiography / NDT</div>
+  <!-- 2I: Radiography -->
+  ${isRad?`<div class="fsec"><div class="fsec-t">Section 2I : Radiography / NDT</div>
   <div class="f2">
-    <div class="fg"><label class="fl">Radioactive Source Status</label>
-      <select class="fs" id="w-radsource"><option value="Removed">Removed from equipment</option><option value="Isolated" ${r('w-radsource')==='Isolated'?'selected':''}>Isolated in position</option></select></div>
     <div class="fg"><label class="fl">RSO Certificate No.</label>
       <input class="fi" id="w-radcert" placeholder="RSO cert no." value="${r('w-radcert')}"></div>
     <div class="fg"><label class="fl">Exclusion Zone Established?</label>
       <select class="fs" id="w-exczone"><option value="Yes" ${r('w-exczone','Yes')==='Yes'?'selected':''}>Yes : 15m minimum</option><option value="No" ${r('w-exczone')==='No'?'selected':''}>No : required before work</option></select></div>
     <div class="fg"><label class="fl">Dosimeters Issued?</label>
-      <select class="fs" id="w-dosimeters"><option value="Yes" ${r('w-dosimeters','Yes')==='Yes'?'selected':''}>Yes</option><option value="No" ${r('w-dosimeters')==='No'?'selected':''}>No : required before entry</option></select></div>
+      <select class="fs" id="w-dosimeters"><option value="Yes" ${r('w-dosimeters','Yes')==='Yes'?'selected':''}>Yes</option><option value="No" ${r('w-dosimeters')==='No'?'selected':''}>No : required</option></select></div>
   </div>
   </div>`:''}
 
-  <div class="fsec"><div class="fsec-t">Section 2K : Gas Monitoring</div>
+  <!-- 2J: Gas Monitoring -->
+  <div class="fsec"><div class="fsec-t">Section 2J : Gas Monitoring</div>
   <div class="ci ${gasReq?'on':''}" style="display:inline-flex;margin-bottom:12px" onclick="toggleCIKey(this,'w-gasreq','gas-fields')">
     <input type="checkbox" id="w-gasreq" ${gasReq?'checked':''}><label style="font-size:15px;font-weight:500">Gas monitoring required for this task</label>
   </div>
   <div id="gas-fields" style="display:${gasReq?'block':'none'}">
     <div class="f2">
-      <div class="fg"><label class="fl">LEL / Explosive Monitoring</label>
+      <div class="fg"><label class="fl">Monitoring Frequency</label>
         <select class="fs" id="w-lelfreq">
           <option value="Continuous" ${r('w-lelfreq','Continuous')==='Continuous'?'selected':''}>Continuous (required for CSE)</option>
-          <option value="Every 15 min" ${r('w-lelfreq')==='Every 15 min'?'selected':''}>Every 15 minutes (ATEX zone)</option>
+          <option value="Every 15 min" ${r('w-lelfreq')==='Every 15 min'?'selected':''}>Every 15 minutes</option>
           <option value="Every 30 min" ${r('w-lelfreq')==='Every 30 min'?'selected':''}>Every 30 minutes</option>
           <option value="Pre-work only" ${r('w-lelfreq')==='Pre-work only'?'selected':''}>Pre-work only</option>
         </select></div>
       <div class="fg"><label class="fl">Gas Monitor Instrument No.</label>
         <input class="fi" id="w-monno" placeholder="e.g. MSA-2041" value="${r('w-monno')}"></div>
-      <div class="fg"><label class="fl">Authorised Gas Tester Name</label>
-        <input class="fi" id="w-gastester" placeholder="Designated gas tester" value="${r('w-gastester')}"></div>
+      <div class="fg"><label class="fl">Authorised Gas Tester</label>
+        <input class="fi" id="w-gastester" placeholder="Designated gas tester name" value="${r('w-gastester')}"></div>
     </div>
   </div>
   </div>
 
-  <div class="fsec"><div class="fsec-t">Section 2L : Emergency Equipment</div>
-  <div class="cg">${EMERG_LIST.map(e=>{const k='emerg-'+e.replace(/\W/g,'_');return`<div class="ci ${wzFS[k]?'on':''}" onclick="toggleCI(this,'${k}')"><input type="checkbox" id="${k}" ${wzFS[k]?'checked':''}><label>${e}</label></div>`;}).join('')}</div>
+  <!-- 2K: Emergency Equipment -->
+  <div class="fsec"><div class="fsec-t">Section 2K : Emergency Equipment</div>
+  <div class="fg"><label class="fl">Select all emergency equipment at work site</label>
+    <div class="multi-sel-box" id="ms-emerg" onclick="openMultiSel('ms-emerg','w-emerg-sel',${JSON.stringify(EMERG_LIST)})">
+      <span id="ms-emerg-display" style="flex:1;font-size:15px;color:${(wzFS['w-emerg-sel']||[]).length?'var(--text)':'var(--text3)'}">
+        ${(wzFS['w-emerg-sel']||[]).length?(wzFS['w-emerg-sel']||[]).join(' : '):'Click to select emergency equipment'}
+      </span>
+      <span style="color:var(--text3)">▼</span>
+    </div></div>
   </div>
 
-  <div class="fsec"><div class="fsec-t">Section 2M : Certificates Required</div>
-  <div class="cg">${CERTS_REQUIRED.map(c=>{const k='cert-'+c.replace(/\W/g,'_');return`<div class="ci ${wzFS[k]?'on':''}" onclick="toggleCI(this,'${k}')"><input type="checkbox" id="${k}" ${wzFS[k]?'checked':''}><label>${c}</label></div>`;}).join('')}</div>
+  <!-- 2L: Certificates and Isolation Cert -->
+  <div class="fsec"><div class="fsec-t">Section 2L : Certificates Required</div>
+  <div class="fg"><label class="fl">Select all certificates attached to this permit</label>
+    <div class="multi-sel-box" id="ms-cert" onclick="openMultiSel('ms-cert','w-cert-sel',${JSON.stringify(CERTS_REQUIRED)})">
+      <span id="ms-cert-display" style="flex:1;font-size:15px;color:${(wzFS['w-cert-sel']||[]).length?'var(--text)':'var(--text3)'}">
+        ${(wzFS['w-cert-sel']||[]).length?(wzFS['w-cert-sel']||[]).join(' : '):'Click to select certificates'}
+      </span>
+      <span style="color:var(--text3)">▼</span>
+    </div></div>
   </div>
 
-  <div class="fsec"><div class="fsec-t">Section 2N : Additional Control Measures</div>
+  <!-- 2M: Additional Controls -->
+  <div class="fsec"><div class="fsec-t">Section 2M : Additional Control Measures</div>
   <div class="fg"><textarea class="fta" id="w-addl" placeholder="Any additional control measures, precautions, or site-specific requirements not captured above...">${r('w-addl')}</textarea></div>
   </div>
 
-  <div class="fsec"><div class="fsec-t">Section 2O : Emergency Muster Point</div>
+  <!-- 2N: Muster Point -->
+  <div class="fsec"><div class="fsec-t">Section 2N : Emergency Muster Point</div>
   <div class="f2">
     <div class="fg"><label class="fl">Muster Point<span class="req">*</span></label>
       <select class="fs" id="w-muster" data-req="1">
@@ -1954,6 +2157,14 @@ function wzScreen2(){
       <input class="fi" id="w-oim" placeholder="Name and radio channel" value="${r('w-oim')}"></div>
   </div>
   </div>`;
+}
+
+function wzYNChange(key,detailId){
+  const el=document.getElementById(key);
+  if(!el) return;
+  wzFS[key]=el.value;
+  const det=document.getElementById(detailId);
+  if(det) det.style.display=el.value==='Yes'?'block':'none';
 }
 
 function renderHazardList(){
@@ -1977,9 +2188,7 @@ function renderHazardList(){
         return '<option value="'+i+'"'+(sel==i?' selected':'')+'>'+lbl+'</option>';
       }).join('');
     }
-    var catOpts=CONTROL_CATS.map(function(c){
-      return '<option value="'+c+'"'+(d.controlCat===c?' selected':'')+'>'+c+'</option>';
-    }).join('');
+    // Control category removed per GEGL requirement
 
     var body='';
     if(isOn){
@@ -2128,11 +2337,7 @@ function renderJHACard(j,i){
             <div class="hz-score ${riskLevel(riskScore(j.initProb,j.initSev)).scoreCls}">${riskScore(j.initProb,j.initSev)}</div>
             <span class="rk ${riskLevel(riskScore(j.initProb,j.initSev)).cls}">${riskLevel(riskScore(j.initProb,j.initSev)).l}</span>
           </div></div>`:''}
-        <div class="fg"><label class="fl">Control Category</label>
-          <select class="fs" onchange="saveJHA(${i},'controlCat',this.value)">
-            <option value="">-- Select --</option>
-            ${CONTROL_CATS.map(c=>`<option value="${c}" ${j.controlCat===c?'selected':''}>${c}</option>`).join('')}
-          </select></div>
+
         <div class="fg ff"><label class="fl">Control Measures (Hierarchy : Eliminate > Substitute > Engineer > Admin > PPE)</label>
           <textarea class="fta" style="min-height:70px" placeholder="Specific controls for this step..." oninput="saveJHA(${i},'controls',this.value)">${j.controls||''}</textarea></div>
         <div class="fg"><label class="fl">Residual Probability</label>
@@ -2278,61 +2483,63 @@ function wzScreen3(){
 
 function wzSubmit(){
   wzSave();
-  // Validate required fields from screen 1
   const req={type:wzFS['w-type'],area:wzFS['w-area'],equip:wzFS['w-equip'],task:wzFS['w-task'],dept:wzFS['w-dept'],appl:wzFS['w-appl'],workby:wzFS['w-workby'],desc:wzFS['w-desc']};
   const missing=Object.entries(req).filter(([k,v])=>!v).map(([k])=>k);
   if(missing.length){toast('Please complete all required fields in Section 1 first.','w');wzStep=0;renderWizard();return;}
   if(!wzFS['w-start']){toast('Start date and time is required.','w');wzStep=0;renderWizard();return;}
-  // Check no backdating
-  if(new Date(wzFS['w-start'])<new Date()){toast('Start date cannot be in the past.','d');wzStep=0;renderWizard();return;}
+  const startD=new Date(wzFS['w-start']);
+  const today=new Date(); today.setHours(0,0,0,0);
+  if(startD<today){toast('Start date cannot be a previous day.','d');wzStep=0;renderWizard();return;}
+  if(!wzFS['_appl_pin_ok']||!wzFS['_appl_pin_sig']){toast('Applicant PIN authentication required. Please complete Section 1.','w');wzStep=0;renderWizard();return;}
 
+  const sig=wzFS['_appl_pin_sig'];
   const activeHazards=Object.values(wzFS.hazards||{}).filter(h=>h.present);
   const maxRisk=activeHazards.reduce((max,h)=>Math.max(max,riskScore(h.rprob||h.prob||2,h.rsev||h.sev||2)),0);
-
-  openSignOff('Permit Applicant : Sign to Submit',APPLICANT_ROLES,(sig)=>{
-    // Verify signer matches selected applicant
-    const applUser=APP.users.find(u=>u.id===wzFS['w-appl']);
-    if(applUser&&sig.userId!==applUser.id){
-      toast('Please sign as the selected Permit Applicant ('+applUser.name+').','w');
-      return;
-    }
-    const dept=wzFS['w-dept']||'OPS';
-    const id=genId(appSite,dept);
-    const ppe=PPE_LIST.filter(p=>wzFS['ppe-'+p.replace(/\W/g,'_')]);
-    const emerg=EMERG_LIST.filter(e=>wzFS['emerg-'+e.replace(/\W/g,'_')]);
-    const certs=CERTS_REQUIRED.filter(c=>wzFS['cert-'+c.replace(/\W/g,'_')]);
-    const iso_types=ISO_TYPES.filter(t=>wzFS['iso-'+t.replace(/\W/g,'_')]);
-    const prep_types=PREP_TYPES.filter(t=>wzFS['prep-'+t.replace(/\W/g,'_')]);
-    const wap=WORK_AREA_PREP.filter(t=>wzFS['wap-'+t.replace(/\W/g,'_')]);
-    const permit={
-      id, type:wzFS['w-type'], site:appSite, dept,
-      taskTitle:wzFS['w-task']||'', area:wzFS['w-area']||'',
-      equip:wzFS['w-equip']||'', wo:wzFS['w-wo']||'',
-      desc:wzFS['w-desc']||'', dur:wzFS['w-dur']||'24 Hours',
-      startDate:wzFS['w-start']||'', workers:[],
-      applicantId:wzFS['w-appl']||'', applicantName:sig.name,
-      applicantDept:wzFS['w-appl-dept']||'',
-      workBy:wzFS['w-workby']||'', contractorId:wzFS['w-cont']||'',
-      fluid:wzFS['w-fluid']||'', pressure:wzFS['w-pressure']||'',
-      idTag:wzFS['w-idtag']||'No', tagNo:wzFS['w-tagno']||'',
-      riskScore:maxRisk, hazards:JSON.parse(JSON.stringify(wzFS.hazards||{})),
-      jha:(wzFS.jha||[]).filter(j=>j.step),
-      ppe, emerg, certs, isoTypes:iso_types, prepTypes:prep_types, workAreaPrep:wap,
-      isoRef:wzFS['w-isoreq']?wzFS['w-isoref']:'N/A',
-      isoDetail:wzFS['w-isodetail']||'',
-      gasReq:wzFS['w-gasreq']||false, gasFreq:wzFS['w-lelfreq']||'',
-      gasTester:wzFS['w-gastester']||'', monNo:wzFS['w-monno']||'',
-      cseApplicable:wzFS['w-cse']||false, csecat:wzFS['w-csecat']||'',
-      muster:wzFS['w-muster']||'', oim:wzFS['w-oim']||'',
-      addlControls:wzFS['w-addl']||'',
-      status:'ph', prog:10,
-      authChain:{ applicant:sig },
-    };
-    savePermit(permit);
-    closeOv('new-ov');
-    toast(`Permit <b>${id}</b> submitted by ${sig.name}. Awaiting Permit Holder to complete Section 2.`,'s');
-    go('pend'); updateBadges();
-  });
+  const dept=wzFS['w-dept']||'OPS';
+  const id=window._resubmitId||genId(appSite,dept);
+  const permit={
+    id, type:wzFS['w-type'], site:appSite, dept,
+    taskTitle:wzFS['w-task']||'', area:wzFS['w-area']||'',
+    equip:wzFS['w-equip']||'', wo:wzFS['w-wo']||'',
+    desc:wzFS['w-desc']||'', dur:wzFS['w-dur']||'24 Hours',
+    startDate:wzFS['w-start']||'', workers:[], toolboxWorkers:[],
+    applicantId:wzFS['w-appl']||'', applicantName:sig.name,
+    applicantDept:wzFS['w-appl-dept']||'',
+    workBy:wzFS['w-workby']||'', contractorId:wzFS['w-cont']||'',
+    fluid:wzFS['w-fluid']||'', pressure:wzFS['w-pressure']||'',
+    idTag:wzFS['w-idtag']||'No', tagNo:wzFS['w-tagno']||'',
+    riskScore:maxRisk, hazards:JSON.parse(JSON.stringify(wzFS.hazards||{})),
+    jha:(wzFS.jha||[]).filter(j=>j.step),
+    ppe:wzFS['w-ppe-sel']||[],
+    emerg:wzFS['w-emerg-sel']||[],
+    certs:wzFS['w-cert-sel']||[],
+    isoYN:wzFS['w-iso-yn']||'No',
+    isoTypes:wzFS['w-iso-sel']||[],
+    isoOther:wzFS['w-iso-other']||'',
+    isoDetail:wzFS['w-isodetail']||'',
+    isoRef:wzFS['w-isoref']||'N/A',
+    prepYN:wzFS['w-prep-yn']||'No',
+    prepTypes:wzFS['w-prep-sel']||[],
+    prepOther:wzFS['w-prep-other']||'',
+    wapYN:wzFS['w-wap-yn']||'No',
+    wapTypes:wzFS['w-wap-sel']||[],
+    gasReq:wzFS['w-gasreq']||false,
+    gasFreq:wzFS['w-lelfreq']||'',
+    gasTester:wzFS['w-gastester']||'',
+    monNo:wzFS['w-monno']||'',
+    cseApplicable:wzFS['w-cse']||false,
+    csecat:wzFS['w-csecat']||'',
+    muster:wzFS['w-muster']||'',
+    oim:wzFS['w-oim']||'',
+    addlControls:wzFS['w-addl']||'',
+    status:'ph', prog:10,
+    authChain:{ applicant:sig },
+  };
+  savePermit(permit);
+  window._resubmitId=null;
+  closeOv('new-ov');
+  toast('Permit <b>'+id+'</b> submitted by '+sig.name+'. Awaiting Permit Holder to complete Section 2.','s');
+  go('pend'); updateBadges();
 }
 
 // ═══════════════════════════════════════════════
@@ -2606,6 +2813,8 @@ function renderDetailFooter(){
   if(['ph','aa','hse','supt'].includes(p.status)){
     btns+=`<button class="btn btn-d" onclick="doReject('${p.id}')">✕ Reject</button>`;
     btns+=`<button class="btn btn-s" onclick="doSignOff('${p.id}')">✓ Sign Off</button>`;
+  } else if(p.status==='toolbox'){
+    btns+=`<button class="btn btn-p" onclick="openToolbox('${p.id}')">▶ Toolbox Talk</button>`;
   } else if(p.status==='active'){
     btns+=`<button class="btn btn-a" onclick="doSuspend('${p.id}')">⏸ Suspend</button>`;
     btns+=`<button class="btn btn-s" onclick="doClose('${p.id}')">✓ Close Permit</button>`;
@@ -2623,21 +2832,23 @@ function doSignOff(id){
   closeOv('dtl-ov');
   const flow={
     ph:  {roles:PERMIT_HOLDER_ROLES, label:'Permit Holder : Accept and complete Section 2', authKey:'ph',  next:'aa',  excludeId:p.applicantId},
-    aa:  {roles:AREA_AUTH_ROLES,     label:'Area Authority : Confirm site safety',           authKey:'aa',  next:'hse'},
+    aa:  {roles:AREA_AUTH_ROLES,     label:'Area Authority : Confirm site safety',           authKey:'aa',  next:'hse', excludeId:p.phId},
     hse: {roles:HSE_ROLES,           label:'HSE Representative : Review controls and JHA',  authKey:'hse', next:'supt'},
-    supt:{roles:SUPT_ROLES,          label:'Superintendent / Manager : Final approval',      authKey:'supt',next:'active'},
+    supt:{roles:SUPT_ROLES,          label:'Superintendent / Manager : Final approval',      authKey:'supt',next:'toolbox'},
   };
   const f=flow[p.status];
   if(!f){toast('No action available for current status.','w');return;}
   openSignOff(f.label,f.roles,(sig)=>{
     if(!p.authChain) p.authChain={};
     p.authChain[f.authKey]=sig;
+    if(f.authKey==='ph') p.phId=sig.userId; // store PH id to exclude from AA
+    if(f.authKey==='ph') p.phName=sig.name;
     p.status=f.next;
-    if(f.next==='active') p.prog=15;
+    if(f.next==='toolbox') p.prog=80;
     savePermit(p);
     toast(`${p.id} : ${f.label} complete.`,'s');
     go(appView); updateBadges();
-  },f.excludeId);
+  },excludeForStage);
 }
 
 function doReject(id){
@@ -2802,6 +3013,209 @@ function exportAllExcel(){
   a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
   a.download=`${appSite}_All_Permits.csv`; document.body.appendChild(a); a.click();
   document.body.removeChild(a); toast('All permits exported as Excel/CSV.','s');
+}
+
+// ═══════════════════════════════════════════════
+// MULTI-SELECT MODAL
+// ═══════════════════════════════════════════════
+let _msKey=null, _msItems=[], _msSel=[], _msBoxId=null, _msDispId=null;
+
+function openMultiSel(boxId,key,items){
+  _msKey=key; _msItems=items; _msBoxId=boxId;
+  _msDispId=boxId+'-display';
+  _msSel=JSON.parse(JSON.stringify(wzFS[key]||[]));
+  const existing=document.getElementById('ms-modal');
+  if(existing) existing.remove();
+  const div=document.createElement('div');
+  div.id='ms-modal'; div.className='ms-modal';
+  div.innerHTML=`
+    <div class="ms-inner">
+      <div class="ms-head">
+        <div style="font-family:var(--cond);font-size:15px;font-weight:600">Select Options</div>
+        <button class="mhx" onclick="closeMSModal()">✕</button>
+      </div>
+      <div class="ms-list" id="ms-list-items"></div>
+      <div class="ms-foot">
+        <button class="btn btn-g" onclick="closeMSModal()">Cancel</button>
+        <button class="btn btn-p" onclick="confirmMS()">Confirm</button>
+      </div>
+    </div>`;
+  document.body.appendChild(div);
+  renderMSItems();
+}
+
+function renderMSItems(){
+  const list=document.getElementById('ms-list-items');
+  if(!list) return;
+  list.innerHTML=_msItems.map(item=>{
+    const sel=_msSel.includes(item);
+    return`<div class="ms-item ${sel?'sel':''}" onclick="toggleMS(this,'${item.replace(/'/g,"\'")}')">
+      <input type="checkbox" ${sel?'checked':''} readonly>
+      <label>${item}</label>
+    </div>`;
+  }).join('');
+}
+
+function toggleMS(el,item){
+  const idx=_msSel.indexOf(item);
+  if(idx>=0) _msSel.splice(idx,1); else _msSel.push(item);
+  el.classList.toggle('sel',_msSel.includes(item));
+  const chk=el.querySelector('input');
+  if(chk) chk.checked=_msSel.includes(item);
+  // Show/hide Other field if present
+  const otherKey=_msKey.replace('-sel','')+ '-other-row';
+  const otherRow=document.getElementById(otherKey.replace('w-iso','iso').replace('w-prep','prep').replace('w-wap','wap'));
+  if(otherRow) otherRow.style.display=_msSel.includes('Other')?'block':'none';
+}
+
+function confirmMS(){
+  wzFS[_msKey]=JSON.parse(JSON.stringify(_msSel));
+  const disp=document.getElementById(_msDispId);
+  if(disp){
+    disp.textContent=_msSel.length?_msSel.join(' : '):'None selected';
+    disp.style.color=_msSel.length?'var(--text)':'var(--text3)';
+  }
+  // Show/hide Other rows
+  const otherRowMap={'w-iso-sel':'iso-other-row','w-prep-sel':'prep-other-row','w-wap-sel':'wap-other-row'};
+  const orId=otherRowMap[_msKey];
+  if(orId){const or=document.getElementById(orId);if(or) or.style.display=_msSel.includes('Other')?'block':'none';}
+  closeMSModal();
+}
+
+function closeMSModal(){
+  const m=document.getElementById('ms-modal');
+  if(m) m.remove();
+}
+
+// ═══════════════════════════════════════════════
+// TOOLBOX TALK
+// ═══════════════════════════════════════════════
+function openToolbox(id){
+  const p=PERMITS.find(x=>x.id===id); if(!p) return;
+  closeOv('dtl-ov');
+
+  // Build hazard summary from JHA
+  const jhaHazards=[...new Set((p.jha||[]).filter(j=>j.hazard).map(j=>j.hazard))];
+  const activeHazards=Object.entries(p.hazards||{})
+    .filter(([,h])=>h.present)
+    .map(([hid,h])=>{const hz=HAZARDS.find(x=>x.id===hid);return hz?{label:hz.label,score:riskScore(h.rprob||h.prob||2,h.rsev||h.sev||2)}:null;})
+    .filter(Boolean)
+    .sort((a,b)=>b.score-a.score);
+
+  if(!p.toolboxWorkers) p.toolboxWorkers=[];
+
+  document.getElementById('conf-title').textContent='Toolbox Talk : '+p.id;
+  document.getElementById('conf-body').innerHTML=`
+  <div style="background:rgba(0,194,168,.06);border:1px solid rgba(0,194,168,.2);border-radius:var(--r);padding:12px 14px;margin-bottom:14px">
+    <div style="font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--acc);margin-bottom:6px">${p.id} : ${p.taskTitle||'Untitled'}</div>
+    <div style="font-size:13px;color:var(--text2)">${(p.area||'').split(':')[0].trim()}</div>
+  </div>
+
+  ${activeHazards.length?`
+  <div style="margin-bottom:14px">
+    <div style="font-family:var(--cond);font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Hazards Briefed to Workers</div>
+    ${activeHazards.slice(0,8).map(h=>{const rl=riskLevel(h.score);return`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)"><span style="font-size:14px;flex:1">${h.label}</span><span class="rk ${rl.cls}" style="font-size:11px">${rl.l}</span></div>`;}).join('')}
+  </div>`:''}
+
+  <div style="font-family:var(--cond);font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Workers Present</div>
+  <div id="tb-workers">
+    ${(p.toolboxWorkers||[]).map((w,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:11px;color:#001a10;font-weight:700;flex-shrink:0">${i+1}</div>
+      <div style="flex:1"><div style="font-size:14px;font-weight:500">${w.name}</div><div style="font-size:12px;color:var(--text3)">${w.company||'GEGL'} : ${w.signOnTime}</div></div>
+      <span style="color:var(--green);font-size:13px;font-weight:600">Signed On</span>
+    </div>`).join('')}
+  </div>
+
+  <div style="display:flex;gap:8px;margin-top:10px;margin-bottom:16px">
+    <input class="fi" id="tb-wname" placeholder="Worker name..." style="flex:2">
+    <input class="fi" id="tb-wco" placeholder="Company..." style="flex:1">
+    <button class="btn btn-s btn-sm" onclick="tbAddWorker('${p.id}')">+ Add</button>
+  </div>
+
+  <div style="background:rgba(240,165,0,.06);border:1px solid rgba(240,165,0,.2);border-radius:var(--r);padding:14px;margin-top:8px">
+    <div style="font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Supervisor Declaration</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px;font-style:italic">"I confirm that a toolbox talk was conducted for Permit ${p.id}. All workers listed above have been fully briefed on all identified hazards and control measures specified in the JHA. All workers acknowledge understanding of the risks before commencing work."</div>
+    <div class="fg" style="margin-bottom:12px">
+      <label class="fl">Supervisor Name</label>
+      <select class="fs" id="tb-sup-sel" onchange="tbSupSel()">
+        <option value="">-- Select supervisor --</option>
+        ${usersForSite(appSite).filter(u=>['Shift Charge','Supervisor','Superintendent','Manager','VP'].includes(u.role)).map(u=>`<option value="${u.id}">${u.name} : ${u.role}</option>`).join('')}
+      </select>
+    </div>
+    <div id="tb-pin-wrap" style="display:none">
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Enter Supervisor PIN to activate permit:</div>
+      <div class="pin-dots" id="tb-dots">${[0,1,2,3].map(i=>`<div class="pin-dot" id="tbd${i}"></div>`).join('')}</div>
+      <div class="pin-numpad" style="margin-top:10px">${[1,2,3,4,5,6,7,8,9,'←',0,'✓'].map(k=>`<button class="pnb" onclick="tbPinKey('${p.id}','${k}')">${k}</button>`).join('')}</div>
+      <div id="tb-err" style="font-size:13px;color:var(--red);margin-top:8px;display:none"></div>
+    </div>
+  </div>`;
+
+  document.getElementById('conf-footer').innerHTML=`<button class="btn btn-g" onclick="closeOv('conf-ov')">Close</button>`;
+  openOv('conf-ov');
+}
+
+let _tbPinBuf='', _tbSupUser=null;
+
+function tbSupSel(){
+  const sel=document.getElementById('tb-sup-sel');
+  _tbSupUser=APP.users.find(u=>u.id===sel.value)||null;
+  _tbPinBuf=''; tbDots();
+  document.getElementById('tb-pin-wrap').style.display=_tbSupUser?'block':'none';
+  const e=document.getElementById('tb-err'); if(e) e.style.display='none';
+}
+
+function tbDots(){
+  for(let i=0;i<4;i++){const d=document.getElementById('tbd'+i);if(d) d.className='pin-dot'+(_tbPinBuf.length>i?' filled':'');}
+}
+
+function tbAddWorker(pid){
+  const p=PERMITS.find(x=>x.id===pid); if(!p) return;
+  const name=document.getElementById('tb-wname')?.value?.trim();
+  const co=document.getElementById('tb-wco')?.value?.trim();
+  if(!name){toast('Enter worker name.','w');return;}
+  if(!p.toolboxWorkers) p.toolboxWorkers=[];
+  p.toolboxWorkers.push({name,company:co||'GEGL',signOnTime:new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})});
+  // Refresh the toolbox modal
+  savePermit(p);
+  openToolbox(pid);
+  toast(name+' added to toolbox.','s');
+}
+
+function tbPinKey(pid,k){
+  const err=document.getElementById('tb-err');
+  if(err) err.style.display='none';
+  if(k==='←'){_tbPinBuf=_tbPinBuf.slice(0,-1);}
+  else if(k==='✓'){
+    if(!_tbSupUser) return;
+    const p=PERMITS.find(x=>x.id===pid); if(!p) return;
+    if(_tbPinBuf.length!==4){if(err){err.textContent='Enter your full 4-digit PIN.';err.style.display='block';}return;}
+    if(_tbPinBuf!==_tbSupUser.pin){
+      if(err){err.textContent='Incorrect PIN. Please try again.';err.style.display='block';}
+      _tbPinBuf=''; tbDots(); return;
+    }
+    if(!p.toolboxWorkers||!p.toolboxWorkers.length){
+      if(err){err.textContent='Add at least one worker before activating the permit.';err.style.display='block';}
+      return;
+    }
+    // Activate permit
+    p.status='active'; p.prog=15;
+    if(!p.authChain) p.authChain={};
+    p.authChain.toolbox={
+      supervisorId:_tbSupUser.id, name:_tbSupUser.name,
+      role:_tbSupUser.role, empNo:_tbSupUser.empNo||'',
+      timestamp:new Date().toLocaleString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}),
+      workerCount:p.toolboxWorkers.length,
+      declaration:'Toolbox talk conducted. All workers briefed on hazards and control measures. All workers acknowledge understanding before commencing work.',
+    };
+    savePermit(p);
+    closeOv('conf-ov');
+    toast(`Permit <b>${pid}</b> is now ACTIVE. Work may commence.`,'s');
+    go('live'); updateBadges();
+    return;
+  }
+  else if(_tbPinBuf.length<4){_tbPinBuf+=k;}
+  tbDots();
 }
 
 // ═══════════════════════════════════════════════
